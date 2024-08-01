@@ -1,0 +1,167 @@
+Grammar
+
+    0 $accept: commands $end
+
+    1 commands: %empty
+    2         | commands command
+
+    3 command: COMMAND NEWLINE
+    4        | COMMAND EQUAL INTEGER NEWLINE
+    5        | COMMAND EQUAL INTEGER COMMA INTEGER NEWLINE
+    6        | COMMAND EQUAL FLOAT NEWLINE
+    7        | command error NEWLINE
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 7
+    COMMAND (258) 3 4 5 6
+    EQUAL (259) 4 5 6
+    NEWLINE (260) 3 4 5 6 7
+    COMMA (261) 5
+    INTEGER <ival> (262) 4 5
+    FLOAT <fval> (263) 6
+
+
+Nonterminals, with rules where they appear
+
+    $accept (9)
+        on left: 0
+    commands (10)
+        on left: 1 2
+        on right: 0 2
+    command (11)
+        on left: 3 4 5 6 7
+        on right: 2 7
+
+
+State 0
+
+    0 $accept: . commands $end
+
+    $default  reduce using rule 1 (commands)
+
+    commands  go to state 1
+
+
+State 1
+
+    0 $accept: commands . $end
+    2 commands: commands . command
+
+    $end     shift, and go to state 2
+    COMMAND  shift, and go to state 3
+
+    command  go to state 4
+
+
+State 2
+
+    0 $accept: commands $end .
+
+    $default  accept
+
+
+State 3
+
+    3 command: COMMAND . NEWLINE
+    4        | COMMAND . EQUAL INTEGER NEWLINE
+    5        | COMMAND . EQUAL INTEGER COMMA INTEGER NEWLINE
+    6        | COMMAND . EQUAL FLOAT NEWLINE
+
+    EQUAL    shift, and go to state 5
+    NEWLINE  shift, and go to state 6
+
+
+State 4
+
+    2 commands: commands command .
+    7 command: command . error NEWLINE
+
+    error  shift, and go to state 7
+
+    $end     reduce using rule 2 (commands)
+    COMMAND  reduce using rule 2 (commands)
+
+
+State 5
+
+    4 command: COMMAND EQUAL . INTEGER NEWLINE
+    5        | COMMAND EQUAL . INTEGER COMMA INTEGER NEWLINE
+    6        | COMMAND EQUAL . FLOAT NEWLINE
+
+    INTEGER  shift, and go to state 8
+    FLOAT    shift, and go to state 9
+
+
+State 6
+
+    3 command: COMMAND NEWLINE .
+
+    $default  reduce using rule 3 (command)
+
+
+State 7
+
+    7 command: command error . NEWLINE
+
+    NEWLINE  shift, and go to state 10
+
+
+State 8
+
+    4 command: COMMAND EQUAL INTEGER . NEWLINE
+    5        | COMMAND EQUAL INTEGER . COMMA INTEGER NEWLINE
+
+    NEWLINE  shift, and go to state 11
+    COMMA    shift, and go to state 12
+
+
+State 9
+
+    6 command: COMMAND EQUAL FLOAT . NEWLINE
+
+    NEWLINE  shift, and go to state 13
+
+
+State 10
+
+    7 command: command error NEWLINE .
+
+    $default  reduce using rule 7 (command)
+
+
+State 11
+
+    4 command: COMMAND EQUAL INTEGER NEWLINE .
+
+    $default  reduce using rule 4 (command)
+
+
+State 12
+
+    5 command: COMMAND EQUAL INTEGER COMMA . INTEGER NEWLINE
+
+    INTEGER  shift, and go to state 14
+
+
+State 13
+
+    6 command: COMMAND EQUAL FLOAT NEWLINE .
+
+    $default  reduce using rule 6 (command)
+
+
+State 14
+
+    5 command: COMMAND EQUAL INTEGER COMMA INTEGER . NEWLINE
+
+    NEWLINE  shift, and go to state 15
+
+
+State 15
+
+    5 command: COMMAND EQUAL INTEGER COMMA INTEGER NEWLINE .
+
+    $default  reduce using rule 5 (command)
