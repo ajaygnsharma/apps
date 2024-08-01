@@ -101,7 +101,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_a_out_OBJECTS = main.$(OBJEXT)
+am_a_out_OBJECTS = cfgErr.$(OBJEXT) main.$(OBJEXT)
 a_out_OBJECTS = $(am_a_out_OBJECTS)
 a_out_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -119,7 +119,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/main.Po
+am__depfiles_remade = ./$(DEPDIR)/cfgErr.Po ./$(DEPDIR)/main.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -160,12 +160,12 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} '/home/asharma/eclipse-workspace/102_cfg_read_c++/missing' aclocal-1.16
+ACLOCAL = ${SHELL} '/home/asharma/eclipse-workspace/C++_UT_cfg_read/missing' aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} '/home/asharma/eclipse-workspace/102_cfg_read_c++/missing' autoconf
-AUTOHEADER = ${SHELL} '/home/asharma/eclipse-workspace/102_cfg_read_c++/missing' autoheader
-AUTOMAKE = ${SHELL} '/home/asharma/eclipse-workspace/102_cfg_read_c++/missing' automake-1.16
+AUTOCONF = ${SHELL} '/home/asharma/eclipse-workspace/C++_UT_cfg_read/missing' autoconf
+AUTOHEADER = ${SHELL} '/home/asharma/eclipse-workspace/C++_UT_cfg_read/missing' autoheader
+AUTOMAKE = ${SHELL} '/home/asharma/eclipse-workspace/C++_UT_cfg_read/missing' automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -175,7 +175,7 @@ CSCOPE = cscope
 CTAGS = ctags
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2
+CXXFLAGS = -g -O2 -Wall -Wextra -O0 -g3
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"101_cfg_read_getline\" -DPACKAGE_TARNAME=\"101_cfg_read_getline\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"101_cfg_read_getline\ 1.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"101_cfg_read_getline\" -DVERSION=\"1.0\"
 DEPDIR = .deps
@@ -193,7 +193,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} '/home/asharma/eclipse-workspace/102_cfg_read_c++/missing' makeinfo
+MAKEINFO = ${SHELL} '/home/asharma/eclipse-workspace/C++_UT_cfg_read/missing' makeinfo
 MKDIR_P = /usr/bin/mkdir -p
 OBJEXT = o
 PACKAGE = 101_cfg_read_getline
@@ -208,10 +208,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/asharma/eclipse-workspace/102_cfg_read_c++/src
-abs_srcdir = /home/asharma/eclipse-workspace/102_cfg_read_c++/src
-abs_top_builddir = /home/asharma/eclipse-workspace/102_cfg_read_c++
-abs_top_srcdir = /home/asharma/eclipse-workspace/102_cfg_read_c++
+abs_builddir = /home/asharma/eclipse-workspace/C++_UT_cfg_read/src
+abs_srcdir = /home/asharma/eclipse-workspace/C++_UT_cfg_read/src
+abs_top_builddir = /home/asharma/eclipse-workspace/C++_UT_cfg_read
+abs_top_srcdir = /home/asharma/eclipse-workspace/C++_UT_cfg_read
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -239,7 +239,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/asharma/eclipse-workspace/102_cfg_read_c++/install-sh
+install_sh = ${SHELL} /home/asharma/eclipse-workspace/C++_UT_cfg_read/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -264,7 +264,7 @@ target_vendor = pc
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-a_out_SOURCES = main.cpp
+a_out_SOURCES = cfgErr.cpp main.cpp
 all: all-am
 
 .SUFFIXES:
@@ -351,6 +351,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/cfgErr.Po # am--include-marker
 include ./$(DEPDIR)/main.Po # am--include-marker
 
 $(am__depfiles_remade):
@@ -499,7 +500,8 @@ clean: clean-am
 clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/main.Po
+		-rm -f ./$(DEPDIR)/cfgErr.Po
+	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -545,7 +547,8 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/main.Po
+		-rm -f ./$(DEPDIR)/cfgErr.Po
+	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

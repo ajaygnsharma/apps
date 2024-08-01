@@ -7,7 +7,6 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,22 +18,11 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <map>
+
+#include "cfgErr.h"
 
 using namespace std;
-
-char *find_key(char *buf, char *key){
-  char *ptr = NULL;
-
-  ptr = strstr(buf,key);
-
-  if(ptr != NULL){
-    char *p = strpbrk(ptr,"=");
-    p++;
-    return p;
-  }else{
-    return NULL;
-  }
-}
 
 struct cfg_s {
   int val1;
@@ -42,61 +30,21 @@ struct cfg_s {
   int val2;
 }cfg;
 
-class Cfg_err{
-	vector <string> msgs;
+static map<string, string> m;
 
-public:
-	Cfg_err(){}
-	void add(string msg);
-	bool any(void);
-	void log(void);
-};
-
-
-
-Cfg_err cfg_err = Cfg_err();
-
-
-void Cfg_err::add(string msg){
-	msgs.push_back(msg);
-}
-
-bool Cfg_err::any(void){
-	return msgs.size();
-}
-
-void Cfg_err::log(void){
-	for(vector<string>::iterator it = msgs.begin(); it != msgs.end(); ++it){
-		cerr << *it;
-		//ibuc_log()
-	}
-}
-
-
-bool find_str(vector <string> tokens, string to_find_str, string &dest){
+bool build_map(string s, string delim){
 	string var;
-	size_t found = -1;
-	for(vector<string>::iterator it = tokens.begin(); it != tokens.end(); ++it){
-		string s = *it;
-		found = s.find(to_find_str);
-		if(found != string::npos){ /* Found it! */
-			stringstream ss(s);
-			string token1;
-			vector <string> v1;
-			while(getline(ss, token1, '=')){
-				v1.push_back(token1);
-			}
-			dest = v1[1];
-			break; //Found, so exit.
-		}
-	}
+	size_t pos = -1;
 
-	if(found != -1){ //Found can be 0 if found at the first location of string
+	pos = s.find(delim);
+	if(pos != string::npos){ /* Found it! */
+		string key = s.substr(0,pos);
+		string value = s.substr(pos+1); // Ignore =
+
+		m[key] = value;
+
 		return true;
 	}else{
-		string s = to_find_str + " not found\n";
-		cfg_err.add(s);
-		dest.clear(); //Make it clear for error proofing.
 		return false;
 	}
 }
@@ -104,29 +52,34 @@ bool find_str(vector <string> tokens, string to_find_str, string &dest){
 void create_data(void){
   FILE *pFile;
   char *buf = NULL;
-  char *f_buf = NULL;
-  char *to = NULL;
   ssize_t n = 0;
   struct cfg_s cfg = {10, "my_security", 20};
 
-  char *ptr = "mysecurity";
   pFile = fopen("test.txt", "w");
 
   n = asprintf(&buf, "TEMPERATURE_MAX=%d\n"
                      "SNMP_C2GROUP_SECURITY=%s\n"
                      "BURST_THOLD=%d\n",
                      cfg.val1, cfg.str, cfg.val2 );
-  //cfg.val2 = 50;
 
   fwrite(buf , n, 1, pFile);
-  //fprintf(pFile, "SNMP_SEC2GROUP_SECURITY=mysecurity\n");
-  //fputs(buffer,pFile);
   fclose(pFile);
   return;
 }
 
+bool mapFind(string s, string &foundStr){
+	if(auto search = m.find(s); search != m.end()){
+		foundStr = search->second;
+		return true;
+	}else{
+		foundStr.clear();
+		return false;
+	}
+}
+
+
 int
-main(int argc, char *argv[])
+main(void)
 {
   /* First load defaults */
   create_data();
@@ -135,27 +88,31 @@ main(int argc, char *argv[])
   stringstream buffer;
   buffer << t.rdbuf();
 
-  //cout << buffer.str() << endl;
   vector <string> tokens;
   string token;
   while(getline(buffer, token, '\n')){
   	tokens.push_back(token);
   }
 
-  size_t s;
-  string str;
-  if(find_str(tokens, "TEMPERATURE_MAX=", str)){
-  	cfg.val1 = stoi(str, &s);
+
+  for(vector<string>::iterator line = tokens.begin(); line != tokens.end(); ++line){
+  	build_map(*line, "=");
   }
 
-  if(find_str(tokens, "SNMP_C2GROUP_SECURITY=", str))
-  	strcpy(cfg.str, str.c_str());
+#if(0)
+  for(auto &x: m){
+  	cout << x.first << "," << x.second  <<  endl;
+  }
+#endif
 
-  if(find_str(tokens, "BURST_THOLD=", str))
-  	cfg.val2 = stoi(str, &s);
+  string found = "";
+  if( mapFind("BURST_THOLD", found) ){    cfg.val1 = stoi(found); } else{ cfg.val1 = 1000; }
+  if( mapFind("SNMP_C2GROUP_SECURITY", found) ){ strcpy(cfg.str, found.c_str()); }
 
-  if(find_str(tokens, "TRUST_THOLD=", str))
-  	cfg.val2 = stoi(str, &s);
+  if( auto search = m.find("TEMPERATURE_MAX"); search != m.end() ){
+  	cfg.val2 = stoi(search->second);
+  }
+
 
   cout << cfg.val1 << endl;
   cout << cfg.str << endl;

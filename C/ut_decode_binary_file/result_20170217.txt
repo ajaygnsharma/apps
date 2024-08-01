@@ -1,0 +1,8 @@
+Status=14
+Sub Status=0
+Length=10
+Capacitance=0 uF
+Capacitor Voltage=5 V
+Capacitor Charge time=1000 ms
+Initial capacitor voltage=5 V
+Read 1 bytes
