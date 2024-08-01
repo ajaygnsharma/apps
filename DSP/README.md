@@ -1,0 +1,1 @@
+Since the goal of all Math that I am learning is to do DSP. I am putting all math also under DSP
