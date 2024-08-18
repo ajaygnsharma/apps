@@ -1,0 +1,21 @@
+CFLAGS=-O0 -Wall -W
+LDFLAGS=-Wl,-elf2flt
+CC=/usr/local/bin/arm-elf-gcc
+RM=rm -f
+
+PROG=dict
+SRC=main.c dict.c
+
+OBJ=$(SRC:%.c=%.o)
+
+$(PROG):$(OBJ)
+	$(CC) $(CFLAGS) -o $(PROG) $(OBJ) $(LDFLAGS)
+
+install:
+	cp ${PROG} /tftpboot/
+	
+.PHONY: clean all dep install
+
+clean:
+	$(RM) $(PROG) $(OBJ) *~ *.gdb *.depend *.elf2flt *elf
+	

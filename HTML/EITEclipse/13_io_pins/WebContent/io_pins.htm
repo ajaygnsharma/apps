@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>I/O PINS</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+
+<script type="text/javascript">
+var ip_id = new Array("i1","i2","i3","i4","i5","i6");
+var op_id = new Array("o1","o2","o3","o4","o5","o6");
+var h_id  = new Array("h1","h2","h3","h4","h5","h6");
+var l_id  = new Array("l1","l2","l3","l4","l5","l6");
+var ci_h_id = ["cih1","cih2","cih3"]; 
+var ci_l_id = ["cil1","cil2","cil3"];
+var co_h_id = ["coh1","coh2","coh3"];
+var co_l_id = ["col1","col2","col3"];
+
+function cio_en()
+{
+	var i=0;
+	var h=new Array();
+	var l=new Array();
+	var ip=new Array();
+	var op=new Array();
+	var ci_h=new Array();
+	var ci_l=new Array();
+	var co_h=new Array();
+	var co_l=new Array();
+
+	if(document.getElementById("cio").checked==true)
+		{
+		for(i=0;i<6;i++)
+			{
+			ip[i]=document.getElementById(ip_id[i]);
+			op[i]=document.getElementById(op_id[i]);
+			h[i]=document.getElementById(h_id[i]);
+			l[i]=document.getElementById(l_id[i]);
+			ci_h[i]=document.getElementById(ci_h_id[i]);
+			ci_l[i]=document.getElementById(ci_l_id[i]);
+			co_h[i]=document.getElementById(co_h_id[i]);
+			co_l[i]=document.getElementById(co_l_id[i]);
+			
+
+			if(ip[i]!=null)
+				{
+				ip[i].disabled=true;
+				}
+			if(op[i]!=null)
+				{
+				op[i].disabled=true;
+				}
+			if(h[i]!= null)
+			{
+			  h[i].disabled=true;
+			}
+			if(l[i]!= null)
+			{
+			  l[i].disabled=true;
+			}
+			if(ci_h[i]!= null)
+			{
+			  ci_h[i].disabled=false;
+			}
+			if(ci_l[i]!= null)
+			{
+			  ci_l[i].disabled=false;
+			}
+			if(co_h[i]!= null)
+			{
+			  co_h[i].disabled=false;
+			}
+			if(co_l[i]!= null)
+			{
+			  co_l[i].disabled=false;
+			}
+		}
+		}
+	else
+		{
+		for(i=0;i<6;i++)
+			{
+			ip[i]=document.getElementById(ip_id[i]);
+			op[i]=document.getElementById(op_id[i]);
+			h[i]=document.getElementById(h_id[i]);
+			l[i]=document.getElementById(l_id[i]);
+			ci_h[i]=document.getElementById(ci_h_id[i]);
+			ci_l[i]=document.getElementById(ci_l_id[i]);
+			co_h[i]=document.getElementById(co_h_id[i]);
+			co_l[i]=document.getElementById(co_l_id[i]);
+
+			if(ip[i]!=null)
+				{
+				ip[i].disabled=false;
+				}
+			if(op[i]!=null)
+				{
+				op[i].disabled=false;
+				}
+		if(h[i]!= null)
+		{
+		  h[i].disabled=false;
+		}
+		if(l[i]!= null)
+		{
+		  l[i].disabled=false;
+		}
+		if(ci_h[i]!= null)
+		{
+		  ci_h[i].disabled=true;
+		}
+		if(ci_l[i]!= null)
+		{
+		  ci_l[i].disabled=true;
+		}
+		if(co_h[i]!= null)
+		{
+		  co_h[i].disabled=true;
+		}
+		if(co_l[i]!= null)
+		{
+		  co_l[i].disabled=true;
+		}
+
+		}
+		}
+}
+
+</script>
+</head>
+
+
+<body onload="cio_en()">
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+
+	<li> <a href='load?PAGENO=3'> Serial </a></li>
+	<li><a style="color: black; font-weight: bold" href='iopins.htm'> I/O Pins </a></li>
+	<li> <a href='load?PAGENO=5'> Management </a></li>
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PAGENO=9'> Readings </a></li>
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+
+	<li> <a href='load?PAGENO=11'> System </a></li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form name="input" action="gpio">
+<table class="t_heading" width="600px" border="0">
+	<tr>
+		<td><!--#exec cgi="cio"--></td>
+	</tr>
+	<tr>
+		<td>
+		<table id="t1" align="center" border="1">
+			<tbody>
+				<!--#exec cgi="gpio1"-->
+				<!--#exec cgi="gpio2"-->
+				<!--#exec cgi="gpio3"-->
+				<!--#exec cgi="gpio4"-->
+				<!--#exec cgi="gpio5"-->
+				<!--#exec cgi="gpio6"-->
+			</tbody>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><img src="green.gif"> High <img
+			src="grey.gif"> Low</td>
+	</tr>
+	<tr>
+		<td><br>
+		<table id="t2" align="center" border="1">
+			<tbody>
+				<!--#exec cgi="cio1"-->
+				<!--#exec cgi="cio2"-->
+				<!--#exec cgi="cio3"-->
+			</tbody>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><br>
+		<input value="Save Changes" type="submit"><input value="Reset"
+			type="reset"></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

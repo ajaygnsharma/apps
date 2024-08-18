@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server port="8080">
+  <module context="01" name="01" path="C:/Users/ajay/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/01" type="static"/>
+</server>

@@ -2,7 +2,7 @@
  * main.c
  *
  *  Created on: Apr 20, 2012
- *      Author: leonyuwin7
+ *      Author: Ajay Sharma
  */
 #include <stdio.h>
 

@@ -1,0 +1,201 @@
+/************************************************************************
+
+	html and body style
+	
+************************************************************************/	
+/*
+	All the pages will no margins, padding and will use a given 
+	font georgia/serif.
+*/
+body, html
+{
+	margin: 0;
+	padding: 0;		
+	font: 100% georgia, serif;
+}
+
+/* 
+	Also the body of the page will have a minimum width of 800px
+*/	
+body
+{
+	min-width: 750px;
+}
+
+/*
+	All the page content will inheret this property. It sets the color 
+	white, margin 0 and auto, width 800px and border will be also given
+	Note that because of the auto value to margin we get the whole
+	webpage content centered.	
+*/
+#wrap 
+{
+	margin: 0 auto;
+	width: 750px;
+}
+
+/************************************************************************
+
+	Header style
+
+************************************************************************/
+/*
+	Align header to the center of the screen
+*/	
+#header
+{
+	text-align: center;
+}
+
+/*
+	Header of size h1 will have padding of 5px
+*/	
+#header h1
+{
+	padding: 5px;
+	margin: 0;
+}
+
+/************************************************************************
+
+	Horizontal tabs style
+
+************************************************************************/
+/*
+	All horizontal tabs will make the border as thin/0 and paddings of 
+	5 px
+*/
+#h_tabs
+{
+	background: #87ceeb;
+	padding: 5px;
+	border: 2px solid black;
+}
+
+/*
+	All the unordered lists in the tabs wll have not style etc..
+*/
+#h_tabs ul
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+
+/*
+	All the links in the unordered lists in the tabs will have no margin
+	padding of 0. Display inline will make them come horizontally etc..
+*/
+#h_tabs li
+{
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+/************************************************************************
+
+	Main content style	
+
+************************************************************************/
+#main
+{
+	float: right;
+	width: 600px;
+}
+
+#main h2, #main h3, #main p
+{
+	padding: 0 10px;
+	color: #4682b4;
+	text-align: center;	
+}
+
+
+/************************************************************************ 
+
+	The sidebar styles 
+	
+************************************************************************/
+/* 
+	Background will be white and width will be 200px.
+	Note that the float property will shift it to the left by floating it
+	first
+*/	
+#sidebar
+{
+	float: left;
+	width: 145px;
+	height: 200px;
+	background: #87ceeb;
+	border-right: 5px solid #4682b4;	
+}
+
+/* 
+	The sidebar list will have no style, with no margin, and no padding
+*/	
+#sidebar ul
+{
+	list-style-type: none;
+	margin-top: 0; 
+}
+
+/*
+	All links will be purple in color and will look like as if visited before
+*/	
+#sidebar a
+{
+	color: #4682b4;
+}
+
+
+/************************************************************************
+
+	Footer style
+
+************************************************************************/
+/* 
+	Using this property will make footer sink to the bottom the webpage
+*/	
+#footer
+{
+	clear: both;
+}
+
+/*
+	All data in the footer will be center aligned, font will be smaller
+	and padding will be done with no margin
+*/ 
+#footer p
+{
+	font: 60% georgia, serif;
+	text-align: center;
+	padding: 5px;
+	margin: 0;
+}
+
+
+
+/************************************************************************
+
+	Table style
+
+************************************************************************/
+/*
+	The tables used in the pages will not have regular borders as in 
+	html pages, but they will be thin solid and spring green in color
+*/	
+table
+{
+	border-collapse: collapse;
+	/* border: 4px solid PowderBlue; */
+}
+
+/* 
+	All the internal elements will have grey color borders
+*/	
+td
+{
+	border: 0px solid #c1cdc1; 
+}

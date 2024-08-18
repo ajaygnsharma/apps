@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<TITLE>Simulating Events</TITLE>
+<SCRIPT><!--
+function button1Clicked() {
+ document.test.button2.click()
+}
+function button2Clicked() {
+ alert("Button 2 was clicked!")
+}
+//--></SCRIPT>
+</HEAD>
+<BODY>
+<FORM NAME="test">
+<INPUT TYPE="BUTTON" NAME="button1" VALUE="Button 1"
+ ONCLICK="button1Clicked()">
+<INPUT TYPE="BUTTON" NAME="button2" VALUE="Button 2"
+ ONCLICK="button2Clicked()">
+</FORM>
+</BODY>
+</HTML>

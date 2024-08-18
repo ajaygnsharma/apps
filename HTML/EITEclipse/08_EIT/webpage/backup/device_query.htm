@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>
+    <center> SERIAL DEVICE QUERY </center>
+    </title>
+  </head>
+  
+  <body>
+  
+  <center>
+    <table>
+      <tr valign=center>
+        <td> <font face="Arial Black" size=5> DEVICE QUERY</font> </td>
+      </tr>
+    </table>
+
+  </center>
+  
+  <center>
+    <form name=mfrm method=post action="command">
+    <table>
+    
+    <tr>
+      <td align=right><big>Command</big></td>
+      <td> <input type=text name="cmd" size="32" value=""> 
+           <input type=submit VALUE="Send">
+      </td>
+    </tr>
+    
+    <tr>
+      <td align=right><big>Response</big></td>
+      <td> <input type=text name="response" size="43" value="<!--#exec cgi="response"-->"> </td>
+    </tr>
+  
+    </table>
+  </form>
+  <p>
+  <a href="/login?PW=<!--#exec cgi="lpass"-->">Main Menu</a>
+
+  </body>
+</html>

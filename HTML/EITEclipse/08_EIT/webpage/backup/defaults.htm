@@ -1,0 +1,36 @@
+<html>
+  <head>
+  <link rel="stylesheet" type="text/css" 
+  href="ex2.css" />
+  <script type="text/javascript">
+  function disp_confirm()
+  {
+    var r = confirm("WARNING: Are you SURE you want to reset the configuration to the factory defaults? This device will be rebooted for the changes to take effect.");
+	if(r == true)
+	{
+	  return true;
+	}
+    else
+	{
+	  return false;
+	}
+  }
+  </script>
+  </head>
+
+  <body>
+
+    <form name="resdefault" action="rdef" method="post" onsubmit="disp_confirm()">
+      <table width="100%">
+        <tr>
+		  <td>  </td>
+		  <td align="right"> <input type="hidden" name="dhcp" value="1"> </td>
+		</tr>
+		<tr>
+          <td> Restore Factory Defaults </td>
+          <td align="right"> <input type="submit" value="Factory Defaults"> </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

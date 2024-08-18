@@ -1,0 +1,134 @@
+/*------------------------------------------------------------------------ 
+					post_device_query.c
+
+Description:	Post Settings to the iopins.htm Page
+				1. Post the Device Query Data
+                2. 
+				3. 
+				4. 
+				5. 
+                6. 
+
+Author:			Ajay Sharma
+
+Rev:			0
+
+History:					  
+------------------------------------------------------------------------*/
+
+#include "micronet.h"
+#include "np_includes.h"
+
+#define     RS485_HDPLX_6GPIO      0x03
+volatile DWORD flag_done = 0;
+
+/*------------------------------------------------------------------------
+ Function:    post_command()
+ Description: POST FUNCTION: Take Data from Internet (Command)
+              and Send it to UART and when get it back sent it to a 
+              buffer.
+ Input:       Socket Pointer 
+ Output:      None
+------------------------------------------------------------------------*/
+void post_command(PSOCKET_INFO socket_ptr)
+cmx_reentrant 
+{
+  unsigned long cmd_len;
+  word16 count, cnt1, cnt2;
+  int i;
+
+  memset(cmd.response_buff,NULL,sizeof(cmd.response_buff));
+
+  if(mn_http_find_value(BODYptr,(byte *)"cmd",cmd.cmd_buff))
+  {
+    memset(buff_pool.data_buff,NULL,sizeof(buff_pool.data_buff));
+    cmd_len = strlen((char *)cmd.cmd_buff);
+    memcpy(buff_pool.data_buff,cmd.cmd_buff,cmd_len);
+    buff_pool.db_out = 0;
+    buff_pool.len = cmd_len + 1;
+    buff_pool.data_buff[cmd_len] = 0x0d;
+    buff_pool.xmit_busy = TRUE;
+    if(flag.rs232_485_gpio == RS485_HDPLX_6GPIO)
+    {
+      flag.rs485txrx = 1;
+      //initUART();
+      FIO0DIR0  = 0x05;                  /* Make Port0.0,0.2 as Output      */
+      FIO0MASK0 = 0xfb;                  /* Mask for P0.2                   */
+      FIO0SET0  = 0x04;                /* P0.2 High: Half Duplex Transmitg*/  
+    }
+    start_xmit();
+    while (buff_pool.xmit_busy);     /* Wait until the UART is done. */
+    
+    if(flag.rs232_485_gpio == RS485_HDPLX_6GPIO)
+    {
+      //flag.rs485txrx = 2;
+      //initUART();
+      //delayMs(1,500);
+      flag.rs485txrx = 2;
+      FIO0DIR0  = 0x05;                  /* Make Port0.0,0.2 as Output      */
+      FIO0MASK0 = 0xfb;                  /* Mask for P0.2                   */
+      FIO0CLR0  = 0x04;                /* P0.2 Low: Half Duplex Recieving */
+      //flag_done = 0;
+      //init_timer( 1, 100);
+      //enable_timer(1);
+      //timer1_counter = 0;
+    }
+    else
+      delayMs(1,50);
+    
+    //if(flag.rs232_485_gpio == RS485_HDPLX_6GPIO)
+    //{
+//      flag.rs485txrx = 2;
+      //FIO0DIR0  = 0x05;                  /* Make Port0.0,0.2 as Output      */
+      //FIO0MASK0 = 0xfb;                  /* Mask for P0.2                   */
+      //FIO0CLR0  = 0x04;                /* P0.2 Low: Half Duplex Recieving */
+   //   //initUART();
+ //   }  
+    
+    //while(flag_done != 1);
+    //timer1_counter = 0;
+    //reset_timer(1);
+    //disable_timer(1);
+    //{
+      //for (i = 0; i < 20000000; i++)//;       /* Wait for initial display           */
+      //{
+//        uib_count;  /* get the no of bytes in the serial buffer */
+        if (uib_count)               /* Something in the UART receive buffer ?*/
+        {
+          /* if we have received the ACK for the last packet sent           */
+    	  if (socket_ptr->tcp_unacked_bytes)
+          count = 0;          /* NO,  Stop: Dont send data to the socket  */
+          else                  /* YES, OK: We can send data to the socket  */
+          {
+          DISABLE_INTERRUPTS;
+          uib_count -= count; /* Reset "no:of bytes in serial port" cntr  */
+          ENABLE_INTERRUPTS;
+          }
+          
+          if (uib_in > uib_out)  /* In UART Buffer: Overlap occured? NO   */
+          {
+            memcpy(cmd.response_buff,&uart_in_buff[uib_out],count);/* Send data*/
+            uib_out += count;    /* Start ptr = Current Ptr               */
+          }
+          else                  /* In UART Buffer: Overlap Occured? YES   */
+          {
+            cnt1 = BUFF_SIZE - uib_out; 
+            cnt2 = count - cnt1;
+            memcpy(cmd.response_buff, &uart_in_buff[uib_out], cnt1);
+            if (cnt2)
+              memcpy(&cmd.response_buff[cnt1], &uart_in_buff[0], cnt2);
+            uib_out = cnt2;
+          }
+          
+          //socket_ptr->send_ptr = eth_out_buff;    /* point to send buffer */
+          //socket_ptr->send_len = count;     /* Get the noof bytes to send */
+          //*psocket_ptr = socket_ptr; /* Set the Pointer to current Socket */
+        }
+     }
+    //  return (NEED_TO_SEND);/* Send micronet signal to send pckt on Inet*/
+    //reset_timer(1);
+    //disable_timer(1);
+  }
+
+  mn_http_set_file(socket_ptr, mn_vf_get_entry("device_query.htm")); 
+}

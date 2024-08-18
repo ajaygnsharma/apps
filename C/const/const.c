@@ -3,6 +3,8 @@
  *
  *  Created on: Apr 29, 2013
  *      Author: sharmaj
+ *  It seems in C, const are not really constant. one needs to use 
+ * enums. Not sure why though.
  */
 #define PROBLEM_1 0
 #define PROBLEM_1_SOL_1 0

@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="ex2.css" />
+    
+  </head>
+  
+  <body>
+
+  <center>
+  
+  <form name="input" action="gpio"> 
+  
+  <h2> GPIO TYPE </h2>
+  <hr>
+	<!--#exec cgi="fio"-->
+	<!--#exec cgi="cio"-->
+  
+  
+  
+  
+  <script  type="text/javascript">
+	
+	var s_no = [<!--#exec cgi="s_no"-->]; 
+
+    var io_name = ["io1","io2","io3","io4","io5","io6","io7","io8"];
+    var i_id = ["i1","i2","i3","i4","i5","i6","i7","i8"]; 
+	var o_id = ["o1","o2","o3","o4","o5","o6","o7","o8"];
+	var i_status = [<!--#exec cgi="fio_status"-->];
+	var o_status = [<!--#exec cgi="fio_status"-->];
+	var i_chk = [<!--#exec cgi="i_chk"-->];
+	var o_chk = [<!--#exec cgi="o_chk"-->];
+    
+	var p_name = ["p1c", "p2c", "p3c", "p4c", "p5c", "p6c", "p7c", "p8c"];
+	var h_id = ["p1ch","p2ch","p3ch","p4ch","p5ch","p6ch","p7ch","p8ch"];
+	var l_id = ["p1cl","p2cl","p3cl","p4cl","p5cl","p6cl","p7c1","p8c1"];
+	var h_status = [<!--#exec cgi="fio_status"-->];
+	var l_status = [<!--#exec cgi="fio_status"-->];
+	var h_chk = [<!--#exec cgi="h_chk"-->];
+	var l_chk = [<!--#exec cgi="l_chk"-->];
+    
+	var image_source = [<!--#exec cgi="image_source"-->];
+	
+	var tableData = "";
+	
+	var s_ino = ["1", "2", "3", "4"]; 
+    var s_ono = ["4", "5", "6", "7"];
+    var ci_name = ["c_i1","c_i2","c_i3", "c_i4"];
+    var ci_i_id = ["c_ii1","c_ii2","c_ii3", "c_ii4"]; 
+	var ci_o_id = ["c_io1","c_io2","c_io3", "c_io4"];
+	var ci_i_status = [<!--#exec cgi="cio_status"-->];
+	var ci_o_status = [<!--#exec cgi="cio_status"-->];
+	var ci_i_chk = [<!--#exec cgi="ci_i_chk"-->];
+	var ci_o_chk = [<!--#exec cgi="ci_o_chk"-->];
+    
+	var ct_name = ["c_t1","c_t2","c_t3","c_t4"];
+	var ct_i_id = ["c_ti1","c_ti2","c_ti3","c_ti4"];
+	var ct_o_id = ["c_t01","c_t02","c_t03","c_t04"];
+	var ct_i_status = [<!--#exec cgi="cio_status"-->];
+	var ct_o_status = [<!--#exec cgi="cio_status"-->];
+	var ct_i_chk = [<!--#exec cgi="ct_i_chk"-->];
+	var ct_o_chk = [<!--#exec cgi="ct_o_chk"-->];
+    
+      document.writeln("<h2> FORCED GPIO </h2> <table width=\"100%\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\"> <tr> <th>Pin</th> <th>Direction</th> <th>Output Condition</th> <th>Input Condition</th></tr>");
+	  for (var i = 0; i < s_no.length; i++) 
+	  {
+		document.writeln("<td>" + s_no[i] + "</td>\n");
+		
+		document.writeln("<td> <input type=\"radio\" value=\"1\" name=\"" + io_name[i] + "\" id=\"" + i_id[i] + "\"" + i_chk[i] + "\" \"" + i_status[i] + "\">Input ");
+		
+		document.writeln("<input type=\"radio\" value=\"2\" name=\"" + io_name[i] + "\" id=\"" + o_id[i]);
+		document.writeln("\" \"" + o_status[i] + "\"" + o_chk[i] + "> Output </td>\n");
+		document.writeln("<td> <input type=\"radio\" value=\"1\" name=\"" + p_name[i] + "\" id=\"" + h_id[i]);
+		document.writeln("\" \"" + h_status[i] + "\"" + h_chk[i] + "> High ");
+		document.writeln("<input type=\"radio\" value=\"2\" name=\"" + p_name[i] + "\" id=\"" + l_id[i]);
+		document.writeln("\" \"" + l_status[i] + "\"" + l_chk[i] + "> Low </td>\n");
+		document.writeln("<td> <img src=\"" + image_source[i] + "\"> </td>");
+		document.writeln("</tr>\n");
+	  }
+    document.writeln("</table>");
+	
+    if(i_chk.length > 1)
+	{
+	  document.writeln("<h2> CONDITIONAL I/O </h2> <table width=\"100%\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\"><tr> <th> Input Pin </th> <th> IF </th> <th> Output Pin </th> <th> Then </th> </tr>");
+	  for (var i = 0; i < ci_i_chk.length; i++) 
+	  {
+		document.writeln("<tr> <td>" + s_ino[i] + "</td>\n");
+		
+		document.writeln("<td> <input type=\"radio\" value=\"1\" name=\"" + ci_name[i] + "\" id=\"" + ci_i_id[i] + "\"" + ci_i_chk[i] + "\" \"" + ci_i_status[i] + "\">High");
+		document.write("<input type=\"radio\" value=\"2\" name=\"" + ci_name[i] + "\" id=\"" + ci_o_id[i] + "\"" + ci_o_chk[i] + "\" \"" + ci_i_status[i] + "\">Low </td>");
+		
+		document.writeln("<td>" + s_ono[i] + "</td>\n");
+		
+		document.writeln("<td> <input type=\"radio\" value=\"1\" name=\"" + ct_name[i] + "\" id=\"" + ct_i_id[i] + "\"" + ct_i_chk[i] + "\" \"" + ci_i_status[i] + "\">High");
+		document.write("<input type=\"radio\" value=\"2\" name=\"" + ct_name[i] + "\" id=\"" + ct_o_id[i] + "\"" + ct_o_chk[i] + "\" \"" + ci_i_status[i] + "\">Low </td>");
+		
+		document.writeln("</tr\n");
+	  }
+	  document.writeln("</table>");
+    }
+	else
+	{
+	  document.writeln(" ");
+	}
+	
+	</script>
+
+  <input type="submit" value="Save Changes" />
+  <input type="reset" value="Reset" />
+  
+  </center>
+  
+  </form>
+  </body>
+</html>

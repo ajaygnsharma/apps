@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="237" key="DIALOG_WIDTH"/>
+		<item value="24" key="DIALOG_Y_ORIGIN"/>
+		<item value="687" key="DIALOG_X_ORIGIN"/>
+		<item value="355" key="DIALOG_HEIGHT"/>
+		<item value="1|Tahoma|8.25|0|WINDOWS|1|-11|0|0|0|400|0|0|0|1|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="Powder" key="selection"/>
+		<list key="findhistory">
+			<item value="Powder"/>
+			<item value="SetAsLast"/>
+			<item value="maind"/>
+			<item value="cio_en"/>
+			<item value="a"/>
+			<item value="a4"/>
+			<item value="alarm[3]"/>
+			<item value="alarm4"/>
+		</list>
+		<list key="replacehistory">
+			<item value="a5"/>
+			<item value="alarm[4]"/>
+			<item value="alarm5"/>
+			<item value="alarm4"/>
+			<item value="a4"/>
+			<item value="a3"/>
+			<item value="true"/>
+			<item value="l"/>
+		</list>
+	</section>
+</section>

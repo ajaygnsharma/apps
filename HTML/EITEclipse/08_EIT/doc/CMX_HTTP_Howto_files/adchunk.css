@@ -1,0 +1,103 @@
+#adchunk .section1ads, #adchunk .section2ads{
+padding: 0px 5px 5px 5px;
+font-family: sans-serif;
+color: #333;
+text-align: left;
+}
+
+#adchunk #IBbuy{
+	float:right;
+	position:relative;
+	top: 0px;
+	right: 5px;	
+	margin-top: -17px;
+	margin-right: 0px;
+	font-size: 9pt;
+}
+
+* html #adchunk #IBbuy{
+	right: 15px;
+}
+
+#adchunk #IBbuy a{
+	color: #ffffff;
+	text-decoration:none !important;
+}
+
+#adchunk #IBbuy a:hover{
+	color: #000;
+}
+
+#adchunk .googlediv{
+margin: 5px 0px;
+}
+#adchunk .google, .Headline{
+float:left;
+font-weight: bold;
+margin-top: 8px;
+font-size: 12px;
+text-decoration: none;
+}
+
+#adchunk .truegoogle{
+font-weight: bold;
+margin-top: 8px;
+font-size: 11px;
+text-decoration: none;
+}
+
+#adchunk .google, #adchunk .truegoogle, #adchunk .Headline, #adchunk .googlesublink{
+color: #576699 !important;
+}
+
+#adchunk .google:hover, #adchunk .truegoogle:hover, #adchunk .Headline:hover, #adchunk .googlesublink:hover{
+background-color: #dcdcdc;
+color: #000 !important;
+text-decoration:none !important;
+}
+
+#adchunk .section1adbody, #adchunk .splinkbody{
+clear:both;
+font-size: 11px;
+}
+
+#adchunk .googleadtext, #adchunk .googlesublink{
+text-decoration: none;
+color: black;
+}
+
+#adchunk .googleadtext{
+	font-size: 11px;
+}
+
+#adchunk .googlesublink{
+font-size: .9em;
+}
+
+#adchunk .titlebar, .titlebar2{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	margin-left: -5px;
+	margin-right: -5px;
+	padding: 2px;
+	font-weight: bold;
+	background: black;
+}
+
+#adchunk .titlebar, .titlebar2{
+margin-bottom: -10px;
+}
+
+.rightBorder {
+	border-right: 1px solid black;
+}
+
+#footer{
+	display:none;
+}
+
+* html #adchunk .titlebar, .titlebar2
+{
+margin-bottom: 0px;
+}

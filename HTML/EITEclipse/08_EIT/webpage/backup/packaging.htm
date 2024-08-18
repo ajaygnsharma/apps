@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title> SERIAL </title>
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab"><a href="serial.htm">Serial Port</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab"><a href="bridge.htm">Serial Ethernet Bridge</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab" id="selectedtab"><a href="packaging.htm">Packing Technique</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="multihost.htm">Multihost Connection</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	</tr>
+  </table>
+	
+  
+  <form name="packaging" action="packaging" method="get">
+    
+	<h2>PACKING TECHNIQUES</h2> <hr> 
+     
+    <table width="100%">
+      <tr> 
+	<td> End Character </td> 
+	<td align="right"> 0x<input type="text" name="E" value="<!--#exec cgi="end_char"-->" size="2" maxlength="2" > </td>
+    </tr>
+    
+	<tr> 
+	  <td> Forward End Character </td>
+	  <td align="right">  
+          <input type="checkbox" name="FW" <!--#exec cgi="fwd_endchar"--> value="1" >
+	  </td>
+    </tr>
+    
+	<tr>
+	  <td> Buffering Time </td>
+	  <td align="right"> <input type="text" name="bt" value="<!--#exec cgi="buff_time"-->" size="4" maxlength="4"> ms </td>
+    </tr> 
+
+	<tr>
+	  <td> Packet Length </td>
+	  <td align="right"> <input type="text" name="pl" value="<!--#exec cgi="pkt_len"-->" size="4" maxlength="4"> 0-1024 bytes </td>
+    </tr> 
+
+    </table>
+
+    <h2>DISCONNECTION </h2> <hr> 
+
+    <table width="100%">	
+    <tr>
+	  <td> Inactivity Timeout </td> 
+	  <td align="right"> 
+        <input type="text" name="it"  value="<!--#exec cgi="itimeout"-->" size="5" maxlength="5">  
+      </td> 
+    </tr>
+    
+	<!--#exec cgi="disconnect_by"-->
+	
+	</table>
+    
+	<hr>
+	
+	
+  <center>
+      <input type="submit" value="Save Changes" />
+      <input type="reset" value="Reset" />
+  </center>
+  </form>
+  </body>
+</html>

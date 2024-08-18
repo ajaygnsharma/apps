@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/3/trunk/my_lib/struct/pplt_struct
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/3/trunk/my_lib/struct/pplt_struct/main.c
+END
+ManufactureInfo.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3/trunk/my_lib/struct/pplt_struct/ManufactureInfo.c
+END
+ManufactureInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3/trunk/my_lib/struct/pplt_struct/ManufactureInfo.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3/trunk/my_lib/struct/pplt_struct/Makefile
+END

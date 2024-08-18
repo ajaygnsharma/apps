@@ -1,0 +1,14 @@
+#ifndef MAIN_INCLUDED
+#define MAIN_INCLUDED
+
+typedef struct _TemperatureData TemperatureData;
+
+#include "convert.h"
+
+struct _TemperatureData
+{
+  gchar *ip_address;
+  GtkWidget *TemperatureDegC;
+};
+
+#endif

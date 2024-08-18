@@ -1,0 +1,1 @@
+-c --device DARMP -g -O2 --apcs=interwork -I..\NETLIB -I..\NETLIB\snmp -I..\webpage -I..\keilRV_lpc2368 -I "C:\Keil\ARM\INC\Philips" -DPOLARM2368 -o ".\Objects\home.o" --omf_browse ".\Objects\home.crf" --depend ".\Objects\home.d" "..\webpage\HOME.c"

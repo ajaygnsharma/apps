@@ -1,0 +1,36 @@
+testled IDLE
+spi-read 0 0 1
+spi-rdsr 0 0 1
+## Test SPI interface to SPI1 (SPI FLASH)
+spi-read 1 0 1
+spi-rdsr 1 0 1
+## Test pfail signal to Princeton ASIC is deasserted
+pfail-check 0
+## Test pfail signal to Princeton ASIC is asserted
+pfail-check 1
+## Test I2C interface to SPP - done if LEDs set correctly above
+testled IDLE
+## Test I2C interface to temperature sensor
+temperature_sensor read
+## Basic DDR address range limit check for this capacity product
+ddr-test 1073676288 16384 1 1 1
+## NAND IBB scan - scan every die for IBBs
+ibbscan 256
+## Basic NAND E/W/R sanity check (channels, targets, block range, page range)
+## Read FLASH ID for each part
+read-id 
+erase 0x0000FFFF 0xF0 4275 1
+write 0x0000FFFF 0xF0 4275 1 256
+read 0x0000FFFF 0xF0 4275 1 256
+erase 0x0000FFFF 0xF0 4275 1
+## End of short HW tests ##
+## DDR media scan (entire SDRAM media)
+## ddr-test 0 268435456 PATTERN(0..4) 1 LOOPS
+ddr-test 0 268435456 1 1 2
+ddr-test 0 268435456 2 1 2
+ddr-test 0 268435456 3 1 2
+ddr-test 0 268435456 4 1 2
+nand-test 0x0000FFFF 0xF0 0 4276 100 10 50 5
+defects-get
+defects-get c
+## DONE ##

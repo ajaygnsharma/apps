@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel=stylesheet type=text/css href=eit_style.css>
+<title>NETWORK</title>
+<script language="JavaScript" type="text/javascript">
+function Dhcp_Disab()
+{
+	var net=new Array("ip","msk","gw","dns");
+	var i=0;
+
+	if(document.getElementById("dhcp").checked==true)
+		{
+		for(i=0;i<4;i++)
+			{
+			document.getElementById(net[i]).disabled=true;
+			}
+		}
+	if(document.getElementById("dhcp").checked==false)
+		{
+		for(i=0;i<4;i++)
+			{
+			document.getElementById(net[i]).disabled=false;
+			}
+		}
+	}
+
+function Disab()
+{
+	var phyP=new Array("spd1","spd2","dpx1","dpx2");
+	var i=0;
+	if(document.getElementById("au").checked==true)
+		{
+		for(i=0;i<4;i++)
+			{
+			document.getElementById(phyP[i]).disabled=true;
+			}
+		}
+	if(document.getElementById("au").checked==false)
+		{
+		for(i=0;i<4;i++)
+			{
+			document.getElementById(phyP[i]).disabled=false;
+			}
+		}
+	}
+</script>
+</head>
+
+<body onload=Dhcp_Disab(),Disab()>
+<div id=left_menu>
+<ul>
+	<li><a href='load?PAGENO=1'> Overview </a></li>
+	<li><a style="color: black; font-weight: bold" href='admin.htm'>
+	Network </a></li>
+	<li><a href='load?PAGENO=3'> Serial </a></li>
+	<li><a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li><a href='load?PAGENO=5'> Management </a></li>
+	<li><a href='load?PAGENO=6'> Security </a></li>
+	<li><a href='load?PAGENO=7'> Device Query </a></li>
+	<li><a href='load?PAGENO=8'> Device Setup </a></li>
+	<li><a href='load?PAGENO=9'> Read Device </a></li>
+	<li><a href='load?PAGENO=10'> Terminal </a></li>
+	<li><a href='load?PAGENO=11'> System </a></li>
+	<li><a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+<div id=content>
+<form name=ipconfig action=network method=post
+	onsubmit="alert('You need to Reboot the Device for the changes to take place.')">
+<table width=600 border=0 class=t_heading>
+	<tr>
+		<td>
+		<h2>IP CONFIGURATION</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% border=0 class=t_content>
+			<tr>
+				<td>DHCP</td>
+				<td align=right><input type=checkbox name=dhcp id=dhcp
+					onclick=Dhcp_Disab() value=1></td>
+			</tr>
+			<tr>
+				<td>MAC Address</td>
+				<td align=right>00:03:34:00:A5:3D</td>
+			</tr>
+			<tr>
+				<td>IP Address</td>
+				<td align=right><input type=text name=ip size=15 id=ip
+					maxlength=15 value="192.168.1.40"></td>
+			</tr>
+			<tr>
+				<td>Subnet Mask</td>
+				<td align=right><input type=text name=msk size=15 id=msk
+					maxlength=15 value="255.255.255.0"></td>
+			</tr>
+			<tr>
+				<td>Gateway Address</td>
+				<td align=right><input type=text name=gw size=15 id=gw
+					maxlength=15 value="0.0.0.0"></td>
+			</tr>
+			<tr>
+				<td>DNS Address</td>
+				<td align=right><input type=text name=dns size=15 id=dns
+					value="0.0.0.0"></td>
+			</tr>
+			<tr>
+				<td>Host Name</td>
+				<td align=right><input type=text name=hname size=15
+					value="eitA53D"></td>
+			</tr>
+			<tr>
+				<td>Protocol</td>
+				<td align=right><select name="protocol">
+
+					<option value=1 selected="selected">TCP</option>
+					<option value=2>UDP</option>
+					<option value=3>ModbusTCP</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td>Web Server Port</td>
+				<td align=right><input type=text name=port id=port size=5
+					maxlength=5 value="80"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>ETHERNET PORT</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% border=0 class=t_content>
+			<tr>
+				<td>Autonegotiation</td>
+				<td><input type=checkbox name=au id=au onclick=Disab() value=1
+					checked></td>
+			</tr>
+			<tr>
+				<td>Speed</td>
+				<td><input type=radio name=speed id=spd1 value=1>
+				100Mbps</td>
+				<td><input type=radio name=speed id=spd2 value=0 checked>
+				10Mbps</td>
+			</tr>
+			<tr>
+				<td>Duplex</td>
+				<td><input type=radio name=duplex id=dpx1 value=1>
+				Full</td>
+				<td><input type=radio name=duplex id=dpx2 value=0 checked>
+				Half</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<table width=100%>
+			<tr align=center>
+				<td><input type=submit value="Save Changes"><input
+					type=reset value=Reset></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

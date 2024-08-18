@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>MANAGEMENT</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+
+  <script type="text/javascript">
+  //Javascript variable containing the form elements name that relate to emails and traps
+  var a4_eml = new Array("Email","a4_e_pr","a4_e_ipc","a4_e_isa","a4_e_c","a4_e_ic","a4_e_spd","a4_c1","a4_ip_pin","a4_ri","a4_msg");
+  var a4_tp = new Array("SNMP Trap","a4_t_pr","a4_t_ipc","a4_t_isa","a4_t_c","a4_t_ic","a4_t_spd","a4_c2","a4_pin_cdn","a4_to","a4_msg");
+
+  // Function that enables the form elements when the alm_2 is checked 
+  function a4_en()
+  {
+    var i = 0;
+	var eml = new Array();
+	var tp = new Array();
+	//If the alm_3 checkbox is not checked the form elements need to be disabled
+	if(document.getElementById("alm_4").checked == false)
+	{
+	  for(i = 1; i < 11; i++)
+      {
+        //Get all the elements in the document that start with the ids in a4_eml
+	    eml[i] = document.getElementById(a4_eml[i]);
+        tp[i] = document.getElementById(a4_tp[i]);
+        //If these ids are not NULL then disable them 
+        if(eml[i] != null) 
+        {
+          eml[i].disabled = true;
+        }
+        if(tp[i] != null)
+        {
+          tp[i].disabled = true;
+        }
+      }
+    } 
+    else
+    {
+      //Get all the elements in document that start with ids in a4_eml and 
+      //enable with since the alm_2 checkbox is checked 
+      for(i = 1; i < 11; i++)
+      {
+        eml[i] = document.getElementById(a4_eml[i]);
+        tp[i] = document.getElementById(a4_tp[i]);
+        if(eml[i] != null)
+        {
+	      eml[i].disabled = false;
+        }
+        if(tp[i] != null)
+        { 
+	      tp[i].disabled = false;
+        }
+      }
+    }
+  }
+
+  //Function to insert rows and colums in a table
+  function insRow() 
+  {
+    var a4_e_chk = new Array(<!--#exec cgi="a4_e_chk"-->); //var containing the checked keyword for form input elements if they are enabled
+    var a4_t_chk = new Array(<!--#exec cgi="a4_t_chk"-->); //same as above but represents emails checkboxes
+    var chr_evt = "Character 1 0x<input type=text name=a4_c1 id=a4_c1 value=\"" + <!--#exec cgi="a4_c1"-->  +  "\" size=2 maxlength=2> <br> Character 2 0x<input type=text name=a4_c2 id=a4_c2 value=\"" + <!--#exec cgi="a4_c2"-->  +  "\" size=2 maxlength=2>";
+    //var that outputs the form element of char1 and char2
+    var ic_evt = "<!--#exec cgi="a4_ic_evt"-->"; //var that outputs the form element of input pin: select menu 
+    var a4_evt = new Array("Events","Power reset","IP Address changed","iServer accessed",chr_evt,ic_evt,"Serial port disconnected");
+    var a4_r = new Array();
+    var a4_c = new Array();
+    var r = 0;
+    var c = 0;
+
+    //Make some rows. In this case 6 for models with no GPIO and 7 for others.
+    for(r = 0; r < <!--#exec cgi="a4_sspd"-->; r++)
+    {
+      //statment to create the row, create row for t2 variable
+      a4_r[r] = document.getElementById('t1').insertRow(r);
+      for(c = 0; c < 3; c++)
+      {
+        //create 3 cells(colns) in it
+        a4_c[c] = a4_r[r].insertCell(c);
+      }
+      
+      if(r == 0) //First row: Enable alarm3 checkbox
+      {
+        a4_c[0].innerHTML = "<input type=checkbox name=alm_4  id=alm_4 onclick=\"a4_en()\"" + a4_e_chk[0] + "> Enable";  
+      }
+      else if(r == 1) //Second row: Table headers
+      {
+        a4_c[0].innerHTML = a4_evt[r - 1]; //Events
+        a4_c[1].innerHTML = a4_eml[r - 1]; //Email
+        a4_c[2].innerHTML = a4_tp[r - 1];  //Trap
+      }
+      <!--#exec cgi="a4_sic_evt"--> //this is only for case when the input condition is not to be shown
+      else //Third and all other rows 
+      {
+    	a4_c[0].innerHTML = a4_evt[r - 1]; //Power reset.... 
+        //checkbox for email, includes name, id, and whether the box is checked 
+        a4_c[1].innerHTML = "<input type=checkbox name=" + a4_eml[r - 1] + " id=" + a4_eml[r - 1] + " " + a4_e_chk[r - 1] + ">"; 
+        //checkbox for trap, includes name, id, and whether the box is checked 
+        a4_c[2].innerHTML = "<input type=checkbox name=" + a4_tp[r]  + " id=" + a4_tp[r]  + " " + a4_t_chk[r] + ">";
+      }
+    }
+  }
+  </script>
+</head>
+
+<body onLoad="insRow(),a4_en()">
+<div id="left_menu">
+<ul>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=1'>Overview </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=2'>Network </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=3'>Serial </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=4'>I/O Pins </a></li>
+	<li style="color: black; font-weight: bold">Management</li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=6'>Security </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=7'>Device Query </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=8'>Device Setup </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=9'>Read Device </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=10'>Terminal </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=11'>System </a></li>
+	<li><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=12'>Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form method=post name=a4 action=alarm4>
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=5'>Email,SNMP</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=20'>Alarm 1</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=21'>Alarm2</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=22'>Alarm3</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab" id="selectedtab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=23'>Alarm4</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=24'>Alarm5</a></td>
+				<td class="separator">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border="1" width=100% class="t_content" id="t1">
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border="0" width=100% class="t_content">
+			<tr>
+				<td>Reminder Interval</td>
+				<td><input type="text" name="a4_ri" id="a4_ri" value="<!--#exec cgi="a4_ri"-->" size="4" maxlength="4" >s</td>
+				</td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td><input type="text" name="a4_to" id="a4_to" value="<!--#exec cgi="a4_to"-->" size="50" maxlength="50"></td>
+			</tr>
+			<tr>
+				<td>Message:</td>
+				<td><input type="text" name="a4_msg" id="a4_msg" value="<!--#exec cgi="a4_msg"-->" size="30" maxlength="30"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="hidden" name="test" id="test" value="0">
+		<input type="submit" value="Save"> <input type="reset"
+			value="Reset"></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

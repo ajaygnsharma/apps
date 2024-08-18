@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+
+<style>
+#storage
+{
+	float: right;
+	width: 500px;
+}
+</style>
+
+<script type=text/javascript>
+	function loadDiv(){
+		alert("hi");
+		document.getElementById("storage").innerHTML = "overview.htm";
+		}
+</script>
+
+</head>
+<body>
+<script src="ajax.js" type="text/javascript"></script>
+<script src="responseHTML.js" type="text/javascript"></script>
+<form name="ajax" method="POST" action="">
+<div id="wrap">
+		<div id="header"> <h1> iTHX-M </h1> </div>
+
+	<div id="h_tabs">
+		<ul>
+			<li> tab1 </li>
+			<li> tab2 </li>
+		</ul>
+	</div>
+
+	<div id="sidebar">
+		<ul>
+			<li style="background: PowderBlue; font-weight: bold"> <a href="javascript:loadDiv()"> Overview </a> </li>
+			<li> <a href="network.htm"> Network </a> </li>
+			<li> <a href="tunneling.htm"> Tunneling </a> </li>
+			<li> <a href="alarms.htm"> Alarms </a> </li>
+			<li> <a href="security.htm"> Security </a> </li>
+			<li> <a href="read_sensor.htm"> Read Sensor </a> </li>
+			<li> <a href="recording.htm"> Recording </a> </li>
+			<li> <a href="system.htm"> System </a> </li>
+		</ul>
+	</div>
+	<div id="storage" style="display:none;">
+		
+	</div>
+</div>
+</form>	
+</body>
+</html>

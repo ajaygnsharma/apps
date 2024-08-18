@@ -1,0 +1,9 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.wst.sse.core,1.1.302.v200808260045,org.eclipse.wst.sse.core,1224115523405
+started,bundle,org.eclipse.wst.validation,1.2.2.v200809050219,org.eclipse.wst.validation,1224115523406
+started,bundle,org.eclipse.wst.ws,1.1.2.v200809081517,org.eclipse.wst.ws,1224115523406
+started,bundle,org.eclipse.wst.ws.service.policy,1.0.2.v200809101532,org.eclipse.wst.ws.service.policy,1224115523407
+started,bundle,org.eclipse.wst.ws.service.policy.ui,1.0.2.v200809031518,org.eclipse.wst.ws.service.policy.ui,1224115523407
+started,bundle,org.eclipse.wst.xml.core,1.1.305.v200809120354,org.eclipse.wst.xml.core,1224115523415
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1224115524276
+started,bundle,org.eclipse.epp.usagedata.ui,1.0.1.R200809220400,org.eclipse.epp.usagedata.ui,1224115524483

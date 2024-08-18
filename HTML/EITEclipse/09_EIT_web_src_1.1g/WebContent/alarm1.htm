@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<TITLE>MANAGEMENT</TITLE>
+<link rel=stylesheet type=text/css href=eit_style.css>
+<head>
+
+<script type="text/javascript">
+var a1_eml=new Array("Email","a1_e_pr","a1_e_ipc","a1_e_isa","a1_e_c","a1_e_ic","a1_e_spd","a1_c1","a1_ip_pin","a1_ri","a1_msg");
+var a1_tp=new Array("SNMP Trap","a1_t_pr","a1_t_ipc","a1_t_isa","a1_t_c","a1_t_ic","a1_t_spd","a1_c2","a1_pin_cdn","a1_to","a1_msg");
+
+function a1_en()
+{
+	var i=0;
+	var eml=new Array();
+	var tp=new Array();
+
+	if(document.getElementById("alm_1").checked==false)
+		{
+		for(i=1;i<11;i++)
+			{
+			eml[i]=document.getElementById(a1_eml[i]);
+			tp[i]=document.getElementById(a1_tp[i]);
+			if(eml[i]!=null)
+				{
+				eml[i].disabled=true;
+				}
+			if(tp[i]!=null)
+				{
+				tp[i].disabled=true;
+				}
+			}
+		}
+	else
+		{
+		for(i=1;i<11;i++)
+			{
+			eml[i]=document.getElementById(a1_eml[i]);
+			tp[i]=document.getElementById(a1_tp[i]);
+			if(eml[i]!=null)
+				{
+				eml[i].disabled=false;
+				}
+			if(tp[i]!=null)
+				{
+				tp[i].disabled=false;
+				}
+			}
+		}
+	}
+
+function insRow()
+{
+	var x=document.getElementById('t1').insertRow(0);
+	var y=x.insertCell(0);
+	var a1_e_chk=new Array( " "," "," "," "," "," "," "," "," "," ");
+	var a1_t_chk=new Array( " "," "," "," "," "," "," "," "," "," ");
+	var chr_evt="Character 1 0x<input type=text name=a1_c1 id=a1_c1 value=\"" +0+"\" size=2 maxlength=2> <br> Character 2 0x<input type=text name=a1_c2 id=a1_c2 value=\"" +0+"\" size=2 maxlength=2>";
+	var ic_evt="Input Pin <select name=a1_ip_pin  id=a1_ip_pin> <option value=1  selected=\"selected\">  PIN1 </option> <option value=2  >  PIN2 </option> <option value=3  >  PIN3 </option> <option value=4  >  PIN4 </option> </select> Input Condition <select name=a1_pin_cdn  id=a1_pin_cdn> <option value=1  >  HIGH </option> <option value=2  >  LOW </option> </select>";
+	var a1_evt=new Array("Events","Power reset","IP Address changed","iServer accessed",chr_evt,ic_evt,"Serial port disconnected");
+	var a1_r=new Array();
+	var a1_c=new Array();
+	var r=0;
+	var c=0;
+	y.innerHTML="<input type=checkbox name=\"alm_1\" id=\"alm_1\" onclick=\"a1_en()\"" +a1_e_chk[0]+"> Enable";
+	for(r=0;r < 6 ;r++)
+		{
+		a1_r[r]=document.getElementById('t2').insertRow(r);
+		for(c=0;c<3;c++)
+			{
+			a1_c[c]=a1_r[r].insertCell(c);
+			}
+		a1_c[0].innerHTML=a1_evt[r];
+
+		if(r==0)
+			{
+			a1_c[1].innerHTML=a1_eml[r];
+			a1_c[2].innerHTML=a1_tp[r];
+			}
+		else
+			{
+			a1_c[1].innerHTML="<input type=checkbox name=" +a1_eml[r]+" id=" +a1_eml[r]+" " +a1_e_chk[r]+">";
+			a1_c[2].innerHTML="<input type=checkbox name=" +a1_tp[r]+" id=" +a1_tp[r]+" " +a1_t_chk[r]+">";
+			}
+		}
+	}
+</script>
+</head>
+<body onLoad=insRow(),a1_en()>
+<div id=left_menu>
+<ul>
+	<li><a href='load?PAGENO=1'>Overview
+	</a></li>
+	<li><a href='load?PAGENO=2'>Network
+	</a></li>
+
+	<li><a href='load?PAGENO=3'>Serial
+	</a></li>
+	<li><a href='load?PAGENO=4'>I/O
+	Pins </a></li>
+	<li style="color: black; font-weight: bold">Management</li>
+	<li><a href='load?PAGENO=6'>Security
+	</a></li>
+	<li><a href='load?PAGENO=7'>Device
+	Query </a></li>
+	<li><a href='load?PAGENO=8'>Device
+	Setup </a></li>
+
+	<li><a href='load?PAGENO=9'>Read
+	Device </a></li>
+	<li><a href='load?PAGENO=10'>Terminal
+	</a></li>
+	<li><a href='load?PAGENO=11'>System
+	</a></li>
+	<li><a href='load?PAGENO=12'>Diagnostics
+	</a></li>
+</ul>
+</div>
+<div id=content>
+<form method=post name=a1 action=alarm1>
+<table width=600px border=0 class=t_heading>
+
+	<tr>
+		<td>
+		<table id=tabmenu cellpadding=0 cellspacing=0>
+			<tr>
+				<td width=15>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=5'>Email,SNMP</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab id=selectedtab><a href='load?PAGENO=20'>Alarm
+				1</a></td>
+
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=21'>Alarm
+				2</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=22'>Alarm
+				3</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=23'>Alarm
+				4</a></td>
+				<td class=separator>&nbsp;</td>
+
+				<td class=tab><a href='load?PAGENO=24'>Alarm
+				5</a></td>
+				<td class=separator>&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		<table id=t1></table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border=1 width=100% class=t_content id=t2></table>
+		</td>
+	</tr>
+	<tr>
+
+		<td>
+		<table border=0 width=100% class=t_content>
+			<tr>
+				<td>Reminder Interval</td>
+				<td><input type=text name=a1_ri id=a1_ri value="0"
+				size="4" maxlength="4">s</td>
+			</tr>
+			<tr>
+
+				<td>To:</td>
+				<td><input type=text name=a1_to id=a1_to value=""
+				size="50" maxlength="50"></td>
+			</tr>
+			<tr>
+				<td>Message:</td>
+				<td><input type=text name=a1_msg id=a1_msg value=""
+				size="30" maxlength="30"></td>
+			</tr>
+		</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td><input type=hidden name=test id=test value=0><input
+			type=submit value=Save> <input type=reset value=Reset></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

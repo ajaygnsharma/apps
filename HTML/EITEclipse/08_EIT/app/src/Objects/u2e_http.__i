@@ -1,0 +1,1 @@
+-c --device DARMP -g -O2 --apcs=interwork -I..\..\netlib\src\snmp -I..\..\webpage -I..\inc -I..\..\netlib\inc -I..\..\post\inc -I..\..\drivers\inc -I..\..\ssi\inc -I "C:\Keil\ARM\INC\Philips" -DPOLARM2368 -o ".\Objects\u2e_http.o" --omf_browse ".\Objects\u2e_http.crf" --depend ".\Objects\u2e_http.d" "U2E_HTTP.C"

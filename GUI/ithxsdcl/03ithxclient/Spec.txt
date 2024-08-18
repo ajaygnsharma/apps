@@ -1,0 +1,11 @@
+-> Command line interface to gather data
+-> Command line arguments
+   1. -t  Get temperature.
+   2. -h  Get Humidity.
+   3. -d  Get Dewpoint
+   4. -ip IP Address
+   5. -n  No of readings
+   6. -d  Delay in secs
+
+   Example:
+   gettemperature -t -ip 192.168.1.241 -n 5 -d 5 

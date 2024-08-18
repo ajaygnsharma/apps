@@ -1,0 +1,73 @@
+{ 
+var google_ads = new Array(); 
+var google_ad; 
+var google_radlinks = new Array(); 
+var google_radlink; 
+var google_info = new Object(); 
+google_ad = new Object(); 
+google_ad.n = 1; 
+google_ad.type = "text"; 
+google_ad.bidtype = "CPC"; 
+google_ad.targeting_type = "contextual"; 
+google_ad.url = "http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=Bw1IrSVn-R6eLLKbGrAOt9LBNoYjkL4H0jf4DwI23AeChkQEQARgBIM-VjwIoBTgAUKfQsY37_____wFgyeafh9Cj2A-yARRlbGVjdHJvbmljZGVzaWduLmNvbboBCTQ2OHg2MF9qc8gBAdoBPWh0dHA6Ly9lbGVjdHJvbmljZGVzaWduLmNvbS9BcnRpY2xlcy9QcmludC5jZm0_QXJ0aWNsZUlEPTIwNDTIAon8ggGoAwHoA7ID6APnAegDHugDBfUDAgAAAPUDBAAAAA&amp;num=1&amp;adurl=http://tracking.searchmarketing.com/click.asp%3FAID%3D64598521&amp;client=ca-penton_html"; 
+google_ad.visible_url = "www.newark.com"; 
+google_ad.line1 = "Audio ics"; 
+google_ad.line2 = "Huge in Stock Selection \x26amp; More"; 
+google_ad.line3 = "Same Day Shipping"; 
+google_ad.regionname = ""; 
+google_ads[0] = google_ad; 
+google_ad = new Object(); 
+google_ad.n = 2; 
+google_ad.type = "text"; 
+google_ad.bidtype = "CPC"; 
+google_ad.targeting_type = "contextual"; 
+google_ad.url = "http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=B5bOfSVn-R6eLLKbGrAOt9LBNv4ndNcfgmKcFwI23AfCTCRACGAIgz5WPAigFOABQ_dumqPz_____AWDJ5p-H0KPYD6ABsZKi_QOyARRlbGVjdHJvbmljZGVzaWduLmNvbboBCTQ2OHg2MF9qc8gBAdoBPWh0dHA6Ly9lbGVjdHJvbmljZGVzaWduLmNvbS9BcnRpY2xlcy9QcmludC5jZm0_QXJ0aWNsZUlEPTIwNDSoAwHoA7ID6APnAegDHugDBfUDAgAAAPUDBAAAAA&amp;num=2&amp;adurl=http://www.megasearch2.com/m/search.aspx%3Fmkt%3Dus%26type%3Dads%26s2%3Delectronic%2520circuit%2520design%26s%3Dcircuit%2Bdesigns%26orig%3D11385&amp;client=ca-penton_html"; 
+google_ad.visible_url = "www.megasearch2.com"; 
+google_ad.line1 = "Circuit Designs Guide"; 
+google_ad.line2 = "Need Circuit Designs Help?"; 
+google_ad.line3 = "Find it here!"; 
+google_ad.regionname = ""; 
+google_ads[1] = google_ad; 
+google_ad = new Object(); 
+google_ad.n = 3; 
+google_ad.type = "text"; 
+google_ad.bidtype = "CPC"; 
+google_ad.targeting_type = "contextual"; 
+google_ad.url = "http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=BWr2vSVn-R6eLLKbGrAOt9LBN8beeGrmE9cQCwI23AdCGAxADGAMgz5WPAigFOABQtvyr6vj_____AWDJ5p-H0KPYD6ABm6Pw_gOyARRlbGVjdHJvbmljZGVzaWduLmNvbboBCTQ2OHg2MF9qc8gBAdoBPWh0dHA6Ly9lbGVjdHJvbmljZGVzaWduLmNvbS9BcnRpY2xlcy9QcmludC5jZm0_QXJ0aWNsZUlEPTIwNDSAAgGoAwHoA7ID6APnAegDHugDBfUDAgAAAPUDBAAAAA&amp;num=3&amp;adurl=http://www.electronicsinfoline.com&amp;client=ca-penton_html"; 
+google_ad.visible_url = "www.ElectronicsInfoline.com"; 
+google_ad.line1 = "DIY Electronics Schematic"; 
+google_ad.line2 = "All Projects with Photo Preview"; 
+google_ad.line3 = "Browse over 10000 circuits. Now!"; 
+google_ad.regionname = ""; 
+google_ads[2] = google_ad; 
+google_ad = new Object(); 
+google_ad.n = 4; 
+google_ad.type = "text"; 
+google_ad.bidtype = "CPC"; 
+google_ad.targeting_type = "contextual"; 
+google_ad.url = "http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=B6EWXSVn-R6eLLKbGrAOt9LBNgcaVKPGouqwCwI23AbDcWRAEGAQgz5WPAigFOABQlr3u-wZgyeafh9Cj2A-yARRlbGVjdHJvbmljZGVzaWduLmNvbboBCTQ2OHg2MF9qc8gBAdoBPWh0dHA6Ly9lbGVjdHJvbmljZGVzaWduLmNvbS9BcnRpY2xlcy9QcmludC5jZm0_QXJ0aWNsZUlEPTIwNDSoAwHoA7ID6APnAegDHugDBfUDAgAAAPUDBAAAAA&amp;num=4&amp;adurl=http://www.parvus.com&amp;client=ca-penton_html"; 
+google_ad.visible_url = "www.parvus.com"; 
+google_ad.line1 = "Embedded System Design"; 
+google_ad.line2 = "MIL-COTS Rugged Embedded Computers"; 
+google_ad.line3 = "System Solutions for C4ISR"; 
+google_ad.regionname = ""; 
+google_ads[3] = google_ad; 
+google_ad = new Object(); 
+google_ad.n = 5; 
+google_ad.type = "text"; 
+google_ad.bidtype = "CPC"; 
+google_ad.targeting_type = "contextual"; 
+google_ad.url = "http://pagead2.googlesyndication.com/pagead/iclk?sa=l&amp;ai=BpdHXSVn-R6eLLKbGrAOt9LBNxruYO8rQur0DwI23AZCpNhAFGAUgz5WPAigFOABQzN-GtgJgyeafh9Cj2A-yARRlbGVjdHJvbmljZGVzaWduLmNvbboBCTQ2OHg2MF9qc8gBAdoBPWh0dHA6Ly9lbGVjdHJvbmljZGVzaWduLmNvbS9BcnRpY2xlcy9QcmludC5jZm0_QXJ0aWNsZUlEPTIwNDSAAgHIAs6NtQGoAwHoA7ID6APnAegDHugDBfUDAgAAAPUDBAAAAA&amp;num=5&amp;adurl=http://www.keytechinc.com/Capabilities/Embedded.html&amp;client=ca-penton_html"; 
+google_ad.visible_url = "www.KeyTechInc.com"; 
+google_ad.line1 = "Circuit Board Designers"; 
+google_ad.line2 = "Custom Circuit \x26amp; Embedded System"; 
+google_ad.line3 = "Design, Electronics: 1-800-803-1345"; 
+google_ad.regionname = ""; 
+google_ads[4] = google_ad; 
+if (window.google_ad_request_done) { 
+google_ad_request_done(google_ads); 
+} 
+if (window.google_radlink_request_done) { 
+google_radlink_request_done(google_radlinks); 
+} 
+}

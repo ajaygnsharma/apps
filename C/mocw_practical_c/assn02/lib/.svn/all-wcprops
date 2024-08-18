@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn02/lib
+END
+my_limits.c
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn02/lib/my_limits.c
+END
+my_char_lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn02/lib/my_char_lib.c
+END
+my_bit_lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn02/lib/my_bit_lib.c
+END

@@ -1,0 +1,20 @@
+iSD-TH Client 
+------------------
+
+v0.01
+
+Introduction: This is a client for the iServer type of products that record humidity and temperature.
+
+Conf file:
+The path for the conf file is /etc/newport/isd_th_client.conf and the syntax of the file is:
+IP address
+port numner
+sampling rate
+command
+
+Put this information in the file and then you can log your data by running the command as follows:
+$isd_th_client > log.csv &
+
+The client will keep on running and collecting data.
+
+Note: Put isd_th_client executable in the /usr/bin directory before executing the command.

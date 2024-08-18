@@ -1,0 +1,224 @@
+
+<html>
+  <HEAD>
+  
+  <link rel="stylesheet" type="text/css" href="ex2.css">
+    <title> NETWORK </title>
+	<script language="JavaScript">
+
+   
+
+function Dhcp_Disab () {
+
+if(document.getElementById("dhcp").checked==true)
+{
+
+ipconfig.ip.disabled=true;
+ipconfig.netmask.disabled=true;
+ipconfig.gw.disabled=true;
+ipconfig.dns.disabled=true;
+
+
+ipconfig.ip.checked=false;
+ipconfig.netmask.checked=false;
+ipconfig.gw.checked=false;
+ipconfig.dns.checked=false;
+
+}
+if(document.getElementById("dhcp").checked==false)
+{
+
+ipconfig.ip.disabled=false;
+ipconfig.netmask.disabled=false;
+ipconfig.gw.disabled=false;
+ipconfig.dns.disabled=false;
+
+}
+
+}
+
+function Disab () {
+
+if(document.getElementById("au").checked==true)
+{
+
+ipconfig.speed[0].disabled=true;
+ipconfig.speed[1].disabled=true;
+ipconfig.duplex[0].disabled=true;
+ipconfig.duplex[1].disabled=true;
+ipconfig.speed[0].checked=false;
+ipconfig.speed[1].checked=false;
+ipconfig.duplex[0].checked=false;
+ipconfig.duplex[1].checked=false;
+}
+if(document.getElementById("au").checked==false)
+{
+
+ipconfig.speed[0].disabled=false;
+ipconfig.speed[1].disabled=false;
+ipconfig.duplex[0].disabled=false;
+ipconfig.duplex[1].disabled=false;
+}
+
+}
+</script>
+
+
+
+
+</script>
+  <link rel="stylesheet" type="text/css" 
+  href="ex2.css" />
+    <TITLE> NETWORK </TITLE>
+	
+	
+  </HEAD> 
+
+  <BODY onload="SetAsLast()"> 
+  <script type="text/javascript" language="JavaScript">
+
+   
+function SetAsLast()
+{
+   if(document.getElementById("au").checked==true)
+   {
+
+ipconfig.speed[0].disabled=true;
+ipconfig.speed[1].disabled=true;
+ipconfig.duplex[0].disabled=true;
+ipconfig.duplex[1].disabled=true;
+ipconfig.speed[0].checked=false;
+ipconfig.speed[1].checked=false;
+ipconfig.duplex[0].checked=false;
+ipconfig.duplex[1].checked=false;
+   }
+if(document.getElementById("au").checked==false)
+   {
+
+ipconfig.speed[0].disabled=false;
+ipconfig.speed[1].disabled=false;
+ipconfig.duplex[0].disabled=false;
+ipconfig.duplex[1].disabled=false;
+   }
+   if(document.getElementById("dhcp").checked==true)
+{
+
+ipconfig.ip.disabled=true;
+ipconfig.netmask.disabled=true;
+ipconfig.gw.disabled=true;
+ipconfig.dns.disabled=true;
+
+
+ipconfig.ip.checked=false;
+ipconfig.netmask.checked=false;
+ipconfig.gw.checked=false;
+ipconfig.dns.checked=false;
+
+}
+if(document.getElementById("dhcp").checked==false)
+{
+
+ipconfig.ip.disabled=false;
+ipconfig.netmask.disabled=false;
+ipconfig.gw.disabled=false;
+ipconfig.dns.disabled=false;
+
+}
+   
+   
+   
+   
+} 
+
+
+
+</script>
+
+
+
+    <h2> IP CONFIGURATION </h2>
+    <hr>
+    <form name="ipconfig" action="network" method="post">
+    <table width="100%">
+    <tr>
+      <td> DHCP </td>
+      <td align="right">
+        <input type="checkbox" name="dhcp" id="dhcp" onclick="Dhcp_Disab()"  value="1" <!--#exec cgi="dhcpflag"-->> 
+      </td>
+    </tr>
+
+    <tr> 
+      <td>MAC Address</td>
+      <td align="right"> <!--#exec cgi="mac"--> </td>
+    </tr>
+    <tr> 
+     <td> IP Address </td>
+     <td align="right"><input type="text" name="ip" size="15" maxlength="15" value="<!--#exec cgi="ip"-->"></td>
+    </tr>
+    <tr> 
+      <td> Subnet Mask </td>
+      <td align="right"> <input type="text" name="netmask" size="15" maxlength="15" value="<!--#exec cgi="submask"-->"> </td>
+    </tr> 
+    <tr> 
+      <td> Gateway Address </td>
+      <td align="right"> <input type="text" name="gw" size="15" maxlength="15" value="<!--#exec cgi="gw_ip"-->"> </td>
+    </tr> 
+    <tr> 
+      <td> DNS Address </td>
+      <td align="right"> <input type="text" name="dns" size="15"  value="<!--#exec cgi="dns"-->"> </td>
+    </tr> 
+    <tr> 
+      <td> Host Name </td> 
+      <td align="right"><input type="text" name="hname" size="15" value="<!--#exec cgi="hname"-->"> </td> 
+    </tr> 
+	
+	<tr>
+      <td> Protocol </td> 
+	  <td align="right"> 
+        <!--#exec cgi="protocol"-->
+      </td>	   
+	</tr>  
+	
+	
+	
+    <tr>
+      <td> Web Server Port  </td> 
+      <td align="right"> <input type="text" name="port" id="port" size="5" maxlength="5" value="<!--#exec cgi="WebPort"-->"> </td>
+    </tr>
+    
+  
+  </table>
+
+  <h2> ETHERNET PORT </h2>
+  <hr>
+  <table width="100%"> 
+    <tr>
+      <td> Autonegotiation </td> 
+      <td> <input type="checkbox" name="au" id="au" onclick="Disab()" value="1" <!--#exec cgi="autonegotiate"-->> </td>
+    </tr>
+    <tr>
+      <td> Speed </td> 
+      <td> <input type="radio" name="speed" value="1" <!--#exec cgi="s100"--> > 100Mbps </td>
+      <td> <input type="radio" name="speed" value="0" <!--#exec cgi="s10"-->> 10Mbps </td>  
+    </tr>
+    <tr>
+      <td> Duplex </td> 
+      <td> <input type="radio" name="duplex" value="1" <!--#exec cgi="fduplex"-->> Full </td>
+      <td> <input type="radio" name="duplex" value="0" <!--#exec cgi="hduplex"-->> Half </td>
+    </tr> 
+  </table>
+
+  
+  
+  
+  
+  
+  
+  
+  <hr>
+  <center>
+    <input type="submit" value="Save Changes" /> 
+    <input type="reset" value="Reset" /></form> 
+  </center>
+  </BODY>
+</html>

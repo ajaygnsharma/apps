@@ -1,0 +1,531 @@
+#include <micronet.h>
+#include "np_includes.h"
+#include "FlashOS.H"          // FlashOS Structures
+
+#define M32(adr) (*((volatile unsigned long  *) (adr)))
+
+byte ipmac_sconfig;// indicate ip and mac config in serial port.
+byte ipmac_done;
+byte temp_ip[IP_ADDR_LEN];
+byte sconsol=0; // serial consol control
+byte power_on=0;
+byte dhcp_led=0;
+
+unsigned char flash_read(unsigned long *str,unsigned long location,unsigned long number)
+cmx_reentrant 
+{
+	unsigned long temp;
+
+	while(number)
+	{
+		temp=M32(location);
+		*str=temp;
+		++str;
+		location=location+4;
+		number--;
+	}
+	*str='\0';
+	return 0;
+}
+
+
+
+void flash_write_default()
+{
+ 	unsigned long buf[]={\
+0x00,0x00,0x12,0x34,0x56,0x78,\
+128,100,101,254,\
+255,255,255,255,\
+255,255,255,0,\
+'1',\
+'e','i','s','0','1','6','0',\
+'1','2','3','4','5','6','7','8',\
+'0','0','0','0','0','0','0','0',\
+'0','0','0','0','0','0','0',0x64,'0',100,'0',\
+'1','1','1','1','1','1','1','1',\
+'0','0','0',2000,'0',100,'0',\
+'0',\
+0,0,0,0,2000};            // Programming Buffer
+
+	/* Program the Flash with the Login Password */
+	FlashInit(0, 12000000, 1);       // Initialize Flash Programming Functions
+	//   Device Base Address = 0
+	//   Clock Frequency = 12MHz
+
+	EraseSector(0x0007D000);   // Test Sector Erase ( 4kB Sector 27)
+	
+	//ProgramPage(0x0007D000, sizeof(buf), buf);
+	ProgramPage(0x0007D000, sizeof(buf), buf);
+  FlashUnInit(1); 
+
+
+}
+
+
+void flash_write(unsigned long *buf)
+{
+ 	/* Program the Flash with the Login Password */
+	FlashInit(0, 12000000, 1);       // Initialize Flash Programming Functions
+	//   Device Base Address = 0
+	//   Clock Frequency = 12MHz
+
+	EraseSector(0x0007D000);   // Test Sector Erase ( 4kB Sector 27)
+	
+	//ProgramPage(0x0007D000, sizeof(buf), buf);
+	ProgramPage(0x0007D000, sizeof(buf), buf);
+  FlashUnInit(1); 
+
+
+}
+
+//int eeprom_reads(byte * str, byte location,byte type, byte number)
+//reentrant {
+//
+//	int temp,i;
+//	byte * temp_ptr;
+//	temp_ptr=str;
+//	i=0;
+//	while(number)
+//	{
+//		temp=nvread(location);
+//		*str=(byte)HIGHBYTE(temp);
+//		*(++str)=(byte)LOWBYTE(temp);
+//		++str;
+//		i+=2;
+//		location++;
+//		number--;
+//	}
+//	*str='\0';
+//	switch(type)
+//	{
+//		case EEPROM_HBYTE:
+//					*(str-1)='\0';
+//					break;
+//		case EEPROM_LBYTE:
+//					*(str-2)=*(str-1);
+//					*(str-1)='\0';
+//					break;
+//		default:
+//					break;
+//	}
+//	return (wspace_adj(temp_ptr,i));
+//}
+//
+//
+//void eeprom_write (byte * str, byte location,byte type)
+//reentrant {
+//	int temp;
+//	byte * temp_ptr;
+//
+//	nv_wr_en();		// write enable
+//	while (*str)
+//	{
+//		if(*str=='"')
+//			*str=' ';
+//		if(*(str+1)=='"')
+//			*(str+1)=' ';
+//		switch(type)
+//		{
+//			case EEPROM_WORD:
+//				if(*(str+1))
+//				{
+//					temp=MK_WORD16(*str,*(++str));
+//				}
+//				else
+//				{
+//					nv_ew_dis();	// erase and write disable		
+//					eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//					temp=MK_WORD16(*str,*(temp_ptr+1));
+//					nv_wr_en();		// write enable
+//				}
+//				break;
+//			case EEPROM_HBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*str,*(temp_ptr+1));
+//				nv_wr_en();		// write enable
+//				break;
+//			case EEPROM_LBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*temp_ptr,*str);
+//				nv_wr_en();		// write enable
+//				break;
+//			default:
+//				break;
+//		}
+//		nvwrite(location,temp);
+//		str++;
+//		location++;
+//	}
+//	nv_ew_dis();	// erase and write disable	
+//}
+//
+//void eeprom_write_default(void)
+//reentrant{
+//	byte i;
+//
+//	eeprom_data_nwrite(default_data+6,eeprom_ip,90);
+//		
+//	for(i=0;i<Unit_MAX;i++)
+//	{
+////ver 4.0		eeprom_write("    ",eeprom_uid(i));
+//		eeprom_write("ABCDEFGH",eeprom_uname(i));
+//		eeprom_write("        ",eeprom_ucmd(i));
+//		eeprom_write(" R01",eeprom_sp1(i));
+//		eeprom_write(" R01",eeprom_sp2(i));
+//		eeprom_write(" R01",eeprom_sp3(i));
+//		eeprom_write(" R01",eeprom_sp4(i));
+//		eeprom_write("ABCDEFGH",eeprom_uunit(i));
+//		eeprom_write("00",eeprom_ufrt(i));
+//	}
+//
+//	eeprom_write("        1234abcd",eeprom_cpassword);
+//	eeprom_write("        12345678",eeprom_password);
+//	eeprom_write("        00000000",eeprom_spassword);
+//
+//}
+//
+//void eeprom_ip_mac_cnfg(void)
+//reentrant{
+////	byte temp_buff[30];
+//	ipmac_sconfig=1;
+//	Serial_Out("Ip and Remote IP Configuration\r\n");
+//	ipmac_done=0;
+//	COM_TX_DIS;
+//	COM_RX_EN;
+//	while(1)
+//	{
+//		Serial_Out("Enter Command:\r\n");
+//		while(xmit_busy2){}		
+//		COM_TX_DIS;
+//		COM_RX_EN;
+//		init_io_buffs2();
+//		ipmac_done=0;
+//		while(!ipmac_done)
+//		{			
+//		}
+//		ipmac_done=0;
+//		Serial_in(temp_buff,10);
+//		if(
+//			(temp_buff[0]=='I'||temp_buff[0]=='i')
+//			&&
+//			(temp_buff[1]=='P'||temp_buff[1]=='p')
+//			&&
+//			(temp_buff[2]=='='||temp_buff[2]=='=')
+//		)
+//		{
+//			if(s_ip_process(temp_buff,3))
+//			{
+//			//	eeprom_data_write(ip_src_addr,eeprom_ip,4);
+//				eeprom_data_nwrite(temp_buff,eeprom_ip,4);
+//				eeprom_read(temp_ip,eeprom_ip,2);	// 
+//				buffer_copy(ip_src_addr,temp_ip,4);
+//				print_data_func(temp_buff,temp_ip,4);
+//				Serial_Out(temp_buff);
+//			}
+//			else
+//			{
+//				Serial_Out("Bad Ip\r\n");
+//			}
+//		}
+//		else if
+//		(
+//			(!(P1&0x02)) // Only for mac address
+//			&&
+//			(temp_buff[0]=='M'||temp_buff[0]=='m')
+//			&&
+//			(temp_buff[1]=='A'||temp_buff[1]=='a')
+//			&&
+//			(temp_buff[2]=='C'||temp_buff[2]=='c')
+//			&&
+//			(temp_buff[3]=='='||temp_buff[3]=='=')			
+//		)
+//		{
+//			if(s_mac_process(&temp_buff[4]))
+//			{
+//				eeprom_data_nwrite(&temp_buff[4],eeprom_mac,6);
+//				s_getMac_func(temp_buff);
+//				Serial_Out(temp_buff);
+//			}
+//			else
+//			{
+//				Serial_Out("Bad MAC\r\n");
+//			}
+//		}
+//		else if
+//		(
+//			(temp_buff[0]=='R'||temp_buff[0]=='r')
+//			&&
+//			(temp_buff[1]=='I'||temp_buff[1]=='i')
+//			&&
+//			(temp_buff[2]=='P'||temp_buff[2]=='p')
+//			&&
+//			(temp_buff[3]=='='||temp_buff[3]=='=')
+//		)
+//		{
+//			if(s_ip_process(temp_buff,4))
+//			{
+//			}
+//			else
+//			{
+//				Serial_Out("Bad Remote Ip, Reset to 0.0.0.0\r\n");
+//				temp_buff[0]=0x00;
+//				temp_buff[1]=0x00;
+//				temp_buff[2]=0x00;
+//				temp_buff[3]=0x00;
+//			}
+//			eeprom_data_nwrite(temp_buff,eeprom_rmt_ip,4);
+//			eeprom_read(temp_ip,eeprom_rmt_ip,2);	// 
+//			buffer_copy(rmtip,temp_ip,4);
+//			print_data_func(temp_buff,temp_ip,4);
+//			Serial_Out(temp_buff);
+//		}
+//		else if
+//		(
+//			(temp_buff[0]=='G'||temp_buff[0]=='g')
+//			&&
+//			(temp_buff[1]=='W'||temp_buff[1]=='w')
+//			&&
+//			(temp_buff[2]=='='||temp_buff[2]=='=')
+//		)
+//		{
+//			if(s_ip_process(temp_buff,3))
+//			{
+//				eeprom_data_nwrite(temp_buff,eeprom_gwip,4);
+//			}
+//			else
+//			{
+//				Serial_Out("Bad Gateway Ip\r\n");				
+//			}
+//			//eeprom_data_nwrite(temp_buff,eeprom_gwip,4);
+//			eeprom_read(temp_ip,eeprom_gwip,2);	// 
+//			buffer_copy(gateway_ip_addr,temp_ip,4);
+//			print_data_func(temp_buff,temp_ip,4);
+//			Serial_Out(temp_buff);
+//		}
+//		else if(
+//		(
+//			(temp_buff[0]=='S'||temp_buff[0]=='s')
+//			&&
+//			(temp_buff[1]=='U'||temp_buff[1]=='u')
+//			&&
+//			(temp_buff[2]=='B'||temp_buff[2]=='b')
+//			&&
+//			(temp_buff[3]=='=')
+//		)
+//		||
+//		(
+//			(temp_buff[0]=='S'||temp_buff[0]=='s')
+//			&&
+//			(temp_buff[1]=='M'||temp_buff[1]=='m')
+//			&&
+//			(temp_buff[2]=='=')
+//		)
+//		)
+//		{
+//			if(temp_buff[2]=='=')
+//			{
+//				if(s_ip_process(temp_buff,3))
+//				{
+//					eeprom_data_nwrite(temp_buff,eeprom_sbmsk,4);
+//				}
+//				else
+//				{
+//					goto error;
+//				}
+//			}
+//			else
+//			{
+//				if(s_ip_process(temp_buff,4))
+//				{
+//					eeprom_data_nwrite(temp_buff,eeprom_sbmsk,4);
+//				}
+//				else
+//				{
+//error:			
+//					Serial_Out("Bad Subnet Mask\r\n");
+//				}
+//			}
+//			//eeprom_data_nwrite(temp_buff,eeprom_sbmsk,4);
+//			eeprom_read(temp_ip,eeprom_sbmsk,2);	// 
+//			buffer_copy(subnet_mask,temp_ip,4);
+//			print_data_func(temp_buff,temp_ip,4);
+//			Serial_Out(temp_buff);
+//		}
+//		else if(temp_buff[0]=='p'||temp_buff[0]=='P')
+//		{
+//			print_read();
+//			Serial_Out(print_buff);
+//		}
+//		else if
+//		(temp_buff[0]=='Q'||temp_buff[0]=='q')
+//		{
+//			Serial_Out("Quit\r\n");
+//			break;
+//		}
+//		else 
+//		{
+//			Serial_Out("Wrong Command\r\n");
+//		}
+//	}
+//	ipmac_sconfig=0;
+//}
+///*
+//byte ip_process(byte * ip_buff,byte position)
+//reentrant {
+//	byte i=position;
+//	byte j=0;
+//	byte k=0;
+//	byte temp=0;
+//	while(ip_buff[i]!='\0'&&k<4)
+//	{
+//		for(j=0;j<4;j++)
+//		{
+//			if(ip_buff[i]=='.'||ip_buff[i]=='\0')
+//			{				
+//				j=4;
+//			}
+//			if(ip_buff[i]>='0'&&ip_buff[i]<='9')
+//			{
+//				temp=temp*10+ip_buff[i]-'0';				
+//			}
+//			i++;
+//		}
+//		temp_ip[k]=temp;
+//		k++;
+//		temp=0;		
+//	}
+//	if(k==4)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return 0;
+//	}
+//}
+//*/
+//byte mac_process(byte * mac_buff)
+//reentrant{
+//	byte i=4;
+//	byte j=0;
+//	byte k=0;
+//	byte temp=0;
+//	while(mac_buff[i]!='\0'&&k<6)
+//	{
+//		for(j=0;j<3;j++)
+//		{
+//			if(mac_buff[i]==':'||mac_buff[i]=='\0')
+//			{				
+//				j=3;
+//			}
+//			if(mac_buff[i]>='0'&&mac_buff[i]<='9')
+//			{
+//				temp=temp*0x10+mac_buff[i]-'0';				
+//			}
+//			if(mac_buff[i]>='a'&&mac_buff[i]<='f')
+//			{
+//				temp=temp*0x10+mac_buff[i]-'a'+10;	
+//			}
+//			if(mac_buff[i]>='A'&&mac_buff[i]<='F')
+//			{
+//				temp=temp*0x10+mac_buff[i]-'A'+10;				
+//			}			
+//			i++;
+//		}
+//		eth_src_hw_addr[k]=temp;
+//		k++;
+//		temp=0;		
+//	}
+//	if(k==6)
+//	{
+//		return 1;
+//	}
+//	else
+//	{
+//		return 0;
+//	}
+//}
+///* data could contain any value as 00 end*/
+//void eeprom_data_write(byte * indata, byte location,byte type, byte number)
+//reentrant{
+//	int temp;
+//	byte i;
+//	byte * temp_ptr;
+//	nv_wr_en();		// write enable
+//	for(i=0;i<number/2;i++)
+//	{
+//		if(*indata=='"')
+//			*indata=' ';
+//		if(*(indata+1)=='"')
+//			*(indata+1)=' ';
+//		switch(type)
+//		{
+//			case EEPROM_WORD:
+//				temp=MK_WORD16(*indata,*(++indata));
+//				break;
+//			case EEPROM_HBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*indata,*(temp_ptr+1));
+//				nv_wr_en();		// write enable
+//				break;
+//			case EEPROM_LBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*temp_ptr,*indata);
+//				nv_wr_en();		// write enable
+//				break;
+//			default:
+//				break;
+//		}
+//		nvwrite(location,temp);
+//		indata++;
+//		location++;
+//	}
+//}
+//
+//void buffer_copy(char * dest, char * src, int number)
+//reentrant{
+//	int i;
+//	for(i=0;i<number;i++)
+//	{
+//		*(dest+i)=*(src+i);
+//	}
+//}
+//
+//void eeprom_data_nwrite(byte * indata, byte location,byte type, byte number)
+//reentrant{
+//	int temp;
+//	byte i;
+//	byte * temp_ptr;
+//	nv_wr_en();		// write enable
+//	for(i=0;i<number/2;i++)
+//	{
+//		switch(type)
+//		{
+//			case EEPROM_WORD:
+//				temp=MK_WORD16(*indata,*(++indata));
+//				break;
+//			case EEPROM_HBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*indata,*(temp_ptr+1));
+//				nv_wr_en();		// write enable
+//				break;
+//			case EEPROM_LBYTE:
+//				nv_ew_dis();	// erase and write disable	
+//				eeprom_read(temp_ptr,location,EEPROM_WORD,1);
+//				temp=MK_WORD16(*temp_ptr,*indata);
+//				nv_wr_en();		// write enable
+//				break;
+//			default:
+//				break;
+//		}
+//		nvwrite(location,temp);
+//		indata++;
+//		location++;
+//	}
+//}
+//

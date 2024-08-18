@@ -1,0 +1,4 @@
+testled IDLE
+pfail-check 0
+testled IDLE
+temperature_sensor read

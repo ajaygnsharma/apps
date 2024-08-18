@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/16/trunk/my_lib/mocw_pc/assn05/prb5.1
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn05/prb5.1/.project
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn05/prb5.1/main.c
+END
+.cproject
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn05/prb5.1/.cproject
+END
+llist
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn05/prb5.1/llist
+END
+llist.c
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/16/trunk/my_lib/mocw_pc/assn05/prb5.1/llist.c
+END
+llist.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/16/trunk/my_lib/mocw_pc/assn05/prb5.1/llist.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn05/prb5.1/Makefile
+END

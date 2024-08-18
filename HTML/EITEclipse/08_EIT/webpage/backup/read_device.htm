@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>READ DEVICES</title>
+  <link rel="stylesheet" type="text/css" href="ex2.css" />
+</head>
+
+<body>
+  
+  <script type="text/javascript">
+  <!--#exec cgi="dev_read"-->
+		
+  </script>	
+  
+  <center>
+  
+  <h2>READ DEVICES</h2>
+  <hr>
+  
+  <script type="text/javascript">
+    document.writeln("<table bgcolor='#000000' border='1' cellpadding='3' cellspacing='3'>");
+	document.writeln("<tbody><tr><td align='center'><table border='0'>");
+    document.writeln("<tr>");
+    if(dev_nc[0] == "")
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + "&nbsp;" + "</td>");
+	else
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + dev_nc[0] + "</td>");
+	
+	if(dev_nc[0] == "")
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + "&nbsp;" + "</td>");
+	else  
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + dev_nd[0] + "</td>");
+	document.writeln("</tr>");
+	document.writeln("</table></td></tr></tbody></table>");
+  </script>    
+  <p>
+  
+  <table border="1" align="center">
+  <tr>
+    <th>S/No</th>
+    <th>Device Name</th>
+    <th>Reading</th>
+    <th>Unit</th>
+  </tr>
+	
+  <script type="text/javascript">
+  var i;
+	    
+  for (i = 0; i < <!--#exec cgi="chkd_devs"--> ; i++)
+  {
+    document.writeln("<tr>");
+    document.writeln("<td>" + dev_na[i] + "</td>");
+    document.writeln("<td>" + dev_nb[i] + "</td>");
+    document.writeln("<td>" + dev_nc[i] + "</td>");
+    document.writeln("<td>" + dev_nd[i] + "</td>");
+    document.writeln("</tr>");
+  }
+  </script>
+	
+  </table>
+	
+  <form name="x" method="GET" action="set_timeout">
+    <input type="hidden" name="PW" value="12345678">
+    <!--#exec cgi="timeout_select"-->
+  </form>
+
+  <script type="text/javascript">
+    function AutoReload() 
+    {
+      window.location.href = window.location.href;
+      setTimeout("AutoReload()", <!--#exec cgi="load_timeout"-->000);
+      return true;
+    }
+    <!--#exec cgi="load_on"-->
+  </script>
+  	
+  <hr>
+  
+  	
+  </center>
+  <p>
+</body>
+</html>

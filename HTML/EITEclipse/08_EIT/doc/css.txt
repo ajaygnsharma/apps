@@ -1,0 +1,14 @@
+<head>
+<link rel="stylesheet" type="text/css"
+href="mystyle.css" />
+</head>
+
+
+	
+<head>
+<style type="text/css">
+hr {color: sienna}
+p {margin-left: 20px}
+body {background-image: url("images/back40.gif")}
+</style>
+</head>

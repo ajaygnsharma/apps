@@ -1,0 +1,6 @@
+iSeries-EIT
+Test cases description:
+Ajay Sharma
+1. read_dev_lport.pl - This is the test for accessing multiple ways to the serial port. One opens the browser interface and keeps the auto update to be 1 second and opens a iLOG/read_dev_lport_pl which simulates the iLOG. The unit should not hang and the readings should continue.
+
+

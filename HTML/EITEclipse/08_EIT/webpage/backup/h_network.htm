@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>	
+  <title></title>
+</head>
+<link rel="stylesheet" type="text/css" 
+  href="help.css" />
+  
+<body>
+<h3> DHCP </h3> 
+<p>
+This option will dynamically requests IP address, subnet mask, and gateway address from the DHCP server. A dip switch on the iServer can enable the DHCP as well. The default is Disable.
+
+<h3> BOOTP </h3> 
+<p>
+This option will dynamically requests IP address, subnet mask, and gateway address from the BOOTP server. A dip switch on the iServer can enable the BOOTP as well. The default is Disable.
+
+<h3> MAC Address </h3> 
+<p>
+Indicates the hardware address of the iServer. It’s non-configurable.
+
+<h3> IP Address </h3> 
+<p>
+Indicates the IP address of the iServer. The iServer’s default IP address is 192.168.1.200. When DHCP or BOOTP is enabled this field will be dimmed.
+
+<h3> Gateway Address </h3> 
+<p>
+This points to the router that forwards traffic to a destination outside of the subnet  in which the iServer resides. This is the IP address of the router which functions as a gateway.
+
+<h3> DNS Server </h3> 
+<p>
+In order to use the iServer’s DNS feature, the DNS server must be configured. Doing so allows the iServer to use a host’s domain name to access the Ethernet node. iServer plays the role of DNS client, in the sense that the iServer will actively query the DNS server for the IP address associated with a particular domain name. iServer functions that support domain name are Serial to Network, Multi-Host Connection, email, and SNMP services.
+
+<h3> Host Name </h3> 
+<p>
+The iServer will send this name to the DHCP or BOOTP server if the DHCP or BOOTP is enabled. The default name is EISxxxx where xxxx are the last characters of the MAC address.
+
+<h3> Protocol </h3> 
+<p> 
+It’s the protocol the iServer communicates with the Ethernet Network. Options are TCP, UDP, and ModbusTCP. The default is TCP.
+
+Note: Any network protocol selected here will globally effect parameters described in this document.
+
+
+<h3> Ethernet Port </h3> 
+<p> It’s the link in terms of speed and duplex between the iServer and an Ethernet node. With this option, the Ehernet port auto-negotiates the speed and duplex with the hardware endpoint to which the iServer is connected (i.e. an Ethernet switch). The default is Auto Negotiate. Once Auto Negotiate is checked, other fields under this category will be dimmed.
+
+</body>
+</html>
+

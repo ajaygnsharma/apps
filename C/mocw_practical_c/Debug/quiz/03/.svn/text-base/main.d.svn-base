@@ -1,0 +1,1 @@
+quiz/03/main.d quiz/03/main.o: ../quiz/03/main.c

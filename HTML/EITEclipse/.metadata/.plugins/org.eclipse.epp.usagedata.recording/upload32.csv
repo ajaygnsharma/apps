@@ -1,0 +1,15 @@
+what,kind,bundleId,bundleVersion,description,time
+activated,view,org.eclipse.ui.navigator.resources,3.3.101.M20080910-0800,org.eclipse.ui.navigator.ProjectExplorer,1223709127823
+closed,editor,org.eclipse.wst.jsdt.ui,1.0.12.v200809172136,org.eclipse.wst.jsdt.ui.CompilationUnitEditor,1223709127836
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223709134672
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223709136022
+started,bundle,org.eclipse.mylyn.resources.ui,3.0.2.v20080918-1100-e3x,org.eclipse.mylyn.resources.ui,1223709136093
+started,bundle,org.eclipse.mylyn.java.ui,3.0.2.v20080918-1100-e3x,org.eclipse.mylyn.java.ui,1223709136132
+started,bundle,org.eclipse.mylyn.pde.ui,3.0.2.v20080918-1100-e3x,org.eclipse.mylyn.pde.ui,1223709136187
+started,bundle,org.eclipse.mylyn.ide.ant,3.0.2.v20080918-1100-e3x,org.eclipse.mylyn.ide.ant,1223709136702
+closed,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223709136809
+stopped,bundle,org.eclipse.jst.j2ee.xdoclet.runtime,1.1.102.v200805140135,org.eclipse.jst.j2ee.xdoclet.runtime,1223709137337
+stopped,bundle,org.eclipse.jst.j2ee.ejb.annotations.xdoclet,1.2.0.v200805140020,org.eclipse.jst.j2ee.ejb.annotations.xdoclet,1223709137372
+stopped,bundle,org.eclipse.jst.server.generic.jboss,1.5.205.v200805140145,org.eclipse.jst.server.generic.jboss,1223709137380
+stopped,bundle,org.eclipse.jst.server.generic.jonas,1.5.205.v200805140145,org.eclipse.jst.server.generic.jonas,1223709137387
+stopped,bundle,org.eclipse.jst.server.generic.oc4j,1.5.205.v200805140145,org.eclipse.jst.server.generic.oc4j,1223709137395

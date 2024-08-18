@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <TITLE> MANAGEMENT </TITLE> 
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab" id="selectedtab"><a href="snmp_email.htm">Email,SNMP</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab"><a href="alarm1.htm">Alarm 1</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm2.htm">Alarm 2</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm3.htm">Alarm 3</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm4.htm">Alarm 4</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm5.htm">Alarm 5</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	</tr>
+  </table>
+	
+  
+  <form method="post" action="smtpsnmp" >
+  <!------------------------------SNMP--------------------------------------->
+  <h2> SNMP </h2> <hr>
+  
+  <table width="100%">
+  <tr>
+    <td>  SNMP Service </td>
+    <td align="right"> <input type="checkbox" name="snmp" <!--#exec cgi="snmp_en"-->> Enable </td>
+  </tr>
+  <tr> 
+    <td> SNMP Community </td>
+    <td align="right"> <input type="text" name="Community" value="<!--#exec cgi="Community"-->"> </td>
+  </tr>
+  <tr> 
+    <td> Contact </td>
+    <td align="right"> <input type="text" name="Contact" value="<!--#exec cgi="contact"-->"> </td>
+  </tr>
+  <tr> 
+    <td> Location </td>
+    <td align="right"> <input type="text" name="Location" value="<!--#exec cgi="location"-->"> </td>
+  </tr>
+  <tr>
+    <td> SNMP Traps </td>
+    <td align="right"> <input type="checkbox" name="trap"  <!--#exec cgi="trap_en"--> > Enable </td>
+  </tr>
+  <tr>
+    <td> SNMP Trap Server IP </td>
+    <td align="right"> <input type="text" name="trap_ip"  value="<!--#exec cgi="trap_ip"-->" > </td>
+  </tr>
+  </table>
+  <!------------------------------EMAIL------------------------------------->
+  <h2> EMAIL </h2> <hr>
+
+  <table width="100%">
+  <tr>  
+    <td> Email Service </td>
+    <td align="right"> <input type="checkbox" name="smtp" <!--#exec cgi="smtp"--> >Enable </td>
+  </tr>
+  <tr>   
+    <td> SMTP Server IP </td>
+    <td align="right"> <input type="text" name="smtpip" value="<!--#exec cgi="smtpip"-->"> </td> 
+  </tr>
+  <tr>
+    <td> SMTP Server Port </td>
+    <td align="right"> 25 </td>
+  </tr>
+  <tr> 
+    <td> From: </td>
+    <td align="right"> <input type="text" name="from" value="<!--#exec cgi="from"-->"> </td>
+  </tr>
+  <tr>
+    <td> Subject: </td>
+    <td align="right"> <input type="text" name="sub" value="<!--#exec cgi="sub"-->"> </td>
+  </tr>
+  </table>
+  
+  <input type="submit" value="Save"> 
+  <input type="reset" value="Reset">
+  </form>
+  </body>
+</html>

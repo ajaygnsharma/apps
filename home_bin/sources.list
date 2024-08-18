@@ -1,0 +1,11 @@
+# 
+# deb cdrom:[Debian GNU/Linux 4.0 r9 _Etch_ - Official i386 NETINST Binary-1 20100523-09:56]/ etch contrib main
+
+#deb cdrom:[Debian GNU/Linux 4.0 r9 _Etch_ - Official i386 NETINST Binary-1 20100523-09:56]/ etch contrib main
+
+# Line commented out by installer because it failed to verify:
+#deb http://security.debian.org/ etch/updates main contrib
+# Line commented out by installer because it failed to verify:
+#deb-src http://security.debian.org/ etch/updates main contrib
+deb http://archive.debian.org/debian/ etch contrib main non-free
+

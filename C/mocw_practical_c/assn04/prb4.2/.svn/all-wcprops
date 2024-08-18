@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2
+END
+mylib.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2/mylib.h
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2/main.c
+END
+strtok.c
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2/strtok.c
+END
+assn4_2
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2/assn4_2
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn04/prb4.2/Makefile
+END

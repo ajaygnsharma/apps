@@ -1,0 +1,69 @@
+/*this is the program to input data from an ADC
+the connections are as follows.
+			_________
+P3.5->RD'  |      Vcc|----+
+P3.6->WR'  |		 |    |
+P3.7->INTR |         |    |
+		   |	 +Vin|----z
+P1.0<-D0   |	 -Vin|----z
+P1.1<-D1   |		 |
+P1.2<-D2   |	AGND |-----|>.
+P1.3<-D3   |		 |
+P1.4<-D4   |   Vref/2|---.
+P1.5<-D5   |     GND |-----|>.
+P1.6<-D6   |	  CS |--------|>.
+P1.7<-D7   |_________|
+*/
+#include<AT89X51.H>
+
+void send_uart(unsigned char val)
+{
+  TI   = 0x00;  // Clear Transmit Flag
+  SBUF = val;   // Send var to the Transmit Buffer: SBUF
+  while(TI != 0x01); //Wait for transmission to be completed.
+}
+
+void init_uart(void)
+{
+  TH1  = 0xFD;  // Set UART to 9600 Baud
+  SCON = 0x50; 	// Mode=8 bit UART
+  TMOD = 0x21;  // Set Timer1 to 8bit Auto Reload
+  TCON = 0x40;  // Start Timer 1 ON
+}
+
+void main(void)
+{
+  unsigned char adc_val = 0;
+  unsigned char i = 0;
+  unsigned char j = 0;
+
+  init_uart(); // Set up the uart
+
+  P1  |= 0xFF; //P1 is an Input
+  P3_5 = 0x01; //Set P3.5 as Input
+
+  while(1)
+  {
+    P3_4 = 0; //Prepare for Analog to Digital Conversion
+	P3_3 = 1; //Set Read to High
+	P3_4 = 1; //Start Analog to Digital Conversion
+
+	while(P3_5 != 1); //Wait until conversion done
+
+	P3_3 = 0; //Load 8 bit value to ADC0804 Outputs
+    adc_val = P1;//Read ADC0804 Output
+
+    send_uart(0x64);
+    send_uart(adc_val);
+    //send_uart(0x0d);
+    send_uart(0x64);
+
+      for(j = 0; j < 254; j++)
+      {
+        for(i = 0; i < 254; i++);
+      }
+
+      P3_3 = 1; //Disable ADC0804 Output
+
+  }
+}

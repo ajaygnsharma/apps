@@ -1,0 +1,1000 @@
+!SESSION 2009-08-16 11:17:52.456 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_10
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-16 11:17:59.400
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-16 11:17:59.401
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-16 11:17:59.402
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-16 11:17:59.411
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 11:25:29.209
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 2 2009-08-16 11:42:34.444
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.debug.core".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getProjectName(AbstractCLaunchDelegate.java:177)
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getCProject(AbstractCLaunchDelegate.java:162)
+	at org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin.handleDebugEvents(LaunchUIPlugin.java:213)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.run(DebugPlugin.java:1076)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.dispatch(DebugPlugin.java:1108)
+	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:344)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 11:42:34.446
+!MESSAGE An exception occurred while dispatching debug events.
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getProjectName(AbstractCLaunchDelegate.java:177)
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getCProject(AbstractCLaunchDelegate.java:162)
+	at org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin.handleDebugEvents(LaunchUIPlugin.java:213)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.run(DebugPlugin.java:1076)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.dispatch(DebugPlugin.java:1108)
+	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:344)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+!ENTRY org.eclipse.debug.core 4 2 2009-08-16 11:42:35.242
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.debug.core".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getProjectName(AbstractCLaunchDelegate.java:177)
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getCProject(AbstractCLaunchDelegate.java:162)
+	at org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin.handleDebugEvents(LaunchUIPlugin.java:213)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.run(DebugPlugin.java:1076)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.dispatch(DebugPlugin.java:1108)
+	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:344)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 11:42:35.244
+!MESSAGE An exception occurred while dispatching debug events.
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getProjectName(AbstractCLaunchDelegate.java:177)
+	at org.eclipse.cdt.launch.AbstractCLaunchDelegate.getCProject(AbstractCLaunchDelegate.java:162)
+	at org.eclipse.cdt.launch.internal.ui.LaunchUIPlugin.handleDebugEvents(LaunchUIPlugin.java:213)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.run(DebugPlugin.java:1076)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.debug.core.DebugPlugin$EventNotifier.dispatch(DebugPlugin.java:1108)
+	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:344)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+!ENTRY org.eclipse.jface 2 0 2009-08-16 11:50:35.125
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.setSelection(PartStack.java:1097)
+	at org.eclipse.ui.internal.PartStack.presentationSelectionChanged(PartStack.java:795)
+	at org.eclipse.ui.internal.PartStack.access$1(PartStack.java:781)
+	at org.eclipse.ui.internal.PartStack$1.selectPart(PartStack.java:123)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation$1.handleEvent(TabbedStackPresentation.java:126)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:267)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:276)
+	at org.eclipse.ui.internal.presentations.defaultpresentation.DefaultTabFolder.access$1(DefaultTabFolder.java:1)
+	at org.eclipse.ui.internal.presentations.defaultpresentation.DefaultTabFolder$2.handleEvent(DefaultTabFolder.java:84)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1109)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1094)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:935)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3171)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1953)
+	at org.eclipse.swt.custom.CTabFolder$1.handleEvent(CTabFolder.java:288)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3180)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:2856)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:1930)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1894)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.core.resources 4 372 2009-08-16 11:55:14.216
+!MESSAGE Resource /06_gtk_temperature_convertor is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-08-16 11:55:14.405
+!MESSAGE Resource /06_gtk_temperature_convertor is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-08-16 11:55:14.643
+!MESSAGE Resource /06_gtk_temperature_convertor is not open.
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 12:07:45.472
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 12:07:53.119
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 12:08:54.818
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-16 12:09:34.522
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+!SESSION 2009-08-20 15:30:57.777 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_10
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-20 15:31:05.751
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-20 15:31:05.761
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-20 15:31:05.762
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-20 15:31:05.772
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-08-20 15:34:55.462
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-20 15:35:52.819
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.core.resources 4 372 2009-08-20 15:35:56.916
+!MESSAGE Resource /06_gtk_temperature_convertor is not open.
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-20 15:36:19.222
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-20 15:37:01.134
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+!SESSION 2009-08-23 12:53:10.562 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_10
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-23 12:53:34.946
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-23 12:53:34.959
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-23 12:53:34.979
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-23 12:53:34.980
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-08-23 12:54:00.337
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.core.resources 4 368 2009-08-23 12:54:31.751
+!MESSAGE Resource /grdng does not exist.
+
+!ENTRY org.eclipse.core.resources 4 368 2009-08-23 12:54:33.165
+!MESSAGE Resource /grdng does not exist.
+
+!ENTRY org.eclipse.core.resources 4 368 2009-08-23 12:54:33.188
+!MESSAGE Resource /grdng does not exist.
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-23 12:55:49.103
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-23 13:02:50.002
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-08-23 13:04:02.854
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+!SESSION 2009-08-24 08:34:35.427 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_10
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-24 08:34:42.190
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-24 08:34:42.191
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-24 08:34:42.191
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-08-24 08:34:42.200
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-08-24 08:35:00.410
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SESSION 2009-12-15 10:53:54.239 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_14
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 10:53:55.413
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 10:53:55.413
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 10:53:55.413
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 10:53:55.413
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-12-15 10:54:10.503
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-12-15 10:59:43.893
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.debug.core 4 120 2009-12-15 11:04:46.240
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-15 11:04:46.301
+!MESSAGE Resource /02grdng is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-15 11:04:46.335
+!MESSAGE Resource /02grdng is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-15 11:04:46.392
+!MESSAGE Resource /02grdng is not open.
+
+!ENTRY org.eclipse.debug.core 4 120 2009-12-15 11:06:58.950
+!MESSAGE Error logged from Debug Core: 
+!STACK 0
+java.io.IOException: read error
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read0(Native Method)
+	at org.eclipse.cdt.utils.spawner.SpawnerInputStream.read(SpawnerInputStream.java:60)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at java.io.FilterInputStream.read(FilterInputStream.java:90)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:138)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.access$1(OutputStreamMonitor.java:128)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$1.run(OutputStreamMonitor.java:194)
+	at java.lang.Thread.run(Thread.java:619)
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-15 11:33:15.613
+!MESSAGE Resource /07_gtk_tmp_cvtr_1_file is not open.
+!SESSION 2009-12-15 13:13:15.994 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_14
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:13:17.567
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:13:17.568
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:13:17.568
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:13:17.568
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-12-15 13:13:29.009
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.core.resources 4 368 2009-12-15 13:37:59.637
+!MESSAGE Resource /05grdng does not exist.
+
+!ENTRY org.eclipse.core.resources 4 368 2009-12-15 13:37:59.639
+!MESSAGE Resource /05grdng does not exist.
+
+!ENTRY org.eclipse.core.resources 4 368 2009-12-15 13:38:10.706
+!MESSAGE Resource /04grdng does not exist.
+
+!ENTRY org.eclipse.core.resources 4 368 2009-12-15 13:38:10.713
+!MESSAGE Resource /04grdng does not exist.
+
+!ENTRY org.eclipse.cdt.core 4 4 2009-12-15 13:39:06.181
+!MESSAGE Error
+!STACK 0
+java.lang.ArrayIndexOutOfBoundsException: 3072
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:110)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.putInt(Database.java:255)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.removeBlock(Database.java:206)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:176)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:53)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:278)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMMacro.<init>(PDOMMacro.java:57)
+	at org.eclipse.cdt.internal.core.pdom.dom.PDOMFile.addMacro(PDOMFile.java:180)
+	at org.eclipse.cdt.internal.core.pdom.indexer.fast.PDOMFastIndexerJob.addSymbols(PDOMFastIndexerJob.java:120)
+	at org.eclipse.cdt.internal.core.pdom.indexer.fast.PDOMFastHandleDelta.changeTU(PDOMFastHandleDelta.java:157)
+	at org.eclipse.cdt.internal.core.pdom.indexer.fast.PDOMFastHandleDelta.run(PDOMFastHandleDelta.java:55)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:60)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SESSION 2009-12-15 13:40:10.476 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_14
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:40:11.640
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:40:11.640
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:40:11.640
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-15 13:40:11.640
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-12-15 13:40:16.581
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SESSION 2009-12-16 16:04:37.850 -----------------------------------------------
+eclipse.buildId=M20070212-1330
+java.version=1.6.0_14
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-16 16:04:42.814
+!MESSAGE NLS missing message: initializer_error in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-16 16:04:42.815
+!MESSAGE NLS missing message: fileInitializer_fileNotFound in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-16 16:04:42.815
+!MESSAGE NLS missing message: fileInitializer_IOError in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.osgi 2 1 2009-12-16 16:04:42.815
+!MESSAGE NLS missing message: fileInitializer_missingFileName in: org.eclipse.core.internal.runtime.messages
+
+!ENTRY org.eclipse.jface 2 0 2009-12-16 16:04:51.627
+!MESSAGE The image could not be loaded: URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+!STACK 0
+org.eclipse.jface.resource.DeviceResourceException: Unable to create resource URLImageDescriptor(bundleentry://129/icons/dtool16/target_filter.gif)
+	at org.eclipse.jface.resource.ImageDescriptor.createResource(ImageDescriptor.java:173)
+	at org.eclipse.jface.resource.DeviceResourceManager.allocate(DeviceResourceManager.java:56)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.LocalResourceManager.allocate(LocalResourceManager.java:83)
+	at org.eclipse.jface.resource.AbstractResourceManager.create(AbstractResourceManager.java:87)
+	at org.eclipse.jface.resource.ResourceManager.createImageWithDefault(ResourceManager.java:114)
+	at org.eclipse.jface.action.ActionContributionItem.updateImages(ActionContributionItem.java:936)
+	at org.eclipse.jface.action.ActionContributionItem.update(ActionContributionItem.java:709)
+	at org.eclipse.jface.action.ActionContributionItem.fill(ActionContributionItem.java:330)
+	at org.eclipse.jface.action.ToolBarManager.update(ToolBarManager.java:317)
+	at org.eclipse.ui.internal.ViewPane.updateActionBars(ViewPane.java:443)
+	at org.eclipse.ui.internal.ViewActionBars.updateActionBars(ViewActionBars.java:59)
+	at org.eclipse.ui.internal.ViewReference.createPartHelper(ViewReference.java:363)
+	at org.eclipse.ui.internal.ViewReference.createPart(ViewReference.java:197)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.ViewPane.setVisible(ViewPane.java:525)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:620)
+	at org.eclipse.ui.internal.PartStack.createControl(PartStack.java:532)
+	at org.eclipse.ui.internal.PartSashContainer.createControl(PartSashContainer.java:562)
+	at org.eclipse.ui.internal.PerspectiveHelper.activate(PerspectiveHelper.java:244)
+	at org.eclipse.ui.internal.Perspective.onActivate(Perspective.java:815)
+	at org.eclipse.ui.internal.WorkbenchPage.onActivate(WorkbenchPage.java:2436)
+	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:2616)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.setActivePage(WorkbenchWindow.java:2597)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1982)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2873)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2821)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1697)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1437)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1695)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1666)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1545)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1489)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1101)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1863)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:422)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.ui.ide 2 4 2009-12-16 16:08:29.299
+!MESSAGE Problems occurred closing the selected resources.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2009-12-16 16:08:29.299
+!MESSAGE The project description file (.project) for 06grdng was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-16 16:08:29.401
+!MESSAGE Resource /06grdng is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-16 16:10:54.373
+!MESSAGE Resource /06grdng is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-16 17:08:24.364
+!MESSAGE Resource /07_gtk_tmp_cvtr_1_file is not open.
+
+!ENTRY org.eclipse.core.resources 4 372 2009-12-16 17:08:24.425
+!MESSAGE Resource /07_gtk_tmp_cvtr_1_file is not open.

@@ -1,0 +1,4 @@
+assn04/prb4.2/main.d assn04/prb4.2/main.o: ../assn04/prb4.2/main.c \
+ ../assn04/prb4.2/mylib.h
+
+../assn04/prb4.2/mylib.h:
