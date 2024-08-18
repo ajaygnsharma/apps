@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;/05_io_pins/table.html&apos; to &apos;table_loop.html&apos;&#x0D;&#x0A;- Original project: &apos;05_io_pins&apos;&#x0D;&#x0A;- Original element: &apos;table.html&apos;" description="Rename resource &apos;table.html&apos;" flags="7" id="org.eclipse.wst.jsdt.ui.rename.resource" input="table.html" name="table_loop.html" stamp="1227553741742" version="1.0"/>
+</session>

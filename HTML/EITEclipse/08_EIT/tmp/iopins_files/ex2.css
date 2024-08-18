@@ -1,0 +1,58 @@
+h2 {color: SteelBlue}
+hr {color: grey}
+h3 {color: SteelBlue}
+table {border-color: grey}
+th {background-color: PowderBlue}
+
+
+/* tab menu */
+table#tabmenu 
+{
+height: 25px;
+margin-top: 10px;	
+}
+
+/* Tab Border */
+table#tabmenu td 
+{
+border-bottom: 2px solid PowderBlue;
+}
+
+/* Tab Properties */
+table#tabmenu td.tab 
+{
+width: 150px;
+text-align: center;
+}
+
+/* Unselected tab properties */
+table#tabmenu td.tab a 
+{
+background-color: White;
+border-right: 2px solid PowderBlue;
+border-top: 2px solid PowderBlue;
+border-left: 2px solid PowderBlue;
+display: block;
+line-height: 25px;
+}
+
+/* Selected tab properties */
+table#tabmenu td.tab a:hover, table#tabmenu td#selectedtab a  
+{
+border-right: 2px solid PowderBlue;
+border-top: 2px solid PowderBlue;
+border-left: 2px solid PowderBlue;
+text-decoration:none;
+background-color: LightCyan;
+}
+
+/* Selected tab properties */
+table#tabmenu td#selectedtab 
+{
+border-bottom: 2px solid LightCyan;
+}
+
+table#tabmenu td.separator 
+{
+width: 5px;
+}

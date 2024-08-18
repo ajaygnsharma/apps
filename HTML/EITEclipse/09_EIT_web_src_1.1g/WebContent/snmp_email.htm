@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>MANAGEMENT</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+
+<script language="JavaScript" type="text/javascript">  
+    function Snmp_able () 
+    {
+	  if(document.getElementById("snmp").checked==false)
+      {
+        document.snmptable.c_str.disabled=true;
+        document.snmptable.Contact.disabled=true;
+	    document.snmptable.Location.disabled=true;
+	  }
+     
+	  if(document.getElementById("snmp").checked==true)
+      {
+        document.snmptable.c_str.disabled=false;
+        document.snmptable.Contact.disabled=false;
+        document.snmptable.Location.disabled=false;
+      }
+   
+      if(document.getElementById("trap").checked==false)
+      {
+        document.snmptable.trap_ip.disabled=true;
+      }
+     
+	  if(document.getElementById("trap").checked==true)
+      {
+        document.snmptable.trap_ip.disabled=false;
+      }
+      
+	  if(document.getElementById("smtp").checked==false)
+      {
+        document.snmptable.smtpip.disabled=true;
+        document.snmptable.from.disabled=true;
+        document.snmptable.sub.disabled=true;
+      }
+      
+	  if(document.getElementById("smtp").checked==true)
+      {
+        document.snmptable.smtpip.disabled=false;
+        document.snmptable.from.disabled=false;
+		document.snmptable.sub.disabled=false;
+      }
+    }
+  </script>
+
+<body onload="Snmp_able()">
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+	<li> <a href='load?PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li style="color: black; font-weight: bold"> Management </li>
+
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PAGENO=9'> Read Device </a></li>
+
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PAGENO=11'> System </a></li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form name="snmptable" method="post" action="smtpsnmp">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+
+				<td class="tab" id="selectedtab"><a href='load?PAGENO=5'>Email,SNMP</a></td>
+
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PAGENO=20'>Alarm 1</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PAGENO=21'>Alarm 2</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PAGENO=22'>Alarm 3</a></td>
+
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PAGENO=23'>Alarm 4</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PAGENO=24'>Alarm 5</a></td>
+				<td class="separator">&nbsp;</td>
+			</tr>
+		</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>SNMP</h2>
+		</td>
+	</tr>
+	<tr>
+
+		<td>
+		<table width="100%" border="0" class="t_content">
+			<tr>
+				<td>SNMP Service</td>
+				<td align="right"><input type="checkbox" name="snmp" id="snmp"
+					onclick="Snmp_able()"  > Enable</td>
+			</tr>
+			<tr>
+
+				<td>SNMP Community</td>
+				<td align="right"><input type="text" name="c_str"
+					value="Public" size="11" maxlength="11"></td>
+			</tr>
+			<tr>
+				<td>Contact</td>
+				<td align="right"><input type="text" name="Contact" size="11" maxlength="11" value="cmx@cmx.com">
+				</td>
+			</tr>
+
+			<tr>
+				<td>Location</td>
+				<td align="right"><input type="text" name="Location" size="11" maxlength="11" value="Third floor">
+				</td>
+			</tr>
+			<tr>
+				<td>SNMP Traps</td>
+				<td align="right"><input type="checkbox" name="trap" id="trap"
+					onclick="Snmp_able()"  > Enable</td>
+
+			</tr>
+			<tr>
+				<td>SNMP Trap Server IP</td>
+				<td align="right"><input type="text" name="trap_ip" size="15" maxlength="15" value="0.0.0.0"
+				></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+		<h2>EMAIL</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" class="t_content">
+
+			<tr>
+				<td>Email Service</td>
+				<td align="right"><input type="checkbox" name="smtp" id="smtp"
+					onclick="Snmp_able()"  >Enable</td>
+			</tr>
+			<tr>
+				<td>SMTP Server IP</td>
+				<td align="right"><input type="text" name="smtpip" size="15" maxlength="15" value="0.0.0.0">
+
+				</td>
+			</tr>
+			<tr>
+				<td>SMTP Server Port</td>
+				<td align="right">25</td>
+			</tr>
+			<tr>
+				<td>From:</td>
+
+				<td align="right"><input type="text" name="from" size="30" maxlength="30" value="">
+				</td>
+			</tr>
+			<tr>
+				<td>Subject:</td>
+				<td align="right"><input type="text" name="sub" size="30" maxlength="30" value="">
+				</td>
+			</tr>
+
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Save"> <input
+			type="reset" value="Reset"></td>
+	</tr>
+</table>
+</form>
+</div>
+
+</body>
+</html>

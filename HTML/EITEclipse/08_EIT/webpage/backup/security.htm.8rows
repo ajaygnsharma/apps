@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+    <title> Security </title>
+  </head>
+  <body>
+  <h2> SECURITY </h2>
+  <hr>
+  
+  <table width="100%">
+  <tr>
+    <td> Login Password </td> 
+    <td align="right"> <input type="text" name="login" value="<!--#exec cgi="lpass"-->" size="8" maxlength="8" disabled> <a href="/change_login.htm"> change </a></td>
+  </tr>
+  </form>
+  
+  <form name="admin_password" action="adminpass" method="post">
+  <tr>
+    <td> Admin Password </td>
+    <td align="right"> <input type="text" name="admin" value="<!--#exec cgi="apass"-->" size="8" maxlength="8" disabled> <a href="/change_admin.htm"> change </a></td>
+  </tr>
+  </form> 
+  
+  <form name="serial_password" action="serialpass" method="post"> 
+  <tr> 
+    <td> Serial Port Password </td>
+    <td align="right"> <input type="text" name="serial" value="<!--#exec cgi="spass"-->" size="8" maxlength="8" disabled> <a href="/change_serial.htm"> change </a> </td>
+  </tr>
+  </form>
+  </table>
+  
+  
+  <form name="security" action="security" method="post">
+  <table width="100%">
+  
+  <tr>
+    <td> Internet Console Access </td>
+    <td> </td>
+    <td align="right"> 
+      <input type="checkbox" name="ica" value="1" <!--#exec cgi="ica"-->>
+    </td>
+  </tr>
+  
+  <tr>
+    <td> Serial Port Console Access </td>
+    <td> </td>    
+    <td align="right"> 
+      <input type="checkbox" name="spca" value="1" <!--#exec cgi="spca"-->>
+    </td>
+  </tr>
+  
+  <tr>
+    <td> Web Server Access </td>
+    <td> </td>    
+    <td align="right"> 
+      <input type="checkbox" name="wsa" value="1" <!--#exec cgi="wsa"-->>
+    </td>
+  </tr>
+  </table>
+  
+  <hr>
+  
+  <table width="100%">
+    <tr> 
+	  <td> <h2> IP Exclusivity <h2> </td> 
+	  <td> </td>
+	  <td align="right"> <input type="checkbox" value="1"> Enable </td>
+	</tr> 
+  </table>
+  
+  <table border="1" align="center">
+    <tr> 
+	  <th> No. </th>
+	  <th> IP Address </th>
+	  <th> Subnet Mask </th>
+	</tr>
+	
+	<tr> 
+	  <td> 1. </td>
+	  <td> <input type="text" name="ip1" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask1" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 2. </td>
+	  <td> <input type="text" name="ip2" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask2" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 3. </td>
+	  <td> <input type="text" name="ip3" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask3" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 4. </td>
+	  <td> <input type="text" name="ip4" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask4" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 5. </td>
+	  <td> <input type="text" name="ip5" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask5" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 6. </td>
+	  <td> <input type="text" name="ip6" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask6" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 7. </td>
+	  <td> <input type="text" name="ip7" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask7" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+	<tr> 
+	  <td> 8. </td>
+	  <td> <input type="text" name="ip8" value="192.168.1.102" size="15" maxlength="15">  </td>
+	  <td> <input type="text" name="mask8" value="255.255.255.0" size="15" maxlength="15"> </td>
+	</tr>
+	
+  </table>
+  
+  <center>
+    <input type="submit" value="Save" /> 
+    <input type="reset" value="Reset" />
+  </center>
+  </form> 
+</body>
+</html>

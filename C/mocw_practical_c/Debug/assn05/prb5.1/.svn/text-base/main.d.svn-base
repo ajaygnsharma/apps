@@ -1,0 +1,4 @@
+assn05/prb5.1/main.d assn05/prb5.1/main.o: ../assn05/prb5.1/main.c \
+ ../assn05/prb5.1/llist.h
+
+../assn05/prb5.1/llist.h:

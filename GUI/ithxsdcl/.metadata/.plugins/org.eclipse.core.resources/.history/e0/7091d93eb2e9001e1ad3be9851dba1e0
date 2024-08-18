@@ -1,0 +1,11 @@
+
+#ifndef READING_INC
+#define READING_INC
+
+//#include <gtk/gtk.h>
+
+//#include "main.h"
+
+void get_reading(GtkWidget *entry, TemperatureData *td);
+
+#endif

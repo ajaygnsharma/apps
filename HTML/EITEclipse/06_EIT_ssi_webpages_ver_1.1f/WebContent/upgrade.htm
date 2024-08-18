@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<script type="text/javascript">
+  function disp_confirm()
+  {
+    var ans = confirm("WARNING: Are you SURE you want to upgrade the firmware?");
+	if(ans)
+	{
+	  return true;
+	}
+    else
+	{
+	  return false;
+	}
+  }
+</script>
+  
+<title>Upgrade</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+
+<body>
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=2'> Network </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=5'> Management </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=6'> Security </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=9'> Read Device </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=10'> Terminal </a></li>
+	<li><a style="color: black; font-weight: bold"
+		href='system_admin.htm'> System </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form action="upgrade" enctype="multipart/form-data"  method="post" onSubmit="return disp_confirm()">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=11'>Reboot</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=25'>Defaults</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab" id="selectedtab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=26'>Upgrade</a></td>
+				<td class="separator">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>Upgrade iServer</h2>
+		</td>
+	</tr>
+	<tr>
+	<tr>
+		<td>Upload New Firmware <input type="file" name="datafile" size="30"></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Upload now" /></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

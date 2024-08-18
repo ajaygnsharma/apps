@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" 
+    href="help.css" />
+  <title> Alarms Help</title>
+</head>
+
+<body>
+
+<h3> SNMP </h3> 
+<p> iServer’s built-in SNMP (Simple Network Management Protocol) agent supports SNMP Trap, RFC1317 RS-232/485 like groups and RFC 1213 MIB-II.
+
+<h3> SNMP Service </h3> 
+<p> The options are Enable and Disable. Disabling the SNMP Service prevents host SNMP software from communicating with the iServer. When SNMP Service is disabled other fields under this category will be dimmed. The default is Disable.
+ 
+<h3> SNMP Community </h3> 
+<p> It’s a plain-text password mechanism that is used to authenticate queries to agents of managed network devices. The default is Public.
+
+<h3> Contact </h3> 
+<p> The SNMP contact information usually includes an emergency contact name and telephone or pager number.
+
+<h3> Location </h3> 
+<p> Specifies the location string for SNMP agents such as the iServer. This basically means where the iServer is physically located.
+
+<h3> SNMP Traps </h3> 
+<p> When certain conditions are met, the iServer is able to send SNMP Traps to the network where the SNMP Trap Server is located. These conditions are defined in the later sections. The default is Disable.
+
+
+
+
+<h3> Email Service </h3> 
+<p> The options are Enable and Disable. When certain conditions are met, the iServer is able to send emails to recipients whose email addresses have been entered in the iServer’s Alarm Properties. These conditions are defined in the later sections. When email Service is disabled other fields under this category will be dimmed. The default is Disable.
+ 
+<h3> SMTP Server IP </h3> 
+<p> This is the IP address for the SMTP (Simple Mail Transfer Protocol) server located somewhere on the network.
+
+<h3> SMTP Server Port </h3> 
+<p> This is the TCP port number for the SMTP server. The default is 25.
+
+<h3> From </h3> 
+<p> This is the iServer’s address sending the email.
+
+<h3> Subject </h3> 
+<p> This is the subject line (maximum of 100 characters with spaces) for the email sent
+
+<h3> Alarm </h3> 
+<p> This includes events or conditions listed below. Once a condition is met then the iServer will prompt a trigger by sending an email or/and an SNMP Trap if either or both are checked. When the box is unchecked other fields under this category will be dimmed. The default is unchecked.
+
+<h3> Power Reset </h3> 
+<p> This refers to starting the iServer from power off (cold start) or restarting the iServer without turning the power off (warm start). If the option is checked the iServer will automatically send an email or/and an SNMP trap after rebooting. The default is unchecked.
+
+<h3> IP Address Changed </h3> 
+<p> If the IP address of the iServer is changed, the iServer it will prompt a trigger. The default is unchecked.
+
+<h3> iServer Accessed </h3> 
+<p> If the iServer is accessed via Telnet Console (port 2002) or its web server, either would be considered as a trigger. The default is unchecked. 
+
+<h3> Serial Port Disconnected </h3> 
+<p> If the serial cable between the iServer and the attached serial device is disconnected, the iServer will prompt a trigger. The default is unchecked.
+
+<h3> Input Pins & Conditions </h3> 
+<p> This is the digital input described in I/O Pins section. If the Input Condition changes to Low or High the iServer will prompt a trigger. The default is unchecked.
+
+<h3> Character 1 & Character 2 </h3> 
+<p> If the iServer receives a serial character in the communication stream that matches with Character 1 (in hex) it will prompt a trigger. If the iServer receives two serial characters that match with Character 1 and Character 2 that would also be considered as a trigger. The default is unchecked.
+
+
+<h3> Reminder Interval </h3> 
+<p> It’s the time interval (in seconds) in which the next email message is sent to the recipients when a trigger event remains active. The default is 0 which means no reminder email. 
+
+<h3> Priority </h3> 
+<p> This is the priority level for the email. The options are High and Low.	
+
+<h3> To </h3> 
+<p> Email addresses to which email notifications (alarms) are sent. The maximum length for entering addresses is 250 characters (with spaces). The email addresses can be separated by a semicolon (;). 
+ 
+<h3> Message </h3> 
+<p> Information about the trigger event (maximum of 500 characters with spaces) emailed to the specified recipients
+
+</body>
+</html>
+

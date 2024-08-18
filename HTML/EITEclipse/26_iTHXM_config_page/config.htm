@@ -1,0 +1,174 @@
+<html>
+<head>
+<title>Configuration</title>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#000080" alink="#008000">
+<center>
+<table>
+	<tr valign=center>
+		</td>
+		<td><font face="Arial Black" size=5>CONFIGURATION</font></td>
+	</tr>
+</table>
+</center>
+<p>
+<center>
+<form name=x method=post action="check"><script
+	language="JavaScript">
+function E(s) {
+ if (s=="") s="&nbsp;";
+ document.write("<td align=center>"+s+"</td>");
+}
+var dev_na= new Array( "1","2","3","1" );
+var dev_nb= new Array( );
+var dev_nc= new Array( "Temperature","Humidity","Dewpoint" );
+var dev_nd= new Array( "000.0","000.0","000.0" );
+var dev_ne= new Array( "SRTF","SRH","SRDF" );
+var dev_nf= new Array( "T_00.00F","H_00.00%","D_00.00F" );
+var dev_ng= new Array( "0D","0D","0D" );
+var dev_nh= new Array( );
+var dev_ni= new Array( );
+var dev_nj= new Array( );
+var dev_nk= new Array( "decimal","decimal","decimal");
+
+var K;
+document.write("<TABLE BORDER=1>");
+document.write("<tr><th>No.</th><th>Sensor Name</th><th>Read Command</th><th>Remote Format</th><th>Remote End Char(Hex)</th><th>Offset</th></tr>");
+for(K=0;K<3;K++)
+{
+document.write("<tr>");
+document.writeln("<td align=center><a href=\"mod_dev?PW=12345678&N="+dev_na[K]+"\">"+dev_na[K]+"</a></td>");
+E(dev_nc[K]);
+E(dev_ne[K]);
+E(dev_nf[K]);
+E(dev_ng[K]);
+E(dev_nd[K]);
+}
+document.write("</tr>");
+function Conf() {
+var response = window.confirm("WARNING! New Recording Will Erase Existing Data. Save Data or Replace Flash. Start Recording?");
+if (response) document.writeln("<a href=\"mod_dev?N=4\">Do Recording</a>");
+}</script>
+</table>
+<p><small>Click on Sensor No. on the left to modify Sensor
+Parameters.</small>
+<p>
+<p>
+<P>Title:<input type=text name=TITL size=16 value="Data_Record_Test">
+&nbsp Degree Unit:<select name=DGRE size=1>
+	<option value=0>F
+	<option value=1>C
+</select>&nbsp LCD/PWR:<select name=LCD size=1>
+	<option value=0>ON
+	<option value=1>OFF
+	<option value=2>UPS
+</select>
+<p><font face="Arial Black">2-MegaBytes Flash Card 0 Kbytes
+Used Space<font color=LimeGreen>
+<p>Flash Card Recording On. AC Power On. Check Battery.
+</font></color></font> <input type=hidden name=PW value="12345678"> <font
+	face="Arial Black">
+<p>Alarm Setup
+</font>
+<p>Alarm 1 Temperature:<select name=ARM1 size=1>
+	<option value=0>Disable
+	<option value=1>Low
+	<option value=2>High
+	<option value=3>High/Low
+</select>&nbsp Alarm 2 Humidity:<select name=ARM2>
+	size=1
+	<option value=0>Disable
+	<option value=1>Low
+	<option value=2>High
+	<option value=3>High/Low
+</select>
+<p>Enabled Alarm 1:<select name=LAT1 size=1>
+	<option value=0>Unlatch
+	<option value=1>Latch
+	<option value=2>Clear Latch
+	<option value=3>Chart SP
+</select>&nbsp Enabled Alarm 2:<select name=LAT2 size=1>
+	<option value=0>Unlatch
+	<option value=1>Latch
+	<option value=2>Clear Latch
+	<option value=3>Chart SP
+</select> </select>
+<p>SP1_L:<input type=text name=SP_1 size=5 value=032.5>nnn.n
+&nbsp SP2_L:<input type=text name=SP_2 size=5 value=025.5>nnn.n
+<p>SP1_H:<input type=text name=SP_3 size=5 value=085.5>nnn.n
+&nbsp SP2_H:<input type=text name=SP_4 size=5 value=065.5>nnn.n
+
+
+<p><font face="Arial Black"> Terminal Server </font>
+<p>TCP/UDP:<select name=TU size=1>
+	<option value=0>TCP
+	<option value=1>UDP
+</select> Server Type:<select name=TSRT size=1>
+	<option value=0>Command
+	<option value=1>Continuous
+</select>Forward CR:<select name=EED size=1>
+	<option value=0>Disable
+	<option value=1>Enable
+</select> Number of Connections:<select name=TSRS size=1>
+	<option value=5>5
+	<option value=0>0
+	<option value=1>1
+	<option value=2>2
+	<option value=3>3
+	<option value=4>4
+</select> Port:<input type=text name=TPT size=4 value="2000">
+<p>Time Stamp <input type=checkbox name=TSTP value=S>
+<p><font face="Arial Black"> Remote Access (Tunneling) </font>
+<p>Remote IP Address:<input type=text name=RIP size=17
+	value="0.0.0.0"> Remote Port:<input type=text name=RPT size=4
+	value="2000"> Remote Access:<select name=RMT size=1>
+	<option value=0>Disable
+	<option value=1>Enable
+</select> <input type=hidden name=N value=3>
+<p><input type=submit value="Update">
+</form>
+<p>
+<p><font face="Arial Black"> Flash Recording</font>
+<p>Type:<select name=RTYP size=1>
+	<option value=2>Limited
+	<option value=0>No Recording
+	<option value=1>Full Flash
+</select> &nbsp Interval:<select name=RINT size=1>
+	<option value=0>10_sec
+	<option value=1>01_min
+</select>
+<p>Clock Date: <input type=text name=CKD size=10
+	value="03/12/2009
+">mm/dd/yyyy &nbsp Time: <input type=text
+	name=CKT size=8 value="11:20:53">hh:mm:ss
+<p>Start Date:<input type=text name=RSD size=10 value="03/12/2009">mm/dd/yyyy
+&nbsp Time: <input type=text name=RST size=8 value="11:04:10">hh:mm:ss
+
+<p>End Date: <input type=text name=RED size=10 value="03/12/2009">mm/dd/yyyy
+&nbsp Time: <input type=text name=RET size=8 value="11:30:13">hh:mm:ss
+
+<form name=x method=POST action="check"><input type=hidden
+	name=PW value="12345678"> <input type=hidden name=N value=6>
+<input type=submit value="Stop Recording"
+<p>
+</form>
+<table width="300">
+	<tr>
+		<td>
+		<form name=x method=POST action="check"><input type=hidden
+			name=PW value="12345678"> <input type=hidden name=N value=5>
+		<input type=submit value="Read Settings"></form>
+		</td>
+		<td>
+		<form name=x method=POST action="check"><input type=hidden
+			name=PW value="12345678"> <input type=hidden name=N value=7>
+		<input type=submit value="Hard Reset"></form>
+		</td>
+	</tr>
+</table>
+<p>
+<p>
+<center>
+<p><a href="/login?PW=12345678">Main Menu</a>
+</body>
+</html>

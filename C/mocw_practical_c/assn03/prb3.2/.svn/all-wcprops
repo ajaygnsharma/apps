@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2
+END
+dict
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/dict
+END
+dict.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/dict.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/main.c
+END
+pathnames.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/pathnames.h
+END
+core
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/core
+END
+dict.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/dict.h
+END
+dict.dat
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/dict.dat
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn03/prb3.2/Makefile
+END

@@ -1,0 +1,1 @@
+quiz/03/sort.d quiz/03/sort.o: ../quiz/03/sort.c

@@ -1,0 +1,41 @@
+<html>
+<head>
+<script type="text/javascript">
+function insRow()
+{
+var x=document.getElementById('t1').insertRow(0);
+var y=x.insertCell(0);
+y.innerHTML="<input type=checkbox name=Alarm1 id=Alarm1> Enable";
+
+//Row 1
+var i = document.getElementById('t2').insertRow(0);
+var j = i.insertCell(0);
+var k = i.insertCell(1);
+var l = i.insertCell(2);
+
+j.innerHTML="Events";
+k.innerHTML="Email";
+l.innerHTML="SNMP Traps";
+
+//Row 2
+var q = document.getElementById('t2').insertRow(1);
+var r = q.insertCell(0);
+var s = q.insertCell(1);
+var t = q.insertCell(2);
+
+r.innerHTML= "iServer accessed";
+s.innerHTML= "<input type=checkbox name=a1_e_ipc>";
+t.innerHTML= "<input type=checkbox name=a1_t_ipc id=a1_t_ipc>";
+
+}
+</script>
+</head>
+
+<body onLoad="insRow()">
+<table id="t1" border="1">
+</table>
+
+<table id="t2" border="1">
+</table>
+</body>
+</html>

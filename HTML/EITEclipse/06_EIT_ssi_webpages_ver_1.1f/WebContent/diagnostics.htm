@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+<title>DIAGNOSTICS</title>
+</head>
+
+<body>
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=2'> Network </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=5'> Management </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=6'> Security </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=9'> Read Device </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=11'> System </a></li>
+	<li style="color: black; font-weight: bold" >Diagnostics</li>
+</ul>
+</div>
+
+<div id="content">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<h2>DIAGNOSTICS</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="x" method="POST" action="rst_cnt">
+		<table width="100%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>Serial Port</th>
+				<th>Recieved</th>
+				<th>Transmitted</th>
+			</tr>
+			<tr>
+				<td>Bytes</td>
+				<td><!--#exec cgi="rx_bytes"--></td>
+				<td><!--#exec cgi="tx_bytes"--></td>
+				<td align="right"><input type="hidden" name="cnt_type"
+					value="1"> <input type="submit" value="Reset Counter">
+				</td>
+			</tr>
+		</table>
+		</form>
+		</td>
+	</tr>
+	<tr>
+		<td><script type="text/javascript">
+  var a;
+  a = 1;
+  
+  if(a == <!--#exec cgi="fullserial"-->)
+  {
+  document.writeln("<table width=\"100%\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\">");
+  document.writeln("<tr>");
+  document.writeln("<td> CTS </td>");
+  document.writeln("<td align=\"right\"> <img src=\"<!--#exec cgi="cts"-->\"> </td> ");
+  document.writeln("</tr>");
+  document.writeln("<tr>");
+  document.writeln("<td> RTS </td>"); 
+  document.writeln("<td align=\"right\"> <img src=\"<!--#exec cgi="rts"-->\"> </td> ");	
+  document.writeln("</tr>");
+  document.writeln("<tr>");
+  document.writeln("<td> DSR </td>"); 
+  document.writeln("<td align=\"right\"> <img src=\"<!--#exec cgi="dsr"-->\"> </td> ");
+  document.writeln("</tr>");
+  document.writeln("<tr>");
+  document.writeln("<td> DCD </td>"); 
+  document.writeln("<td align=\"right\"> <img src=\"<!--#exec cgi="dcd"-->\"> </td> ");
+  document.writeln("</tr>");
+  document.writeln("<tr>");
+  document.writeln("<td> DTR  </td>");
+  document.writeln("<td align=\"right\"> <img src=\"<!--#exec cgi="dtr"-->\"> </td> "); 
+  document.writeln("</tr>");
+  document.writeln("</table>");
+  }
+  else
+  {
+    document.writeln(" ");
+  }
+  </script></td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" class="t_content">
+			<tr>
+				<th>Ethernet Port</th>
+				<th>Recieved</th>
+				<th>Transmitted</th>
+			</tr>
+			<form name="x" method="POST" action="rst_cnt">
+			<tr>
+				<td>TCP</td>
+				<td><!--#exec cgi="tcp_rx_bytes"--></td>
+				<td><!--#exec cgi="tcp_tx_bytes"--></td>
+				<td align="right"><input type="hidden" name="cnt_type"
+					value="2"> <input type="submit" value="Reset Counter">
+				</td>
+			</tr>
+			</form>
+
+			<form name="x" method="POST" action="rst_cnt">
+			<tr>
+				<td>UDP</td>
+				<td><!--#exec cgi="udp_rx_bytes"--></td>
+				<td><!--#exec cgi="udp_tx_bytes"--></td>
+				<td align="right"><input type="hidden" name="cnt_type"
+					value="3"> <input type="submit" value="Reset Counter">
+				</td>
+			</tr>
+			</form>
+
+			<form name="x" method="POST" action="rst_cnt">
+			<tr>
+				<td>ICMP</td>
+				<td><!--#exec cgi="icmp_rx_bytes"--></td>
+				<td><!--#exec cgi="icmp_tx_bytes"--></td>
+				<td align="right"><input type="hidden" name="cnt_type"
+					value="4"> <input type="submit" value="Reset Counter">
+				</td>
+			</tr>
+			</form>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>PING</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="x" method="POST" action="rst_cnt">Host IP Address <input
+			type="text" name="ip" value="" size="15" maxlength="15"> <input
+			type="text" name="cnt" value="" size="1" maxlength="1">
+		Count <input type="hidden" name="cnt_type" value="5"> <input
+			type="submit" value="Submit"></form>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

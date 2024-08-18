@@ -1,0 +1,133 @@
+
+#ifndef MICRONET_flash
+#define MICRONET_flash	1
+
+#include "np_includes.h"
+extern byte ipmac_sconfig;
+extern byte power_on;
+extern byte dhcp_led;
+
+void flash_write_default(void);
+void flash_write(unsigned long *buf);
+
+//int flash_reads (byte *str, byte location,byte type,byte number) reentrant;
+unsigned char flash_read(unsigned long *str,unsigned long location,unsigned long number)cmx_reentrant;
+////void flash_write_default(void) reentrant;
+//void flash_ip_mac_cnfg(void) reentrant;
+//byte ip_process(byte *ip_buff,byte position) reentrant;
+//byte mac_process(byte *mac_buff) reentrant;
+////void flash_data_write(byte * indata, byte location,byte type, byte number) reentrant;
+////void flash_data_nwrite(byte * indata, byte location,byte type, byte number) reentrant;
+//void buffer_copy(char *dest, char *src, int number) reentrant;
+void read_network_cfg(void) cmx_reentrant;
+//
+//
+//#define flash_mac 0x00
+//#define flash_MAC 3
+//
+//#define eeprom_ip 0x03,EEPROM_WORD
+//#define eeprom_IP 2
+//#define eeprom_timeout 0x0b,EEPROM_WORD
+//#define eeprom_TM 2
+//#define eeprom_dns 0x27,EEPROM_WORD
+//#define eeprom_DNS 9
+//
+//
+//#define eeprom_fctl 0x05,EEPROM_WORD // flow control
+//#define eeprom_modbus 0x06,EEPROM_WORD // TCP/MODBUS
+//#define eeprom_tcpudp 0x07,EEPROM_WORD // TCP/UDP
+//#define eeprom_cctrl 0x08,EEPROM_WORD // CONNECTION CONTROL
+//#define eeprom_ctm	0x0a,EEPROM_WORD // CONNECTION TIMEOUT
+//
+//#define eeprom_baud 0x11,EEPROM_WORD
+//#define eeprom_data 0x12,EEPROM_WORD
+//#define eeprom_stop 0x13,EEPROM_WORD
+//#define eeprom_parity 0x14,EEPROM_WORD
+//#define eeprom_smode 0x15,EEPROM_WORD
+//#define eeprom_id 0x16,EEPROM_WORD	// id & id_number
+//#define eeprom_ID 1
+//#define eeprom_chk 0x17,EEPROM_WORD
+//#define eeprom_CHK 1
+//#define eeprom_type 0x18,EEPROM_WORD // FOR UNIT TYPE
+//#define eeprom_TYPE 1
+//#define eeprom_tsrtype 0x19,EEPROM_WORD
+//#define eeprom_tsrstatus 0x1A,EEPROM_WORD
+//#define eeprom_dhcp_ip 0x1b,EEPROM_WORD
+//#define eeprom_APPORT 1
+//#define eeprom_tsr_port 0x26, EEPROM_WORD
+//
+//#define eeprom_rmt_ip 0x1d,EEPROM_WORD
+//#define eeprom_RMTIP 2
+//#define eeprom_rmt_port 0x1f,EEPROM_WORD
+//#define eeprom_RMTPORT 1
+//#define eeprom_rmten 0x20,EEPROM_WORD  // to enable/disable the Remote IP
+//
+//#define eeprom_GWIP 2
+//#define eeprom_gwip 0x21, EEPROM_WORD // GATEWAY IP
+//#define eeprom_SBMSK 2
+//#define eeprom_sbmsk 0x23, EEPROM_WORD //SUBMASK IP
+//
+//#define eeprom_ENDCHAR 1
+//#define eeprom_endchar 0x25, EEPROM_WORD // end char
+//#define eeprom_ENEND 1
+//#define eeprom_enend 0x09, EEPROM_WORD // enable or disable end char.
+//
+//#define eeprom_encpw 0x0d,EEPROM_WORD // enable or disable com port password
+//#define eeprom_ENCPW 1
+//
+//#define eeprom_enweb 0x0e,EEPROM_WORD // enable or disable com port password
+//#define eeprom_ENWEB 1
+//
+//
+//#define Unit_MAX 8
+//#define Read_MAX 8
+//#define SP_MAX 4
+//#define Base_Addr 0x30
+//
+//#define eeprom_UID 1//ver 4.0
+//#define eeprom_uid(i) 0x0f, EEPROM_WORD//ver 4.0
+//#define eeprom_NAME 4
+//#define eeprom_uname(i) Base_Addr+i*eeprom_NAME,EEPROM_WORD // uname 4words
+//#define eeprom_CMD 4//ver 4.0 
+//#define eeprom_ucmd(i) Base_Addr+Unit_MAX*(eeprom_NAME)+i*eeprom_CMD,EEPROM_WORD // ucmd 2words
+//#define eeprom_SP 2//ver 4.0 to replace _UID/_CMD with value of 2
+//#define eeprom_sp1(i) Base_Addr+Unit_MAX*(eeprom_NAME+2*eeprom_SP)+i*eeprom_SP,EEPROM_WORD // sp1 2words
+//#define eeprom_sp2(i) Base_Addr+Unit_MAX*(eeprom_NAME+3*eeprom_SP)+i*eeprom_SP,EEPROM_WORD // sp1 2words
+//#define eeprom_sp3(i) Base_Addr+Unit_MAX*(eeprom_NAME+4*eeprom_SP)+i*eeprom_SP,EEPROM_WORD // sp1 2words
+//#define eeprom_sp4(i) Base_Addr+Unit_MAX*(eeprom_NAME+5*eeprom_SP)+i*eeprom_SP,EEPROM_WORD // sp1 2words
+//#define eeprom_UNIT	4
+//#define eeprom_uunit(i) Base_Addr+Unit_MAX*(eeprom_NAME+6*eeprom_SP)+i*eeprom_UNIT,EEPROM_WORD // uunit 4words
+//#define eeprom_FRT 1
+//#define eeprom_ufrt(i) Base_Addr+Unit_MAX*(eeprom_NAME+6*eeprom_SP+eeprom_UNIT)+i*eeprom_FRT,EEPROM_WORD		// ufrt 1 word
+//#define	eeprom_cpassword 0xE8,EEPROM_WORD
+//#define eeprom_CPW 8
+
+
+#define FLASH_MAC_ADDR					0x0007D000 	//MAC ADDRESS
+#define FLASH_MAC_LEN						6
+				
+#define FLASH_IP_ADDR						0x0007D006	//IP ADDRESS
+#define FLASH_IP_LEN						4
+
+#define	FLASH_GATEWAY_ADDR			0x0007D00A	//GATEWAY
+#define	FLASH_SUBNETMASK_ADDR		0x0007D00E 	//SUBNET_MASK
+
+#define FLASH_EN_WEBSVR_ADDR		0x0007D012	//Enable WebServer
+#define FLASH_HOSTNAME_ADDR			0x0007D013	//Hostname
+#define FLASH_HOSTNAME_LEN			7						//Length of the Hostname NNNEEEDDDDDD TTTOOO CCCHHHAAANNNGEEE ITT to 16
+
+#define LOGIN_PASS_ADDR					0x0007D01A  //LOGIN PASSWORD
+#define LOGIN_PASS_LEN 					8
+#define ADMIN_PASS_ADDR 				0x0007D022 	//ADMIN PASSWORD
+#define ADMIN_PASS_LEN 					8
+
+#define	FLASH_FLOW_CONTROL_ADDR	0x0007D00B
+#define FLASH_TCP_MODBUS_ADDR		0x0007D00C
+#define FLASH_TCP_UDP_ADDR			0x0007D00D
+#define	FLASH_TCP_CC_ADDR				0x0007D00E
+#define	FLASH_TCP_ENDCHAR_ADDR	0x0007D00F
+#define FLASH_TCP_TIMEOUT_ADDR	0x0007D010
+
+/*--------------------Passwords--------------------------------*/
+
+#endif

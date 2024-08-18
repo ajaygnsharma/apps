@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:o xmlns:v>
+	<head>
+		<title>CMX-MicroNet MIB Data Editor</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="ProgId" content="VisualStudio.HTML">
+		<meta name="Originator" content="Microsoft Visual Studio .NET 7.1">
+	</head>
+	<body>
+		<P><a name="contents"></a><STRONG>Contents:</STRONG>
+		</P>
+		<UL>
+			<li>
+				<a href="#intro">Introduction</a>
+			<li>
+				<a href="#limit">Limitations</a>
+			<li>
+				<a href="#file">Output Files</a>
+			<li>
+				<a href="#load">Loading MIBs</a>
+			<li>
+				<a href="#add">Adding Variable-Bindings</a>
+			<li>
+				<a href="#delete">Deleting Variable-Bindings</a>
+			<li>
+				<a href="#access">Accessing SNMP Variables</a>
+			<li>
+				<a href="#trap">Sending Traps </a>
+			<LI>
+				<a href="#community">Community Names</a>
+			</LI>
+		</UL>
+		<P><a name="intro"></a><STRONG>Introduction:</STRONG>
+		</P>
+		<p>The MIB Data Editor is a Windows tool for defining data to be stored in the SNMP 
+			agent. Information is entered through the graphical user interface and the MIB 
+			Data Editor generates program files which are compiled with the SNMP agent to 
+			produce the embedded code.
+		</p>
+		<p>SNMP Agents have a list of variable-bindings that are supported. In this 
+			implementation the list is contained in flash memory in the code space and is 
+			named VBTable. The list is compiled with the agent code and requires a new 
+			program load to change the variable-bindings supported. The list contains the 
+			Object Identifier (OID) and other data for all supported variable-bindings. New 
+			variable-bindings can not be added at run time (dynamic variables are not 
+			supported).
+		</p>
+		<p>
+			Some of the variable-bindings have non-volatile values. These values are stored 
+			in the list along with the OID. Some values can be read by the agent but not 
+			changed (example: the equipment type). Non-volatile variables that can be 
+			changed using SNMP (example: the contact for the equipment) are also contained 
+			in the table. These variables have a maximum length which is set by the MIB 
+			Data Editor, but otherwise can be changed at runtime by the application or over 
+			SNMP.
+		</p>
+		<P>Volatile variables (agent variables) are data or measurements derived by the 
+			equipment (example: up time) and are kept in RAM. These variables can be read 
+			or set by the application. The MIB Data Editor places the value of a 
+			variable in RAM when the Agent Variable box is checked. RAM variables are 
+			not initialized, no initial value is entered.</P>
+		<a href="#contents">Contents</a>
+		<p><a name="limit"></a><STRONG>Limitations:</STRONG>
+		</p>
+		<P>MIB files used should contain only the MIB data. Other sections of a RFC or 
+			document, such as introduction and examples, should be removed. An exception 
+			during MIB load indicates that an improperly formed MIB was used.
+		</P>
+		<P>Although not necessary, it is convenient to list the MIBs by numerical order. The 
+			MIBs are added to the tree by the order of loading.
+		</P>
+                <P>Non-volatile parameters are saved in the variable-binding table ,VBTable.inc and VBTable.c, 
+			along with their OID and other data. The length of the space allocated for the 
+			variable is determined with the MIB Data editor when the initial value is 
+			entered. Subsequently changing the value with an SNMP set command must supply a 
+			new value whose length is equal or shorter than the initial value. Attempting 
+			to set a longer value will return a “bad value” error.
+		</P>
+		<p>V2 get bulk requests are converted to get next requests. Only one repeater is 
+			returned regardless of the number requested. This is a correct, but limited 
+			response.
+		</p>
+		<P>The lengths of the input and output buffers are set by defines MN_SNMP_IN_BUFF_SIZE and 
+			MN_SNMP_OUT_BUFF_SIZE in the mnconfig.h file.
+		</P>
+		<P>
+			Traps are generated at the request of the application. One and only one variable 
+			binding must be included with a trap.
+		</P>
+		<P>OID’s are limited to 63 bytes in length.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="file"></a><STRONG>Output Files: </STRONG>
+		</P>
+		<P>The MIB Data Editor program is MIB_Data_Editor.exe. This program is written in 
+			C# and requires the Microsoft .Net framework to operate. The .Net framework is 
+			contained in Windows NT, 2000, and XP or can be download from the Microsoft web 
+			site. Two configuration files are used in the same directory as MIB Data 
+			Editor. MibEdit.pth is a text file that contains the path to output files and 
+			MibEdit.mbs is a text file containing the fully qualified MIB files to be used. 
+			If these files do not exist they will be created when the MIB Data Editor is 
+			used. The easiest way to create and maintain these files is to use the MIB Data 
+			Editor, although any text editor can be used.
+		</P>
+		<P>Output or target files are generated which contain an encoded list of the 
+			variable-bindings recognized by the agent. They are saved in the folder 
+			contained in the MibEdit.pth file. The VBTable.bin is the file used by the MIB 
+			Data Editor and is a binary file of the data to be compiled with the agent. 
+			VBTable.inc is a assembly language file containing the same data in a { db 0nnh 
+			} format. VBTable.c contains an initialized array of the data. One of these 
+			files is selected as appropriate for the compiler used.
+		</P>
+		<P>
+			A file agentVariable.h contains index values into a ‘C’ array as defines for 
+			interfacing with the application program. File NonVolatileVariable.h contains 
+			index values into the VBTable for non-volatile variables. File VariableLength.h 
+			contains the length of each variable as defines of the variable name with an 
+			extension of _Length. File OidIndex.h contains data to find OID values by 
+			variable name with _OID extension.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="load"></a><STRONG>Loading MIBs:</STRONG>
+		</P>
+		<P>
+			The path where output files are stored is set by selecting “Target Path” form 
+			the file menu and browsing for the desired folder.
+		</P>
+		<P>The MIBs to be displayed in the left window are shown in the center bottom 
+			window. Additional MIBs are added to the MIB list by selecting “Add Mib to 
+			List” from the file menu. The MIBs must be added in order of definition of 
+			terms.
+		</P>
+		<P>The MIBs can be removed, or the MIB list can be modified by selecting “Edit Mib 
+			List” form the file menu. The text box is used to type in the desired MIB’s 
+			file fully qualified name.
+		</P>
+		<a href="#contents">Contents</a>
+		<P>
+			<a name="add"></a><STRONG>Adding Variable-Bindings:</STRONG>
+		</P>
+		<P>The tree, representing the variable-bindings selected, is displayed in the left 
+			window. Variable-bindings to be operated on are selected from the tree. In the 
+			right window the variable-bindings selected for the agent are shown in a 
+			display only window. Selecting a variable-binding in the left window allows 
+			addition or removal of a variable-binding from the agent list. The parameters 
+			of the selected variable-binding are shown in the center upper window. When the 
+			variable-binding is not in the agent list, no data is shown in the value 
+			windows and “Variable-Binding Not Used” is displayed.
+		</P>
+		<P>To add the selected variable-binding to the agent list, values are selected and 
+			the add button is clicked. The values are type checked, letters can not be 
+			entered for an integer value, but for a display string any input is accepted. 
+			After adding, the display changes to “Variable-Binding in Agent Table Base and 
+			the variable name is added to the right hand window.
+		</P>
+		<P>
+			When a selected variable-binding is an agent variable, the “Agent Variable” box 
+			is checked. No value is entered for the non-volatile variable and a RAM 
+			location is assigned for the variable by the MIB Data Editor .</P>
+		<P>Some variables are contained in tables. The table entries are accessed using an 
+			index. When an indexed variable-binding is selected, the index selector is 
+			displayed. For tables of tables, two index selections are available.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="delete"></a><STRONG>Deleting Variable-Bindings:</STRONG>
+		</P>
+		<P>To remove a variable-binding form the VBTable, the variable-binding is selected 
+			in the left window. When a selected variable-binding is in the agent table, and 
+			the Delete button is clicked, the variable-binding is removed form the agent 
+			table and the data blanked.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="access"></a><STRONG>Accessing SNMP Variables</STRONG></P>
+		<P>Each variable has a unique name associated with the OID. The MIB Data Editor 
+			generates two files (one for flash variable and the other for RAM variables) 
+			listing the unique name and the index in the array of the variable. Functions 
+			are provided to read and write variables.
+		</P>
+		<P>The file “agentVariable.h” contains a list of defines which are the name of the 
+			variable and the index in the array of the RAM variables. The length of the 
+			array “SNMP_DATA_LENGTH” is also in this file. The file “NonVolatileVariable.h” 
+			contains a list of defines and the index in the array of the FLASH variables. 
+			The “agentVariable.h” and “NonVolatileVariable.h” files are compiled with the 
+			‘C’ program.
+		</P>
+		<P>Variables are stored as a variable length array of unsigned characters. The 
+			length of the variable is set using the MIB Data Editor. The scaling is 
+			defined in the MIB. The application interfaces to SNMP using these lengths and 
+			scaling. For a variable in FLASH, the application program will read a variable 
+			using:
+		</P>
+		<P>&nbsp;&nbsp;&nbsp; void mn_getFlashVariable(byte* puc, word16 name, byte length)</P>
+		<P>name is the unique name of the variable in the define file, puc is a pointer 
+			to an unsigned char array and length is the number of bytes in the variable..
+		</P>
+		<P>Writing a variable to FLASH uses:
+		</P>
+		<P>
+		&nbsp;&nbsp;&nbsp; void mn_setFlashVariable(byte* puc, word16 name, byte 
+		length);
+		</P>
+		<P>
+			For a variable in RAM, the equivalent programs are:
+		</P>
+		<P>&nbsp;&nbsp;&nbsp; void mn_getRamVariable(byte* puc, word16 name, byte length)
+		</P>
+		<P>&nbsp;&nbsp;&nbsp; void mn_setRamVariable(byte* puc, word16 name, byte length)
+		</P>
+		<P>
+			A utility function is provided for incrementing agent variables.
+		</P>
+		<P>&nbsp;&nbsp;&nbsp; void mn_incrementMeasVariable(word16 parameter, byte length)
+		</P>
+		<P>parameter is the unique name and length is the length of the variable.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="trap"></a><STRONG>Sending Traps</STRONG></P>
+		<P>
+			Traps are generated by calling:
+		</P>
+                <P>&nbsp;&nbsp;&nbsp; int mn_snmp_trap (int iName_OID , byte gTrap, 
+                        byte sTrap, byte v, byte * dstaddr)
+		</P>
+                <P>The return is the number of characters in the SNMP message or a negative number
+                        if there was an error. iName_OID is the name of the variable to be included
+                        in the trap with _OID extension added. gTrap is the generic trap and sTrap
+                        is the specific trap to be included in the return. v is the SNMP version of
+                        the trap, 1 for version 1 and 2 for version 2c. dstaddr is a pointer to an
+                        array containing the IP address which is receiving the trap.
+		</P>
+		<a href="#contents">Contents</a>
+		<P><a name="community"></a><STRONG>Community Names:</STRONG>
+		</P>
+		<p>Community names are used to qualify access to the agent. Set requests 
+			are only processed when the request community name is the same as the 
+			agent variable "ucWriteCommunityName[]". Get, getnext and getbulk 
+			requests are processed when the community name is ether agent variable 
+			"ucReadCommunityName[]" or "ucWriteCommunityName[]. The community name 
+			used for traps generated by the agent is contained in agent variable 
+			"ucTrapCommunity[]. These variables are defined in file "snmp.c".
+		</p>
+		<a href="#contents">Contents</a>
+	</body>
+</html>

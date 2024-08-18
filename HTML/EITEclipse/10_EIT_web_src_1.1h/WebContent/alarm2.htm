@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<TITLE>MANAGEMENT</TITLE>
+<link rel=stylesheet type=text/css href=eit_style.css>
+<head>
+<script type="text/javascript">
+function a2_en(){
+	var eml=new Array();
+	var trp=new Array();
+	var cdn=new Array();
+	var info=new Array();
+	var i=0;
+var a2_eml=new Array("a2_e_pr","a2_e_ipc","a2_e_isa","a2_e_c","a2_e_ic","a2_e_spd");
+var a2_trp=new Array("a2_t_pr","a2_t_ipc","a2_t_isa","a2_t_c","a2_t_ic","a2_t_spd");
+var a2_cdn=new Array("a2_c1","a2_c2","a2_ip_pin","a2_pin_cdn");
+var a2_info=new Array("a2_ri","a2_to","a2_msg");
+var a2_e_chk=new Array(<!--#exec cgi="a2_e_chk"-->);
+var a2_t_chk=new Array(<!--#exec cgi="a2_t_chk"-->);
+if(document.getElementById("alm_2").checked==false)
+{
+	for(i=0;i<6;i++)
+	{
+		eml[i]=document.getElementById(a2_eml[i]);
+		trp[i]=document.getElementById(a2_trp[i]);
+		cdn[i]=document.getElementById(a2_cdn[i]);
+		info[i]=document.getElementById(a2_info[i]);
+		if(null!=cdn[i])
+			{
+			cdn[i].disabled=true;
+			}
+		if(null!=info[i])
+			{
+			info[i].disabled=true;
+			}
+		if(null!=eml[i])
+			{
+			eml[i].disabled=true;
+			}
+		if(null!=trp[i])
+			{
+			trp[i].disabled=true;
+			}
+
+		if(a2_e_chk[i]=="checked")
+			{
+			eml[i].checked=true;
+			}
+		if(a2_t_chk[i]=="checked")
+			{
+			trp[i].checked=true;
+			}
+	}
+}
+else
+{
+	for(i=0;i<6;i++)
+		{
+		eml[i]=document.getElementById(a2_eml[i]);
+		trp[i]=document.getElementById(a2_trp[i]);
+		cdn[i]=document.getElementById(a2_cdn[i]);
+		info[i]=document.getElementById(a2_info[i]);
+		if(null!=eml[i])
+			{
+			eml[i].disabled=false;
+			}
+		if(null!=trp[i])
+			{
+			trp[i].disabled=false;
+			}
+		if(null!=cdn[i])
+			{
+			cdn[i].disabled=false;
+			}
+		if(null!=info[i])
+			{
+			info[i].disabled=false;
+			}
+		if(a2_e_chk[i]=="checked")
+			{
+			eml[i].checked=true;
+			}
+		if(a2_t_chk[i]=="checked")
+			{
+			trp[i].checked=true;
+			}
+		}
+	}
+}</script>
+</head>
+<body onLoad=a2_en()>
+<div id=left_menu>
+<ul>
+	<li><a href='load?PAGENO=1'>Overview</a></li>
+	<li><a href='load?PAGENO=2'>Network</a></li>
+	<li><a href='load?PAGENO=3'>Serial</a></li>
+	<li><a href='load?PAGENO=4'>I/O Pins </a></li>
+	<li style="color: black; font-weight: bold">Management</li>
+	<li><a href='load?PAGENO=6'>Security </a></li>
+	<li><a href='load?PAGENO=7'>Device Query </a></li>
+	<li><a href='load?PAGENO=8'>Device Setup </a></li>
+	<li><a href='load?PAGENO=9'>Readings </a></li>
+	<li><a href='load?PAGENO=10'>Terminal</a></li>
+	<li><a href='load?PAGENO=11'>System</a></li>
+	<li><a href='load?PAGENO=12'>Diagnostics</a></li>
+</ul>
+</div>
+<div id=content>
+<form method=post name=a2 action=alarm2>
+<table width=600px class=t_heading>
+	<tr>
+		<td>
+		<table id=tabmenu cellpadding=0 cellspacing=0>
+			<tr>
+				<td width=15>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=5'>Email,SNMP</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=20'>Alarm 1</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab id=selectedtab><a href='load?PAGENO=21'>Alarm 2</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=22'>Alarm 3</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=23'>Alarm 4</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=24'>Alarm 5</a></td>
+				<td class=separator>&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left><input type=checkbox name=alm_2 id=alm_2
+			onclick=a2_en() <!--#exec cgi="a2_chk"-->> Enable</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% class=alarm border=1>
+			<tr>
+				<th>Events</th>
+				<th>Email</th>
+				<th>SNMP Trap</th>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>Power Reset</td>
+				<td><input type=checkbox name=a2_e_pr id=a2_e_pr></td>
+				<td><input type=checkbox name=a2_t_pr id=a2_t_pr></td>
+			</tr>
+			<tr>
+			<tr>
+				<td>IP Address Changed</td>
+				<td><input type=checkbox name=a2_e_ipc id=a2_e_ipc></td>
+				<td><input type=checkbox name=a2_t_ipc id=a2_t_ipc></td>
+			</tr>
+			<tr>
+				<td>iServer Accessed</td>
+				<td><input type=checkbox name=a2_e_isa id=a2_e_isa></td>
+				<td><input type=checkbox name=a2_t_isa id=a2_t_isa></td>
+			</tr>
+			<tr>
+				<td>Character 1 <input type=text name=a2_c1 id=a2_c1 value=<!--#exec cgi="a2_c1"--> size=4 maxlength=4><br>
+				Character 2 <input type=text name=a2_c2 id=a2_c2 value=<!--#exec cgi="a2_c2"--> size=4 maxlength=4></td>
+				<td><input type=checkbox name=a2_e_c id=a2_e_c></td>
+				<td><input type=checkbox name=a2_t_c id=a2_t_c></td>
+			</tr>
+			<!--#exec cgi="a2_ic_evt"-->
+			<!--#exec cgi="a2_sspd"-->
+		</table>
+	<tr>
+		<td align=left>
+		<h3>Properties</h3>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width=100% class=alarm>
+			<tr>
+				<td>Reminder Interval</td>
+				<td><input type=text name=a2_ri id=a2_ri value="<!--#exec cgi="a2_ri"-->"
+				size=4 maxlength=4>sec</td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td><input type=text name=a2_to id=a2_to value="<!--#exec cgi="a2_to"-->"
+				size=50 maxlength=50></td>
+			</tr>
+			<tr>
+				<td>Message:</td>
+				<td><input type=text name=a2_msg id=a2_msg value="<!--#exec cgi="a2_msg"-->"
+				size=30 maxlength=30></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type=hidden name=test id=test value=0> <input
+			type=submit value=Save> <input type=reset value=Reset></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713556540
+activated,editor,org.eclipse.ui.browser,3.2.201.v20080708_34x,org.eclipse.ui.browser.editor,1223713559879
+closed,editor,org.eclipse.wst.html.ui,1.0.301.v200809120137,org.eclipse.wst.html.core.htmlsource.source,1223713559925
+activated,editor,org.eclipse.wst.css.ui,1.0.301.v200807170605,org.eclipse.wst.css.core.csssource.source,1223713572343
+executed,command,org.eclipse.ui,3.4.1.M20080910-0800,org.eclipse.ui.file.save,1223713595462
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713595946
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713596757
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713597724
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713602077
+executed,command,org.eclipse.ui,3.4.1.M20080910-0800,org.eclipse.ui.file.save,1223713608270
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713608800
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713618503
+activated,editor,org.eclipse.ui.browser,3.2.201.v20080708_34x,org.eclipse.ui.browser.editor,1223713619720
+no handler,command,org.eclipse.ui,3.4.1.M20080910-0800,org.eclipse.ui.file.refresh,1223713620781
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713623201
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713623966
+activated,editor,org.eclipse.wst.css.ui,1.0.301.v200807170605,org.eclipse.wst.css.core.csssource.source,1223713625136
+activated,editor,org.eclipse.ui.browser,3.2.201.v20080708_34x,org.eclipse.ui.browser.editor,1223713628583
+no handler,command,org.eclipse.ui,3.4.1.M20080910-0800,org.eclipse.ui.file.refresh,1223713630284
+activated,editor,org.eclipse.wst.css.ui,1.0.301.v200807170605,org.eclipse.wst.css.core.csssource.source,1223713636511
+deactivated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713638117
+activated,workbench,org.eclipse.ui.workbench,3.4.1.M20080827-0800a,,1223713656026
+executed,command,org.eclipse.ui,3.4.1.M20080910-0800,org.eclipse.ui.file.save,1223713660175
+activated,editor,org.eclipse.ui.browser,3.2.201.v20080708_34x,org.eclipse.ui.browser.editor,1223713661486
+activated,editor,org.eclipse.wst.css.ui,1.0.301.v200807170605,org.eclipse.wst.css.core.csssource.source,1223713665791

@@ -1,0 +1,122 @@
+Written by Administrator    
+Thursday, 29 March 2007
+
+Microcontrollers aren't imaginable without interrupts. Arm isn't exception. In earlier articles there were SWI exceptions mentioned, but there are two more sources of exceptions: IRQ(General Purpose Interrupt) and FIQ(Tast Interrupt).
+ARM Pin Connect Block
+
+All I/O pins of LPC2000 ARM can be multiplexed to several functions via pin select block. Pin selection bloc allows selections up to three more other functions except GPIO. Pin Connect block give flexibility to ARM MCU because each PIN can have different functionality. After reset all pins are configured as GPIO.
+
+Image
+
+As example above you can see that P.1 pin function can be assigned by PINSEL0 register 3 and 2 bit configurations. Si if you write PINSEL0|=(1<<3)|(1<<2); then pin will be assigned to EINT0 function. Pretty simple. So before using External interrupt EINT0 first you have to select pin function for P0.1 pin.
+
+After pins are set up, then follows selecting Interrupt mode For external interrupt mode selection there is EXMODE register used which allows to select weather interrupt occur on level change or on rising or falling edge. EXPOL register is used to select polarity of interrupt signal that triggers an interrupt.
+Interrupt structure of LPC
+
+LPC21xx microcontrollers have four external interrupt lines. Each of them can be connected to FIQ or IRQ mode. Generally there should be one interrupt that is connected to FIQ mode. So if one interrupt is connected to FIQ, then logically other has to be IRQ. In order to manage IRQ's more easy there were Vector Interrupt Controller (VIC) added. Vectored interrupt controller allow system optimally to respond ti interrupt without any additional checking the sources of interrupts what would take more cycles.
+
+Generally VIC takes 32 interrupt request inputs (LPC21xx) and programmable assigns them to 3 categories: FIQ, vectored IRQ and non-vectored IRQ. Each Interrupt there can be assigned a priority that can be adjusted programmable.
+
+Logic says that FIQ interrupts have highest priority. If more than one interrupt is assigned to FIQ, then VIC has to OR the requests what adds additional latency. So best results are achieved when one interrupt is assigned to FIQ.
+
+Vectored IRQ have middle priority. Only 16 of any from 32 interrupt requests can be assigned to vectored IRQ mode. Slot number from 0 to 15 defines vectored IRQ priority.
+
+Non-vectored interrupts have the lowest priority.
+
+Generally speaking when one or more interrupts occur then VIC logic OR's one interrupt and gives the highest priority interrupt service routine address to ARM processor. Otherwise VIC provides default routine address which can check another VOC register to see if there are other IRQ active.
+FIQ and vectored IRQ interrupt setup example
+
+Lets say wee want to set up EINT1 as FIQ interrupt and EINT0 as vectored IRQ.
+
+
+void setupInterrupts(void)
+
+{
+
+PINSEL0=0x000000CC; //P0.1 as EINT0 P0.3 as EINT1
+
+VICIntSelect=0x00008000; //Enable VIC channel as FIQ for EINT1
+
+VICVectCnt0=0x0000002E; //bit 5 enables slot (14 for EINT0) for EINT0
+
+/*
+
+Each VIC control register consist of two fields: a channel field (0:4 bits) and enable bit (5). This way each each channel can be connected to any given slot.
+
+*/
+
+VICVectAddr0=(unsigned long)EINT0_routine;// Pass address of IRQ in to VIC slot
+
+/*
+
+VICVectAdd register should contain an address of C function to run when interrupt occure.
+
+*/
+
+VICIntSelect=0x0000C000; //Enable EINT1 and EINT0 interrupts in VIC
+
+}
+
+
+Using WinARM toolset IRQ and FIQ ISR can be defined as follows:
+
+
+void __attribute__ ((interrupt("IRQ"))) EINT0_routine(void)
+
+{
+
+EXTINT=0x00000001; //Clear EINT0 interrupt flag
+
+VICVectAddr=0; //Dummy write to signal end of interrupt
+
+}
+
+
+void __attribute__ ((interrupt("FIQ"))) EINT1_routine(void)
+
+{
+
+EXTINT=0x00000002; //Clear EINT2 interrupt flag
+
+}
+
+
+VIC can handle 16 vectored interrupts and at least one FIQ. But there are more than 17 interrupt sources on the MCU. Extra interrupt sources can be services as non-vectored interrupts. Non-vectored interrupts are served by single ISR. The adres of this ISR is stored in additional vector address register. If interrupt occurs and it is not assigned to FIQ or vectored IRQ, then it will act as non-vectored interrupt. When non-vectored interrupt occurs default ISR address is loaded to CPU. This ISR have to check by itself what type of interrupt occurred. For instance:
+
+
+void setInt(void)
+
+{
+
+PINSEL0=0x20000000; /enable EINT1;
+
+VICDefVectAddr=(unsigned long)NonVectored; // ISR address to VIC slot
+
+VICIntEnable=0x00008000; //Enable EINT in the VIC
+
+}
+
+
+Then ISR may look like:
+
+
+void __attribute__ ((interrupt("IRQ"))) NonVectored(void)
+
+{
+
+if(VICIRQStatus&&0x00008000) //test for interrupt source
+
+{
+
+EXTINT=0x00000002; //Clear EINT0 interrupt flag
+
+}
+
+VICVectAddr=0; //Dummy write to signal end of interrupt
+
+}
+
+
+Using VIC you get another benefit – ability to generate software interrupts on any given channel(not the same as SWI). This is handy for simulation during development. Also VIC has a protected mode when USER cannot access VIC registers. If application code wants to access VIC it has to enter privileged mode usually in FIQ or IRQ or even by SWI instruction.
+
+As VIC doesn't support nested interrupts we need to execute some code to enable nested interrupt. Firs o all when entering to ISR we should preserve SPSR_irq by placing it in the stack, then Enable IRQ and then Link register has to be stored in stack. This way area for nested IRQ is prepared. When exiting from IRQ all has to be restored in reverse way. These operations is handy to have stored in macros.

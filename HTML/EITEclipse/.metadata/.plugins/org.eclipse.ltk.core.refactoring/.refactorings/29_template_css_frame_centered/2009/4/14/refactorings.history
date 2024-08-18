@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;29_template_css_frame_centered/WebContent/index.htm&apos; to &apos;overview.htm&apos;" description="Rename resource &apos;index.htm&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/index.htm" name="overview.htm" stamp="1238803507462" updateReferences="true"/>
+</session>

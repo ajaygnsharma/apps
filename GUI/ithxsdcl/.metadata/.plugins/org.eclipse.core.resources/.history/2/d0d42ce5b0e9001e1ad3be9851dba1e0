@@ -1,0 +1,11 @@
+
+#ifndef CONVERT_TEMP
+#define CONVERT_TEMP
+
+#include <gtk/gtk.h>
+
+#include "main.h"
+
+void get_reading(GtkWidget *entry, TemperatureData *td);
+
+#endif

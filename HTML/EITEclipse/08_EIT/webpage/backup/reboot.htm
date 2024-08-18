@@ -1,0 +1,43 @@
+<html>
+  <head>
+  <script type="text/javascript">
+  function disp_confirm()
+  {
+    var r = confirm("WARNING: Are you SURE you want to reboot this device?");
+	if(r == true)
+	{
+	  return true;
+	}
+    else
+	{
+	  return false;
+	}
+  }
+  </script>
+    
+  <link rel="stylesheet" type="text/css" 
+  href="ex2.css" />
+  <title>
+    SYSTEM
+  </title>
+  </head>
+
+  <body>
+    <center>
+    <h2> SYSTEM </h2> <hr>
+    </center>
+
+    <form method="post" action="reboot" onsubmit="disp_confirm()">
+      <table width="100%">
+        <tr>
+		  <td>  </td>
+		  <td align="right"> <input type="hidden" name="none" value="1"> </td>
+		</tr>
+		<tr> 
+          <td> Reboot iServer </td>
+          <td align="right"> <input type="submit" value="Reboot" /> </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

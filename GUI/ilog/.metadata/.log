@@ -1,0 +1,274 @@
+!SESSION 2010-03-21 13:48:30.731 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.cdt.core 1 0 2010-03-21 13:49:26.704
+!MESSAGE Indexed 'ilog' (3 sources, 149 headers) in 5.11 sec: 10,287 declarations; 15,424 references; 16 unresolved inclusions; 5 syntax errors; 272 unresolved names (1.05%)
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:26.791
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:26.792
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:29.525
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:29.525
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 13:53:56.644 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:59.423
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:59.424
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:59.867
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:53:59.868
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 13:56:23.904 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:56:26.549
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:56:26.550
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:56:26.965
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:56:26.966
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:57:27.669
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 13:57:27.670
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 13:57:29.438
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 13:57:29.438
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 13:57:29.438
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 13:57:29.438
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 13:57:29.438
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 13:57:29.439
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 13:57:29.440
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 13:57:29.440
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 13:57:29.440
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 13:57:29.469
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 13:57:29.469
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 13:57:29.469
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+!SESSION 2010-03-21 18:38:44.480 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:40:00.928
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:40:00.935
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 18:40:02.763
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 18:40:02.763
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 18:40:02.763
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 18:40:02.763
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 18:40:02.763
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 18:40:02.763
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 18:40:02.765
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 18:40:02.765
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 18:40:02.765
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.ui 4 0 2010-03-21 18:40:02.786
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10050 2010-03-21 18:40:02.786
+!MESSAGE Cannot complete the request.  See the error log for details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10005 2010-03-21 18:40:02.786
+!MESSAGE "Subclipse" will be ignored because it is already installed.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:43:59.861
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:43:59.862
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:33.895
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:33.896
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 18:44:48.483 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:51.179
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:51.180
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:51.600
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:44:51.601
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2010-03-21 18:47:36.649
+!MESSAGE Server returned lastModified <= 0 for http://subclipse.tigris.org/update_1.6.x/content.xml
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:48:42.277
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:48:42.277
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:48:44.399
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:48:44.399
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 18:49:23.343 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:49:26.011
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:49:26.012
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:49:26.413
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:49:26.414
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2010-03-21 18:52:26.090
+!MESSAGE Server returned lastModified <= 0 for http://subclipse.tigris.org/update_1.6.x/content.xml
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:38.178
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:38.179
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:45.668
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:45.669
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 18:52:56.517 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:59.261
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:59.262
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:59.688
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 18:52:59.689
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+!SESSION 2010-03-21 19:00:00.786 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_0
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product &
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product &
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:04.828
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:04.830
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.444
+!MESSAGE The installable unit org.eclipse.jdt.compiler.apt.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.444
+!MESSAGE The installable unit org.eclipse.core.net.linux.x86.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.447
+!MESSAGE The installable unit org.eclipse.cdt.core.linux.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.447
+!MESSAGE The installable unit org.eclipse.ecf.ssl.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.447
+!MESSAGE The installable unit org.eclipse.equinox.launcher.gtk.linux.x86.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.448
+!MESSAGE The installable unit org.eclipse.ecf.provider.filetransfer.httpclient.ssl.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.448
+!MESSAGE The installable unit org.eclipse.jdt.compiler.tool.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.448
+!MESSAGE The installable unit org.eclipse.core.runtime.compatibility.registry.translated_host_properties is missing the filename property.
+
+!ENTRY org.eclipse.equinox.p2.directorywatcher 4 0 2010-03-21 19:00:11.449
+!MESSAGE The installable unit org.eclipse.core.resources.compatibility.translated_host_properties is missing the filename property.

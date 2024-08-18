@@ -1,0 +1,1 @@
+quiz/mit_c_quiz_01.d quiz/mit_c_quiz_01.o: ../quiz/mit_c_quiz_01.c

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+
+<html>
+  
+  <HEAD>
+    <link rel="stylesheet" type="text/css"
+    href="ex2.css" />
+    <TITLE>SERVER</TITLE>
+  </HEAD> 
+  
+  <BODY>
+  
+   <center> 
+   <h2> OVERVIEW </h2>
+   </center> 
+   
+   <hr>   
+   
+   <table width="100%" align="center" cellspacing="0" cellpadding="0">
+    <tr>
+      <td> Model </td>
+      <td> <!--#exec cgi="model"--> </td>
+    </tr>
+
+    <tr>
+      <td> Firmware Version </td>
+      <td> <!--#exec cgi="version"--> </td>
+    </tr>
+
+
+    <tr>
+	  <td> <hr> </td>
+      <td> <hr> </td>
+    </tr> 	  
+	
+	<tr>
+	  <td> <h3> Network Configuration </h3> </td>
+      <td> </td>
+    </tr> 	  
+	
+    <tr>
+      <td> DHCP </td>
+      <td> <!--#exec cgi="dhcp"-->  </td>
+    </tr>
+    
+    <tr>
+      <td> MAC Address </td>
+      <td> <!--#exec cgi="mac"-->  </td>
+    </tr>
+
+    <tr>
+      <td> IP Address </td>
+      <td> <!--#exec cgi="ip"-->  </td>
+    </tr>
+   
+    <tr>
+      <td> Subnet Mask </td>
+      <td> <!--#exec cgi="submask"-->  </td>
+    </tr>
+
+    <tr>
+      <td> Gateway Address </td>
+      <td> <!--#exec cgi="gw_ip"-->  </td>
+    </tr>
+
+    <tr>
+      <td> Hostname </td>
+      <td> <!--#exec cgi="hname"-->  </td>
+    </tr>
+    
+    <tr>
+      <td> Ethernet Port </td>
+      <td> <!--#exec cgi="port"-->  </td>
+    </tr>
+
+    <tr>
+	  <td> <hr> </td>
+      <td> <hr> </td>
+    </tr> 	  
+	
+	<tr>
+	  <td> <h3> Features </h3> </td>
+      <td> </td>
+    </tr> 	  
+	
+    <tr>
+      <td> SNMP </td>
+      <td> <!--#exec cgi="snmp"-->  </td>
+    </tr>
+
+    <tr>
+      <td> Modbus TCP </td>
+      <td> <!--#exec cgi="modbus"-->  </td>
+    </tr>
+
+    
+    <tr>
+      <td> Serial Port </td>
+      <td> <!--#exec cgi="serial"-->  </td>
+    </tr>
+
+   </table>
+   </center>
+  </BODY>
+</HTML>

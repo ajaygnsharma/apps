@@ -1,0 +1,225 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+Target (THUMB no RTOS), 0x0004 // Tools: 'ARM-ADS'
+Target (THUMB with CMX-RTX), 0x0004 // Tools: 'ARM-ADS'
+
+Group (Source Group 1)
+Group (SNMP)
+
+File 1,1,<..\..\netlib\src\Vfile.c><Vfile.c>
+File 1,1,<..\..\netlib\src\ARP.c><ARP.c>
+File 1,1,<..\..\netlib\src\BOOTP.c><BOOTP.c>
+File 1,1,<..\..\netlib\src\DHCP.c><DHCP.c>
+File 1,1,<..\..\netlib\src\Ethernet.c><Ethernet.c>
+File 1,1,<..\..\netlib\src\Http.c><Http.c>
+File 1,1,<..\..\netlib\src\IGMP.c><IGMP.c>
+File 1,1,<..\..\netlib\src\INTRFACE.c><INTRFACE.c>
+File 1,1,<..\..\netlib\src\IP.c><IP.c>
+File 1,1,<..\..\netlib\src\LPC23xx_ETH.c><LPC23xx_ETH.c>
+File 1,1,<..\..\netlib\src\Mn_csum.c><Mn_csum.c>
+File 1,1,<..\..\netlib\src\MN_DNS.c><MN_DNS.c>
+File 1,1,<..\..\netlib\src\MN_MEM.c><MN_MEM.c>
+File 1,1,<..\..\netlib\src\MN_OS.c><MN_OS.c>
+File 1,1,<..\..\netlib\src\mn_port.c><mn_port.c>
+File 1,1,<..\..\netlib\src\MN_TIMER.c><MN_TIMER.c>
+File 1,1,<..\..\netlib\src\MNSERVER.c><MNSERVER.c>
+File 1,1,<..\..\netlib\src\MNSTRING.c><MNSTRING.c>
+File 1,1,<..\..\netlib\src\MODEM.c><MODEM.c>
+File 1,1,<..\..\netlib\src\PHYSICAL.c><PHYSICAL.c>
+File 1,1,<..\..\netlib\src\Smtp.c><Smtp.c>
+File 1,1,<..\..\netlib\src\Socket.c><Socket.c>
+File 1,1,<..\..\netlib\src\SUPPORT.c><SUPPORT.c>
+File 1,1,<..\..\netlib\src\Tcp.c><Tcp.c>
+File 1,1,<..\..\netlib\src\TFTP.c><TFTP.c>
+File 1,1,<..\..\netlib\src\TFTPFLSH.c><TFTPFLSH.c>
+File 1,1,<..\..\netlib\src\udp.c><udp.c>
+File 1,2,<..\..\netlib\src\ARM_ENV.s><ARM_ENV.s>
+File 2,1,<..\..\netlib\src\snmp\HardwareDependent.c><HardwareDependent.c>
+File 2,1,<..\..\netlib\src\snmp\SNMP.c><SNMP.c>
+File 2,1,<..\..\netlib\src\snmp\snmpresponse.c><snmpresponse.c>
+File 2,1,<..\..\netlib\src\snmp\SNMPTICK.c><SNMPTICK.c>
+File 2,1,<..\..\netlib\src\snmp\SNMPTRAP.c><SNMPTRAP.c>
+File 2,1,<..\..\netlib\src\snmp\SNMPUTIL.c><SNMPUTIL.c>
+
+
+Options 1,0,0  // Target 'THUMB no RTOS'
+ Device (LPC2368)
+ Vendor (NXP (founded by Philips))
+ Cpu (IRAM(0x40000000-0x40007FFF) IRAM2(0x7FE00000-0x7FE037FF) IROM(0-0x7FFFF) CLOCK(12000000) CPUTYPE(ARM7TDMI))
+ FlashUt (LPC210x_ISP.EXE ("#H" ^X $D COM1: 38400 1))
+ StupF ("STARTUP\Philips\LPC2300.s" ("Philips LPC2300 Startup Code"))
+ FlashDR (UL2ARM(-U268761108 -O7 -S0 -C0 -FO15 -FD40000000 -FC800 -FN1 -FF0LPC_IAP2_512 -FS00 -FL07D000))
+ DevID (4152)
+ Rgf (LPC23xx.H)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ÿPhilips\)
+ OrgReg (ÿPhilips\)
+ TgStat=16
+ OutDir (.\Objects\)
+ OutName (netlib)
+ GenApp=0
+ GenLib=1
+ GenHex=0
+ Debug=1
+ Browse=1
+ LstDir (.\Listing\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 0 <>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=1790
+ ADSFLGA { 243,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACPUTYP (ARM7TDMI)
+ RVDEV ()
+ ADSTFLGA { 0,12,16,2,99,4,0,66,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSOCM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSIRAM { 0,0,0,0,64,0,128,0,0 }
+ OCMADSIROM { 1,0,0,0,0,0,0,8,0 }
+ OCMADSXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCR_RVCT { 1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,8,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,0,128,0,0,0,0,0,224,127,0,56,0,0 }
+ RV_STAVEC ()
+ ADSCCFLG { 1,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSCMISC ()
+ ADSCDEFN (POLARM2368)
+ ADSCUDEF ()
+ ADSCINCD (..\..\netlib\inc;..\..\netlib\src\snmp;..\inc;..\..\drivers\inc;..\..\post\inc;..\..\ssi\inc;..\..\webpage)
+ ADSASFLG { 65,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSAMISC ()
+ ADSADEFN ()
+ ADSAUDEF ()
+ ADSAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ADSLDFG { 17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSLDTA (0x00000000)
+ ADSLDDA (0x40000000)
+ ADSLDSC ()
+ ADSLDIB ()
+ ADSLDIC ()
+ ADSLDMC ()
+ ADSLDIF ()
+ ADSLDDW ()
+  OPTDL (SARM.DLL)(-cLPC2100)(DARMP.DLL)(-pLPC2368)(SARM.DLL)()(TARMP.DLL)(-pLPC2368)
+  OPTDBG 48125,0,()()()()()()()()()() (BIN\UL2ARM.DLL)()()()
+ FLASH1 { 1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 (BIN\UL2ARM.DLL)
+ FLASH3 ("LPC210x_ISP.EXE" ("#H" ^X $D COM1: 38400 1))
+ FLASH4 ()
+EndOpt
+
+Options 2,0,0  // Target 'THUMB with CMX-RTX'
+ Device (LPC2368)
+ Vendor (NXP (founded by Philips))
+ Cpu (IRAM(0x40000000-0x40007FFF) IRAM2(0x7FE00000-0x7FE037FF) IROM(0-0x7FFFF) CLOCK(12000000) CPUTYPE(ARM7TDMI))
+ FlashUt (LPC210x_ISP.EXE ("#H" ^X $D COM1: 38400 1))
+ StupF ("STARTUP\Philips\LPC2300.s" ("Philips LPC2300 Startup Code"))
+ FlashDR (UL2ARM(-U268761108 -O7 -S0 -C0 -FO15 -FD40000000 -FC800 -FN1 -FF0LPC_IAP2_512 -FS00 -FL07D000))
+ DevID (4152)
+ Rgf (LPC23xx.H)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ÿPhilips\)
+ OrgReg (ÿPhilips\)
+ TgStat=16
+ OutDir (.\Objects\)
+ OutName (netlibr)
+ GenApp=0
+ GenLib=1
+ GenHex=0
+ Debug=1
+ Browse=1
+ LstDir (.\Listing\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 0 <>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=1790
+ ADSFLGA { 243,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACPUTYP (ARM7TDMI)
+ RVDEV ()
+ ADSTFLGA { 0,12,16,2,99,4,0,66,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSOCM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSIRAM { 0,0,0,0,64,0,128,0,0 }
+ OCMADSIROM { 1,0,0,0,0,0,0,8,0 }
+ OCMADSXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCR_RVCT { 1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,8,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,0,128,0,0,0,0,0,224,127,0,56,0,0 }
+ RV_STAVEC ()
+ ADSCCFLG { 1,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSCMISC ()
+ ADSCDEFN (CMXARM2368 RTOS_USED=1)
+ ADSCUDEF ()
+ ADSCINCD (..\NETLIB;..\NETLIB\snmp;C:\CMX)
+ ADSASFLG { 65,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSAMISC ()
+ ADSADEFN ()
+ ADSAUDEF ()
+ ADSAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ADSLDFG { 17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSLDTA (0x00000000)
+ ADSLDDA (0x40000000)
+ ADSLDSC ()
+ ADSLDIB ()
+ ADSLDIC ()
+ ADSLDMC ()
+ ADSLDIF ()
+ ADSLDDW ()
+  OPTDL (SARM.DLL)(-cLPC2100)(DARMP.DLL)(-pLPC2368)(SARM.DLL)()(TARMP.DLL)(-pLPC2368)
+  OPTDBG 48125,0,()()()()()()()()()() (BIN\UL2ARM.DLL)()()()
+ FLASH1 { 1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 (BIN\UL2ARM.DLL)
+ FLASH3 ("LPC210x_ISP.EXE" ("#H" ^X $D COM1: 38400 1))
+ FLASH4 ()
+EndOpt
+

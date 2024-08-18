@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" 
+    href="help.css" />
+  <title> Serial Port Help</title>
+</head>
+
+<body>
+<h3> Baud Rate </h3> 
+<p> Indicates speed of the iServer’s serial port. Options are 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, and 921600 bits/s. The default is 9600 bits/s.
+
+<h3> Data Bit </h3> 
+<p> Indicates the number of bits in a transmitted serial packet. Options are 7 and 8. The default is 8. 
+
+<h3> Parity </h3> 
+<p> Checks for the parity bit. Options are Even, Odd, and None. The default is None.
+
+<h3> Stop Bit </h3> 
+<p> Indicates the end of transmission. Options are 1 and 2. The default is 1. 	
+
+<h3> Flow Control </h3> 
+<p> Manages data flow between the iServer and the attached serial device to ensure it’s processed efficiently. Too much data arriving before the device can handle it causes lost data. Options are Hardware (using RTS and CTS pins), Software (using Tx and Rx pins), and None. The default is None.
+
+<h3> Interface </h3> 
+<p> The serial interface is either RS232, RS485 2-wire, or RS485 4-wire. The default is RS232.
+
+<h3> 2-wire 485 Timer </h3>
+<p>  Due to the fact that with 2-wire RS485 data can either be transmitted or received at a time, this timer adjusts the switching logic between Tx and Rx. For example if the Timer is set to 500ms, this means that the iServer waits for 500ms AFTER it transmits the data to its serial port. If there is no more data within that interval, the iServer then changes its RS485 driver from transmit mode to receive mode. At this time, it listens to the serial device for a response. Again, if it does not receive any data in 500ms, it then switches back to transmit mode. This field can take anything between 0ms to 9999ms. The default is 500ms.
+
+<h3> 2-wire 485 Type </h3> 
+<p> Options are Slave and Master. In the Slave mode when the iServer is powered on, the RS485 serial driver will be in transmitting mode. Therefore, any data that is received on the network port will be transmitted to the serial device. In the Master mode when the iServer is powered on, the RS485 serial driver will be in receiving mode and any data that is received on the serial port will be transmitted to the network. The default is Slave.
+
+
+
+<h3> Number of Connections </h3> 
+<p> This option allows up to 5 connections to be made to the serial port. The choices are 0, 1, 2, 3, 4, and 5. When 0 is selected no connections can be made to the serial port except from the web server via port 1000.  The default is 5.
+
+<h3> Local Port </h3>
+<p> This is a port number that is assigned to the iServer’s serial port for the purpose of TCP, UDP, or ModbusTCP connection. Any number between 500 and 65535 can be defined with the exceptions of 2002 which is already used for Telnet console connection. If port number is set to 0, the serial port is closed on an out-bound connection. The default is 2000.
+
+Note: Number 502 is the default port number for the ModbusTCP protocol. If ModbusTCP is enabled (See Network menu) the Local Port should indicate 502 automatically.
+
+<h3> Connect on </h3> 
+<p> Options are Always, Rise DTR, and Drop DTR. If Always is selected, then the iServer forwards any network connections to it’s serial port with no conditions. Some serial devices accept connections based on certain signal conditions. For example, a serial device may accept a connection only if the iServer’s DTR  (connected to the device’s DSR or DCD) is high or low. In this case, when the iServer receives a network connection from a networked host, before forwarding it to its serial port the iServer must rise its DTR (when Rise DTR is selected) or it must lower its DTR (when Drop DTR is selected). The default is Always.
+
+
+<h3> Remote Access </h3> 
+<p> This option allows the iServer to establish a connection to a remote node on the network. The attached serial device then can communicate with that network node. Options are Enable and Disable. The default is Disable. When disabled other fields under this category will be dimmed.
+
+<h3> Remote IP Address </h3> 
+<p> This is the IP address of the network node to which the iServer initiates the connection.
+ 
+Note: If the selected protocol is UDP (Network menu), then the Remote IP Address can either be a single IP address for a Directed UDP connection or it can be the network broadcast address for a broadcasted connection (i.e. 192.168.1.255).  
+
+<h3> Remote Port </h3> 
+<p> This is the port number for the remote network node to which the iServer connects. The default is 2000.
+
+<h3> Retry Timer </h3> 
+<p> If the connection is broken due to network problems, power failure, etc., the iServer will try to get the connection back on line every Retry Timer amount. Enter time in the format mm:ss, where mm is the number of minutes and ss is the number of seconds. 00:00 disables the Retry Timer. The default is 00:00. 	
+
+<h3> Connect on </h3> 
+<p> Options are Always, Any Character, DSR Risen, and DSR Dropped. If Always is selected then the iServer will open a connection to the Remote IP Address regardless of receiving any data on its serial port. If Any Character is selected then the iServer will open a connection to the Remote IP Address if it receives serial data. If DSR Risen is selected then the iServer will open a connection to the Remote IP Address only if its DSR is risen (by the DTR pin of the attached serial device). If DSR Dropped is selected then the iServer will open a connection to the Remote IP Address only if its DSR is dropped (by the DTR pin of the attached serial device). The default is Always.
+
+
+<h3> End Character </h3> 
+<p> When this hexadecimal character is received by the iServer on its serial port, the iServer will forward the buffered serial data to the Ethernet. The default value is 00, which means the iServer requires NO End Character to forward the data to the network.
+
+<h3> Forward End Character </h3> 
+<p> The options are Yes and No. If Yes, the iServer will send the End Character out to the Ethernet as part of the data. If No, the iServer will not count the End Character as part of the data and will drop it. The default is No.
+
+<h3> Buffering Time </h3> 
+<p> This forces the iServer to pack the received serial data for this amount of time. This parameter defines the time interval during which the iServer stores the serial data in its buffer before send it out to the network. Depending on the users’ applications, this time must be at least larger than one character interval within the specified baud rate. For example, assume that the serial port is set to 1200 bps, 8 data bits, 1 stop bit, and no parity. In this case, the total number of bits needed to send a character is 10 bits and the time required to transfer one character is (10 (bits) / 1200 (bits/s) ) * 1000 (ms/s) = 8.3 ms. Therefore, the Buffering Time must be larger than 8.3 ms. If the interval is set to be too long (counting the baud rate in the equation) and therefore the iServer’s buffer gets full, the iServer will override the specified time and push the data out to the network before the buffer is full. The default is 0 milliseconds which means disabled.  
+
+<h3> Packet Length </h3> 
+<p> If the received data length (in bytes) matches the configured value, the data will be forced out to the network. The data length can be configured for 0 to 1024 bytes. Set to 0 if you do not need to limit the length. The default is 0.
+
+
+<h3> Inactivity Timeout </h3> 
+<p> This option impacts Network-to-Serial and Serial-to-Network connections. 
+The iServer will drop the TCP connection if there is no activity before the set time expires. Enter time in the format mm:ss, where mm is the number of minutes and ss is the number of seconds. 00:00 disables the inactivity timeout. The default is 00:00. 	
+
+<h3> Disconnect by </h3> 
+<p> This option impacts Serial-to-Network connections. The choices are None, DSR Risen, DSR Dropped, and Hard Disconnect. The iServer will not disconnect the network connection under any circumstances if None is selected. With DSR Risen selected, the iServer will disconnect the network connection if its DSR signal is risen. With DSR DROPPED selected, the iServer will disconnect the network connection if its DSR signal is dropped. Choosing Hard Disconnect will force the iServer to drop the network connection if the serial cable is physically disconnected between the iServer and the serial device. The default is None.
+
+<h3> Connection Type </h3>
+<p> The options are Disable, Simultaneous, and Sequential. The iServer can send the received serial data to multiple network hosts Simultaneously or Sequentially. In Simultaneous mode, the received serial data will be transmitted to all the network nodes that are indicated in the host table (using TCP, UDP, or ModbusTCP protocol – depending on which protocol is selected under the Network menu). In Sequential mode, the iServer scrolls through the IP addresses in the host table until it connects to one. After a successful connection, the iServer stops trying to connect to any others. If this connection fails, the iServer continues to scroll through the table until the next successful connection (using TCP or ModbusTCP protocol – depending on which protocol is selected under Network menu). Each entry in the host table should contain an IP address and a port number. If Disable is selected other fields under this category will be dimmed. The default is Disable.
+
+<h3> Retry Counter </h3> 
+<p> This indicates the number of tries to connect to the host address. The default is 2.
+
+<h3> Retry Timeout </h3> 
+<p> This indicates the amount of time (ms) between each try. The default is 200 ms.
+
+</body>
+</html>

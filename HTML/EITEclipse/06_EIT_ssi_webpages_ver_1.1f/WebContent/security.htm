@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+<title>Security</title>
+</head>
+
+<script language="JavaScript">
+    function IP_Disab () 
+	{
+      if(document.getElementById("ipx").checked==false)
+      {
+        document.security.ip1.disabled=true;
+        document.security.ip2.disabled=true;
+        document.security.ip3.disabled=true;
+		document.security.ip4.disabled=true;
+		document.security.ip5.disabled=true;
+		document.security.ip6.disabled=true;
+		document.security.ip7.disabled=true;
+		document.security.ip8.disabled=true;
+      }
+      
+	  if(document.getElementById("ipx").checked==true)
+      {
+        document.security.ip1.disabled=false;
+        document.security.ip2.disabled=false;
+        document.security.ip3.disabled=false;
+	    document.security.ip4.disabled=false;
+	    document.security.ip5.disabled=false;
+	    document.security.ip6.disabled=false;
+	    document.security.ip7.disabled=false;
+	    document.security.ip8.disabled=false;
+      }
+    }
+  </script>
+
+<body onload="IP_Disab ()">
+<div id="left_menu">
+<ul>
+    <li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=1'>Overview </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=2'>Network </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=3'>Serial </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=4'>I/O Pins </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=5'>Management </a></li>
+	<li style="color: black; font-weight: bold"> Security </li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=7'>Device Query </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=8'>Device Setup </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=9'>Read Device </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=10'>Terminal </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=11'>System </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=12'>Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form name="security" action="security" method="post">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<h2>SECURITY</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" class="t_content">
+			<tr>
+				<td>Login Password</td>
+				<td align="right"><input type="text" name="login" value="<!--#exec cgi="lpass"-->"
+				size="16" maxlength="16" disabled> <a href="/change_login.htm">
+				change </a></td>
+			</tr>
+			<tr>
+				<td>Admin Password</td>
+				<td align="right"><input type="text" name="admin" value="<!--#exec cgi="apass"-->"
+				size="16" maxlength="16" disabled> <a href="/change_admin.htm">
+				change </a></td>
+			</tr>
+			<tr>
+				<td>Serial Port Password</td>
+				<td align="right"><input type="text" name="serial" value="<!--#exec cgi="spass"-->"
+				size="16" maxlength="16" disabled> <a href="/change_serial.htm">
+				change </a></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" class="t_content">
+			<tr>
+				<td>Internet Console Access</td>
+				<td></td>
+				<td align="right"><input type="checkbox" name="ica" value="1"<!--#exec cgi="ica"-->>
+				</td>
+			</tr>
+			<tr>
+				<td>Serial Port Console Access</td>
+				<td></td>
+				<td align="right"><input type="checkbox" name="spca" value="1"<!--#exec cgi="spca"-->>
+				</td>
+			</tr>
+			<tr>
+				<td>Web Server Access</td>
+				<td></td>
+				<td align="right"><input type="checkbox" name="wsa" value="1"<!--#exec cgi="wsa"-->>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+	<td> <h2>IP EXCLUSIVITY </h2> 
+	<input type="checkbox" name="ipx" id="ipx" onclick="IP_Disab ()" value="1"<!--#exec cgi="ipx"-->> 
+	Enable </td>
+	</tr>
+	<tr>
+		<td>
+		<table border="1" align="center">
+			<tr>
+				<th>No.</th>
+				<th>IP Address</th>
+			</tr>
+			<tr>
+				<td>1.</td>
+				<td><input type="text" name="ip1" value="<!--#exec cgi="ip1"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>2.</td>
+				<td><input type="text" name="ip2" value="<!--#exec cgi="ip2"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>3.</td>
+				<td><input type="text" name="ip3" value="<!--#exec cgi="ip3"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>4.</td>
+				<td><input type="text" name="ip4" value="<!--#exec cgi="ip4"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>5.</td>
+				<td><input type="text" name="ip5" value="<!--#exec cgi="ip5"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>6.</td>
+				<td><input type="text" name="ip6" value="<!--#exec cgi="ip6"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>7.</td>
+				<td><input type="text" name="ip7" value="<!--#exec cgi="ip7"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+			<tr>
+				<td>8.</td>
+				<td><input type="text" name="ip8" value="<!--#exec cgi="ip8"-->"
+				size="15" maxlength="15"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Save" /> <input type="reset"
+			value="Reset" /></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

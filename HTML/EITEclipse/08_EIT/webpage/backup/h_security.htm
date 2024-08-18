@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" 
+  href="help.css" />
+  <title> Security Help</title>
+</head>
+
+<body>
+
+Note: Administrator password is required to access Security menu.
+
+<h3> Login Password </h3> 
+<p> To access the iServer’s web server this password is required. The maximum length can be up to 16 alphanumeric case-sensitive characters. Empty box means no password is required. The default Login Password is 12345678.
+
+<h3> Administrator Password </h3> 
+<p> to access Network, Security, or System menu this password is required. The maximum length can be up to 16 alphanumeric case-sensitive characters. Empty box means no password is required. The default Administrator Password is 00000000.
+
+<h3> Serial Port  Password </h3> 
+<p> to access the iServer’s serial port (via TCP or UDP socket connection) this password is required. The maximum length can be up to 16 alphanumeric case-sensitive characters. Empty box means no password is required. The default Administrator Password is none.
+
+Note: This password will also be prompted when Telnet to port 2002 is made. Port 2002 is the Telnet consol port that allows users to configure all the parameters that can be configured through the web server.
+ 
+<h3> Telnet Console Access </h3> 
+<p> The options are Enable and Disable. If Disabled Telnet to the iServer’s port 2002 is blocked. The default is Enable.  
+
+<h3> Serial Console Access </h3>
+<p> The options are Enable and Disable. If Disabled an in-bound console connection to the iServer’s serial port is blocked. Using a dip switch on the iServer users can change the serial port from data mode to configuration mode. This password will be prompted once the serial port in the configuration mode is accessed. The default is Enable.
+
+Note: A console connection is a connection to configure the iServer and it can be done through Telnet (port 2002) and the serial RS232 port (dip switch).
+
+
+
+<h3> Web Server Access </h3> 
+<p> The options are Enable and Disable. If Disabled access to the iServer’s web server is blocked. The default is Enable. 
+
+<h3> IP Exclusivity </h3> 
+<p> 
+This table contains all the IP Addresses and Subnets that are allowed to communicate with the iServer. This means if the table is empty all addresses are allowed. The ptions are Enable and Disable. If enabled, all packets from IP Addresses not in this list are ignored and thrown away (regardless of TCP, UDP, or ModbusTCP protocol) . The default is Disable.
+
+<h3> Data Encryption </h3> 
+<p> This is the Advanced Encryption Standard (AES), also known as Rijndael. The options are Disable, 128-bit, 192-bit, and 256-bit encryption key lengths. For a 128-bit key length, 32 hexadecimal characters are entered. For a 192-bit key length, 48 hexadecimal characters are entered. For a 256-bit key length, 64 hexadecimal characters are entered. The default is Disable.
+
+Generally, one of two situations applies: 1. Encrypted iServer-to-iServer communication: Both iServer devices must be configured with the same encryption key. 2. Third-party application to iServer-encrypted communication: iServer uses standard AES encryption protocols. To communicate successfully, products and applications on the peer side must use the same protocols and the same encryption key as the iServer. 
+
+Note: Encryption only applies to the port selected for socket connection (default 2000), regardless of whether TCP or UDP protocol is used.
+
+</body>
+</html>
+

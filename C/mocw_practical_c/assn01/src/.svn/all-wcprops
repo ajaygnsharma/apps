@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn01/src
+END
+test.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn01/src/test.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn01/src/main.c
+END
+tst_assn_01
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/my_lib/mocw_pc/assn01/src/tst_assn_01
+END

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>MODIFY DEVICE ENTRY</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+
+<body>
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+	<li> <a href='load?PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PAGENO=5'> Management </a></li>
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a style="color: black; font-weight: bold" 
+	href='load?PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PAGENO=9'> Read Device </a></li>
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PAGENO=11'> System </a></li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form name="f1" method="post" action="updatedevparam">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<h2>DEVICE PARAMETERS</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>Device No. <!--#exec cgi="show_unit_num"--></h2>
+		</td>
+	</tr>
+	<tr>
+		<td><input type=hidden name=N value="<!--#exec cgi="show_idnum"-->">
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border="0" width="100%" class="t_content">
+			<tr>
+				<td>Device Name</td>
+				<td><input type="text" name="NM" size="8" maxlength="8" value="<!--#exec cgi="show_name"-->">
+				</td>
+			</tr>
+			<tr>
+				<td>Device Command</td>
+				<td><input type="text" name="CMD" size="9" maxlength="9"
+					value="<!--#exec cgi="show_cmd"-->"></td>
+			</tr>
+			<tr>
+				<td>Response Unit</td>
+				<td><input type="text" name="UNT" size="9" maxlength="9"
+					value="<!--#exec cgi="show_units"-->"></td>
+			</tr>
+		</table>
+	<tr>
+		<td><input type="submit" VALUE="Save Changes"> <input
+			type="reset" value="Reset" name="X"></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>
+
+

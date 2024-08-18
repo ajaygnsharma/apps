@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>LOGIN</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+
+<body>
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+	<li> <a href='load?PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PAGENO=5'> Management </a></li>
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PAGENO=9'> Read Device </a></li>
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+	<li style="color: black; font-weight: bold"> System </li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+
+<form action="system_admin" method="post">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td> <h2>Administrator</h2> </td>
+	</tr>	
+	<tr>
+	    <td>
+		Password 
+		<input type="password" size="16" maxlength="16" name="PW"> 
+		<input type="submit" value="OK">
+		</td>
+	</tr>
+</table>
+</form>
+<!--#exec cgi="pswd_msg"--></div>
+</body>
+
+</html>

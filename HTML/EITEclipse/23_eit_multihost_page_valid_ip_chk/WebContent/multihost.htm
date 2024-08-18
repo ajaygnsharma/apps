@@ -1,0 +1,285 @@
+<html>
+<head>
+<title>SERIAL</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+<script language="JavaScript" type="text/javascript">
+
+function validate_form(thisform)
+{
+  var i;
+  var m_ip = new Array();
+  var m_p = new Array();
+  var ip_name = ["mip1","mip2","mip3","mip4","mip5","mip6","mip7","mip8","mip9","mip10","mip11","mip12"];
+  var p_name = ["mp1","mp2","mp3","mp4","mp5","mp6","mp7","mp8","mp9","mp10","mp11","mp12"];
+  var ret_val;
+
+  ret_val = false;
+  
+  for(i = 0; i < 12; i++)
+  {
+    m_ip[i] = document.getElementById(ip_name[i]);
+    m_p[i] = document.getElementById(p_name[i]);
+    if(isNaN(m_ip[i]))
+    {
+      ret_val = false;
+    }
+    else
+    {
+      ret_val = true;
+    }
+  }
+    
+  if(ret_val == false)
+  {
+	alert("check the ip addresses entered");
+	return false;  
+  }
+  else
+  {
+    alert("Please reboot the device for the settings to take place");
+    return true;
+  }
+}
+
+function Disable() 
+{
+   var host_address = [ "0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0","0.0.0.0"];
+   var port = [ "0","0","0","0","0","0","0","0","0","0","0","0"];
+   var i;
+   var ip_name = ["mip1","mip2","mip3","mip4","mip5","mip6","mip7","mip8","mip9","mip10","mip11","mip12"];
+   var p_name = ["mp1","mp2","mp3","mp4","mp5","mp6","mp7","mp8","mp9","mp10","mp11","mp12"];
+   var m_ip = new Array();
+   var m_p = new Array();
+   
+   if(document.multihost.connection_type.options[0].selected==true)
+   {
+	  document.multihost.retry_counter.disabled = true;
+      document.multihost.retry_timeout.disabled = true;
+       
+	  for(i = 0; i < 12; i++)
+      {
+        m_ip[i] = document.getElementById(ip_name[i]);
+        m_p[i] = document.getElementById(p_name[i]);
+        
+        m_ip[i].disabled = true;
+        m_p[i].disabled = true;
+      }
+    }
+    else
+    {
+      document.multihost.retry_counter.disabled=false;
+      document.multihost.retry_timeout.disabled=false;
+
+      for(i = 0; i < 12; i++)
+      {
+        m_ip[i] = document.getElementById(ip_name[i]);
+        m_p[i] = document.getElementById(p_name[i]);
+          
+        m_ip[i].disabled = false;
+        m_p[i].disabled = false;
+        m_ip[i].value = host_address[i];
+        m_p[i].value  = port[i];        
+      }
+    }
+   
+}
+</script>
+
+<body onload="Disable()">
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+	<li><a style="color: black; font-weight: bold" href='serial.htm'> Serial </a></li>
+	<li> <a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PAGENO=5'> Management </a></li>
+
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PAGENO=9'> Readings </a></li>
+
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PAGENO=11'> System </a></li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form name="multihost" action="multihost" method="post" onsubmit="return validate_form(this)">
+<table width="600" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+				<td class="tab"><a href='load?PAGENO=3'>Serial Port</a></td>
+
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PAGENO=15'>Network-to-Serial</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PAGENO=16'>Packing Techniques</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab" id="selectedtab"><a href='load?PAGENO=17'>Multi-host
+				Connection</a></td>
+				<td class="separator">&nbsp;</td>
+
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h3>MULTI-HOST CONNECTION</h3>
+		</td>
+
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" class="t_content">
+			<tr>
+				<td>Connection Type</td>
+
+				<td align="right"> <select name="connection_type" id="type" onchange="Disable()">
+
+<option value="1" selected="selected"> Disable </option>
+<option value="2" > Simultaneous </option>
+<option value="3" > Sequential </option>
+</select>
+ </td>
+			</tr>
+			<tr>
+				<td>Retry Counter</td>
+
+				<td align="right"><input type="text" name="retry_counter"
+					value="2" size="1"
+				maxlength="1"></td>
+			</tr>
+			<tr>
+				<td>Retry Timeout</td>
+				<td align="right"><input type="text" name="retry_timeout"
+					value="200" size="4"
+				maxlength="4"> msecs</td>
+			</tr>
+		</table>
+
+		</td>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+		<td>
+		<table id="host" border="1" align="center">
+
+			<tr>
+				<th>No</th>
+				<th>Host Address</th>
+				<th>Port</th>
+			</tr>
+			<tr>
+				<td>1</td>
+
+				<td><input type="text" name="mip1" id="mip1" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp1" id="mp1" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td><input type="text" name="mip2" id="mip2" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp2" id="mp2" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+
+			<tr>
+				<td>3</td>
+				<td><input type="text" name="mip3" id="mip3" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp3" id="mp3" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td><input type="text" name="mip4" id="mip4" value="" size="15"
+					maxlength="15"></td>
+
+				<td><input type="text" name="mp4" id="mp4" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td><input type="text" name="mip5" id="mip5" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp5" id="mp5" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+
+				<td>6</td>
+				<td><input type="text" name="mip6" id="mip6" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp6" id="mp6" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td><input type="text" name="mip7" id="mip7" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp7" id="mp7" value="" size="5"
+					maxlength="5"></td>
+
+			</tr>
+			<tr>
+				<td>8</td>
+				<td><input type="text" name="mip8" id="mip8" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp8" id="mp8" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>9</td>
+
+				<td><input type="text" name="mip9" id="mip9" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp9" id="mp9" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td><input type="text" name="mip10" id="mip10" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp10" id="mp10" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+
+			<tr>
+				<td>11</td>
+				<td><input type="text" name="mip11" id="mip11" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp11" id="mp11" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>12</td>
+				<td><input type="text" name="mip12" id="mip12" value="" size="15"
+					maxlength="15"></td>
+
+				<td><input type="text" name="mp12" id="mp12" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Save Changes"> <input
+			type="reset" value="Reset"></td>
+	</tr>
+
+</table>
+</form>
+</div>
+</body>
+</html>

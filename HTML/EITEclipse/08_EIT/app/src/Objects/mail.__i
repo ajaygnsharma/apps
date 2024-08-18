@@ -1,0 +1,1 @@
+-c --device DARMP -g -O2 --apcs=interwork -I..\..\netlib\src\snmp -I..\..\webpage -I..\inc -I..\..\netlib\inc -I..\..\post\inc -I..\..\drivers\inc -I..\..\ssi\inc -I "C:\Keil\ARM\INC\Philips" -DPOLARM2368 -o ".\Objects\mail.o" --omf_browse ".\Objects\mail.crf" --depend ".\Objects\mail.d" "mail.c"

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>DEVICE SETUP</title>
+	<link rel="stylesheet" type="text/css" href="ex2.css" />
+  </head>
+  
+  <body>
+  <p>
+  <center>
+  <form name="x" method="post" action="check">
+      
+  <script type="text/javascript">
+    <!--#exec cgi="dev_all"-->
+    var i;  
+ 
+    function E(s) 
+    {
+      if (s=="") 
+        s="&nbsp;";
+      document.write("<td align=center>"+s+"</td>");
+    } 
+    
+  </script>
+  
+  <table border="1" align="center">
+  <tr>
+    <th>S/No</th>
+    <th>Check</th>
+    <th>Device Name</th>
+    <th>Device Command</th>
+	<th>Response Unit</th>
+  </tr>
+  
+  <script type="text/javascript">
+  
+    for (i=0; i< 8 ; i++)
+    {
+      document.write("<tr>");
+      document.writeln("<td align=center><a href=\"setdeviceparam?N="+dev_na[i]+"\">"+dev_na[i]+"</a></td>");
+      document.writeln("<td align=center><INPUT TYPE=checkbox NAME=ck"+dev_na[i]+" VALUE=Y "+dev_nb[i]+"></td>");
+      E(dev_nc[i]);
+      E(dev_nd[i]);
+      E(dev_ne[i]);
+      document.write("</tr>");
+    }
+    
+    </script>
+   </table>
+   
+    <p>
+    <small>Click on device No. on the left to modify device parameters.</small>
+    <p>
+       
+    <input type=submit value="Update Checked Box">
+  </form>
+
+  <p>
+  </center>
+ 
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title> SERIAL </title>
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab" id="selectedtab"><a href="serial.htm">Serial Port</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab"><a href="bridge.htm">Serial Ethernet Bridge</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="packaging.htm">Packing Technique</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="multihost.htm">Multihost Connection</a></td>
+	  <td class="separator">&nbsp;</td>	   
+	</tr>
+  </table>
+	
+  
+  <form name="Serialconfig" action="serial" method="get">
+    <h2> SERIAL PORT </h2> <hr>
+
+    <table width="100%">
+      <tr>
+        <td> Baud Rate </td>
+	    <td align="right">
+          <!--#exec cgi="baud"-->
+	    </td>
+      </tr>
+      <tr>
+	    <td> Data Bits </td>
+	    <td align="right"> 
+          <!--#exec cgi="databits"--> 
+	    </td>
+      </tr>
+      <tr>
+	    <td> Parity </td>
+	    <td align="right"> 
+         <!--#exec cgi="parity"-->
+	    </td>
+      </tr>
+      <tr>
+	    <td> Stop Bit </td>
+	    <td align="right"> 
+          <!--#exec cgi="stopbit"--> 
+ 	    </td>
+      </tr>
+      <tr>
+	    <td> Flow Ctrl </td>
+	    <td align="right"> 
+          <!--#exec cgi="flowcontrol"--> 
+ 	    </td>
+      </tr>
+      
+      <!--#exec cgi="rs485timer"-->
+	  
+	  <!--#exec cgi="rs485txrx"-->
+	  
+      <!--#exec cgi="rs485type"-->
+	  
+	</table>
+  
+  <hr>  
+
+  <center>
+      <input type="submit" value="Save Changes" />
+      <input type="reset" value="Reset" />
+  </center>
+  </form>
+  </body>
+</html>

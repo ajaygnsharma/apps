@@ -1,0 +1,33 @@
+# Owner:     SJ-PE
+# Project:   R6000-2.5" MST
+# Change history:
+#    9/11/2014    Ajay Sharma   - running only nand-test, at this time both
+#                                 cannot run properly.
+#    8/29/2014    Daniel        - make script runnable
+#    7/18/2014    Dave Ord      - Sample (not runnable)
+#Initial LED state
+testled IDLE
+### Short duration HW tests follow ###
+## Test SPI interface to SPI0 (SPI EEPROM)
+spi-read 0 0 1
+spi-rdsr 0
+## Test SPI interface to SPI1 (SPI FLASH)
+spi-read 1 0 1
+spi-rdsr 1
+## Test pfail signal to Princeton ASIC is deasserted
+pfail-check 0
+## Test pfail signal to Princeton ASIC is asserted
+pfail-check 1
+## Test I2C interface to SPP - done if LEDs set correctly above
+testled IDLE
+## Test I2C interface to temperature sensor
+temperature_sensor read
+## NAND IBB scan - scan every die for IBBs
+ibbscan 256
+## Basic NAND E/W/R sanity check (channels, targets, block range, page range)
+## Read FLASH ID for each part
+read-id 0
+nand-test 0x0000FFFF 0xF0 0 2115 100 10 50 1
+#defects-get
+#defects-get c
+## DONE ##

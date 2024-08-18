@@ -1,0 +1,1029 @@
+														main.c
+---------------------------------------------------------------------
+
+void main(void)
+
+void webpages_init(void)
+
+
+														Callback.c
+---------------------------------------------------------------------
+
+/* Called from mn_tcp_send and mn_udp_send */
+word16 mn_app_get_send_size(PSOCKET_INFO socket_ptr)
+
+
+/* initialization before receiving a packet */
+/* Called from mn_tcp_recv and mn_udp_recv */
+/* num = number of bytes to be received */   
+void mn_app_init_recv(word16 num,PSOCKET_INFO socket_ptr)
+
+
+/* Process received packet. Called from mn_tcp_recv and mn_udp_recv. */
+SCHAR mn_app_process_packet(PSOCKET_INFO socket_ptr)
+
+/* process received byte. Called from mn_tcp_recv and mn_udp_recv */
+void mn_app_recv_byte(byte c,PSOCKET_INFO socket_ptr)
+
+/*
+   Do what needs to be done after successfully sending a packet.
+   Called from mn_tcp_recv().
+*/
+void mn_app_send_complete(word16 data_len,PSOCKET_INFO socket_ptr)
+
+
+CHAR mn_app_server_idle(PSOCKET_INFO *psocket_ptr)
+
+
+/* called from mn_server after a packet has been received */
+SCHAR mn_app_server_process_packet(PSOCKET_INFO socket_ptr)
+
+
+void mn_port_init_recv(void)
+
+void mn_port_recv_byte(byte c)
+
+char mn_port1000_process_packet(PSOCKET_INFO socket_ptr)
+
+char mn_port2000_process_packet(PSOCKET_INFO socket_ptr)
+
+int serial_in(byte *inbuffer)
+
+/// get the blank record where can store the new socket. if full, return 1. 
+CHAR socket_get(byte n)
+
+
+///find if the socket already in the record. if find, then return the number, if fail, return -1
+CHAR socket_nfind(byte n)
+
+
+/* return a pointer to a socket matching the passed source port */
+/* this is a modification of function mn_find_socket in socket.c */
+PSOCKET_INFO special_find_socket(word16 src_port)
+
+
+
+																SOCKET.C	
+-------------------------------------------------------------------------------------------------------
+
+/********************************************************************/
+
+/* perform all initialization needed by MicroNet. returns result from
+   mn_ether_init if ethernet used, otherwise always returns 1.
+*/
+int mn_init(void)
+
+
+/* fills socket structure and opens TCP connection if needed.
+   returns socket_no or negative number on error.
+*/
+SCHAR mn_open(byte dest_ip[], word16 src_port, word16 dest_port, \
+   byte open_mode, byte proto, byte type, byte *buff_ptr, word16 buff_len)
+	 
+/* fills socket structure. returns socket_no or negative number on error.
+   mn_open is split into two functions because some linkers were complaining
+   about recursion in tcp.c because mn_open was being called from
+   tcp_recv_header. tcp_recv_header now calls mn_open_socket.
+*/
+
+SCHAR mn_open_socket(byte dest_ip[], word16 src_port, \
+   word16 dest_port, byte proto, byte type, byte *buff_ptr, word16 buff_len)
+	
+/* loops until a TCP or UDP packet is received for the passed socket.
+   returns number of bytes received or negative number on error.
+   Also returns if no packet received in SOCKET_WAIT_TICKS timer ticks.
+*/
+int mn_recv(SCHAR socket_no, byte *buff_ptr, word16 buff_len)
+
+
+/* loops until a TCP or UDP packet is received for the passed socket.
+   returns number of bytes received or negative number on error.
+   Also returns if no packet received in wait_ticks timer ticks.
+   If wait_ticks is 0 will return immediately if no packet available.
+*/
+int mn_recv_wait(SCHAR socket_no, byte *buff_ptr, word16 buff_len, word16 wait_ticks)
+
+
+void mn_reset_inactivity_timer(PSOCKET_INFO socket_ptr)
+
+
+
+/* sends a TCP or UDP packet using the passed socket. returns number of
+   bytes sent or negative number on error. If a TCP packet waits for a reply.
+*/
+int mn_send(SCHAR socket_no, byte *data_ptr, word16 data_len)
+
+
+/* searches for an available socket, returns socket number or negative #
+   if none found.
+*/
+static SCHAR next_socket(void)
+
+
+
+/* does a tcp_abort if a tcp socket and closes the socket. returns
+   negative number if a bad socket passed, otherwise returns 0. The
+   difference between mn_close and mn_abort is that mn_abort will not
+   send any packets, while mn_close for tcp sockets will send a TCP FIN
+   and negotiate a close.
+*/
+int mn_abort(SCHAR socket_no)
+
+
+
+/* does a tcp_shutdown if a tcp socket and closes the socket. returns
+   negative number if a bad socket passed, otherwise returns 0.
+*/
+int mn_close(SCHAR socket_no)
+
+
+
+/* finish the packet and turn on xmit ISR, len is only used by ethernet.
+   returns 1 if successful or less than 0 if an error.
+
+   PPP and SLIP always return 1.
+*/
+SCHAR mn_close_packet(PSOCKET_INFO socket_ptr, word16 len)
+
+
+
+/* return a pointer to a socket matching the passed ports and ip_dest_addr */
+PSOCKET_INFO mn_find_socket(word16 src_port, word16 dest_port, byte *dstaddr)
+
+
+
+/* Determines socket_type from the src_port. The socket_type is used in
+   the callback functions to do special processing. (See callback.c).
+*/
+byte mn_get_socket_type(word16 src_port)
+
+
+
+
+																		T C P . C
+------------------------------------------------------------------------------------------
+/*----------------------------------------------------------------------- 
+ Function:    mn_tcp_init(PSOCKET_INFO socket_ptr)
+ Description: Initialize tcp settings for a socket 
+ Input:		Socket Pointer
+ Output:		None
+-------------------------------------------------------------------------*/
+void mn_tcp_init(PSOCKET_INFO socket_ptr)
+
+
+/*---------------------------------------------------------------------------- 
+   Function:	SCHAR mn_tcp_open(byte open_type,PSOCKET_INFO socket_ptr)
+   Description:	Open a tcp connection in active or passive mode, 
+   Input: 		Type of Connection(active or passive),Socket Pointer
+   Output:		tcp_state or times out after SOCKET_WAIT_TICKS*TCP_RESEND_TRYS 
+ 				ticks if doing an ACTIVE_OPEN.
+------------------------------------------------------------------------------*/
+SCHAR mn_tcp_open(byte open_type,PSOCKET_INFO socket_ptr)
+
+
+
+/*---------------------------------------------------------
+ Function:    void mn_tcp_abort(PSOCKET_INFO socket_ptr)
+ Description: Abort the tcp connection 
+ Input:		  Socket Pointer
+ Output:	  None
+ ---------------------------------------------------------*/
+void mn_tcp_abort(PSOCKET_INFO socket_ptr)
+
+
+
+/*---------------------------------------------------------
+ Function: 	void mn_tcp_close(PSOCKET_INFO socket_ptr)
+ Description: Initiate a close.
+ Input:		Socket Pointer
+ Output:	None
+ --------------------------------------------------------*/
+void mn_tcp_close(PSOCKET_INFO socket_ptr)
+
+
+
+/*------------------------------------------------------------------------
+   	Function:	int mn_tcp_recv(PSOCKET_INFO *psocket_ptr)
+	Description:Get a TCP packet.
+	Input:		Socket Pointer
+	Output:		Success:Returns number of data bytes received
+				Error:	negative number not equal to NEED_TO_LISTEN   
+			    0 	 :  if no data received
+				NEED_TO_LISTEN: if we need to listen again 				
+	Comment:    -> psocket_ptr will point to the socket that received 
+	  			   the data. 
+				-> mn_ip_recv() MUST be called before calling 
+				   this function.
+--------------------------------------------------------------------------*/
+int mn_tcp_recv(PSOCKET_INFO *psocket_ptr)																		
+
+
+/*---------------------------------------------------------------
+ Function:    int mn_tcp_send(PSOCKET_INFO socket_ptr)
+ Description: Send a packet if we are not still waiting on an ack 
+              from the last one we sent. 
+ Input:		  Socket Pointer
+ Output:	  Success: number of data bytes sent
+ 			  Error:   negative number if error or if the packet is 
+			           too large to send
+-----------------------------------------------------------------*/
+int mn_tcp_send(PSOCKET_INFO socket_ptr)
+
+
+
+/*-------------------------------------------------------
+ Function: 		void mn_tcp_shutdown(PSOCKET_INFO socket_ptr)
+ Description: 	shutdown the tcp connection 
+ Input:			Socket Pointer
+ Output:		None
+ ---------------------------------------------------------*/
+void mn_tcp_shutdown(PSOCKET_INFO socket_ptr)
+
+
+
+/*----------------------------------------------------------
+ Function: static byte tcp_recv_header(word32 *csum_ptr,word16 *TCPcsum_ptr,PSOCKET_INFO *psocket_ptr)
+ Description: Get a TCP header. 
+ Input:       csum Pointer, TCP sum pointer and Socket pointer
+ Output:      Success: 1 
+ Error:   0 
+-------------------------------------------------------------*/
+static byte tcp_recv_header(word32 *csum_ptr,word16 *TCPcsum_ptr,PSOCKET_INFO *psocket_ptr)
+
+
+
+/* ----------------------------------------------------------------------- 
+ Function:  static void tcp_recv_send(PSOCKET_INFO socket_ptr)
+ Description:Does a recv then a send, called from mn_tcp_open and 
+ 			 mn_tcp_shutdown
+ Input:		Socket Pointer
+ Output:	None
+ ------------------------------------------------------------------------*/
+static void tcp_recv_send(PSOCKET_INFO socket_ptr)
+
+
+
+/*--------------------------------------------------------------------
+ Function:    static SCHAR tcp_send_ack(PSOCKET_INFO socket_ptr)
+ Description: Send an ACK packet 
+ Input: Socket Pointer
+ Output: None
+ --------------------------------------------------------------------*/
+static SCHAR tcp_send_ack(PSOCKET_INFO socket_ptr)
+
+
+
+/*----------------------------------------------------------
+ Function: static SCHAR tcp_send_header(PSOCKET_INFO socket_ptr)
+ Description: Compute checksum and send a TCP Header. 
+ Input:    Socket Pointer
+ Output:   Success: 1 if able to send packet
+ 		   Error:   return a negative number.
+--------------------------------------------------------------*/
+static SCHAR tcp_send_header(PSOCKET_INFO socket_ptr)
+
+
+
+/*--------------------------------------------------------------------
+ Function: static SCHAR tcp_send_nodata_pkt(PSOCKET_INFO socket_ptr, byte tcp_flag)
+ Description: Send a TCP packet without any data. 
+ Input:       Success: returns positive number if able to send the packet 
+              Error:   otherwise returns a negative number.
+------------------------------------------------------------------------*/
+static SCHAR tcp_send_nodata_pkt(PSOCKET_INFO socket_ptr, byte tcp_flag)
+
+/*---------------------------------------------------------------
+ Function:    static SCHAR tcp_send_reset(PSOCKET_INFO socket_ptr)
+ Description: Send a reset packet 
+ Input: Socket Pointer
+ Output: call tcp_send_nodata_pkt()
+-------------------------------------------------------------------*/
+static SCHAR tcp_send_reset(PSOCKET_INFO socket_ptr)
+
+
+
+/*---------------------------------------------------------------------
+ Function: static SCHAR tcp_send_syn_close(PSOCKET_INFO socket_ptr, byte tcp_flag)
+ Description: Called from tcp_send_syn_ack & tcp_send_syn to finished sending packet .
+ Input: Socket Pointer and tcp_flag
+ Ouput: Success: positive number if able to send the packet 
+        Error:   returns a negative number.
+-------------------------------------------------------------------------*/
+static SCHAR tcp_send_syn_close(PSOCKET_INFO socket_ptr, byte tcp_flag)
+
+
+
+/*-------------------------------------------------------------
+ Function: static void tcp_update_ack(word16 data_len, PSOCKET_INFO socket_ptr)
+ Description: update sequence and acknowledgement numbers 
+ Input:       Length of the Data and Socket pointer
+ Output:	  None
+---------------------------------------------------------------*/
+static void tcp_update_ack(word16 data_len, PSOCKET_INFO socket_ptr)
+
+
+
+/*--------------------------------------------------------
+ Function:    	static void update_unacked_bytes(PSOCKET_INFO socket_ptr)
+ Description: 	Check for valid received ACK and update SND_UNA if needed.
+ Input:			Socket Pointer
+ Output:		None
+ -------------------------------------------------------------*/
+static void update_unacked_bytes(PSOCKET_INFO socket_ptr)
+
+
+
+
+
+
+
+																		U D P . C
+-----------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------ 
+ Function: int mn_udp_recv(PSOCKET_INFO *psocket_ptr)
+ Description: Get a UDP packet.
+ Input: 	  Socket Pointer 
+ Output:      Success: Returns number of data bytes received on the passed socket
+	 		  Error: -1 
+              No Data recieved or data recieved on another socket: 0 
+			  psocket_ptr will point to the socket that received the data.
+ Comment: 	  -> mn_ip_recv() MUST be called before calling this function.
+----------------------------------------------------------------------------------*/
+int mn_udp_recv(PSOCKET_INFO *psocket_ptr)
+
+
+
+/*------------------------------------------------------------------
+ Function:    int mn_udp_send(PSOCKET_INFO socket_ptr)
+ Description: Send IP header, UDP header and data.
+ Input:       Socket Pointer
+ Output:      Success: Returns number of data bytes sent 
+ 			  Error:   negative number 
+--------------------------------------------------------------------*/
+int mn_udp_send(PSOCKET_INFO socket_ptr)
+
+
+
+
+
+
+
+
+
+
+
+																				IP.C
+---------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------- */
+/* calculate IP checksum */
+static word32 ip_checksum(byte tos, word16 IPlen, word16 IPId, word16 frag, \
+   word16 TTLProto, byte *srcaddr, byte *rsrcaddr)
+
+
+
+/* get the IP header, returns packet type or 0 if the header is not valid. */
+static byte ip_recv_header(void)
+
+
+/* eat rest of packet */
+void mn_ip_discard_packet(void)
+
+
+
+byte mn_ip_get_pkt(void)
+cmx_reentrant {
+
+
+
+/* ----------------------------------------------------------------------- */
+/* Receives ethernet or PPP or SLIP header and IP header. If an ICMP echo  */
+/* request is received it will send an ICMP echo reply. Returns the        */
+/* packet_type. It should be checked so the proper routine can be called   */
+/* to process the rest of the packet. */
+byte mn_ip_recv(void)
+
+
+
+
+/* ----------------------------------------------------------------------- */
+/* Compute the IP checksum then send the IP header. Returns 1 if able to
+   send packet, otherwise returns a negative number.
+*/
+SCHAR mn_ip_send_header(PSOCKET_INFO socket_ptr,byte ip_proto,word16 ip_len)
+
+
+
+
+static void reset_recv(void)
+
+	 
+	 
+static void send_ping_reply(void)
+
+
+
+
+
+
+
+
+																A R P .C
+------------------------------------------------------------------------------------
+																
+/* gets an entry to the arp cache table, using an existing spot if
+   neccessary.
+*/
+static PARP_INFO mn_arp_get_entry(void)
+
+
+/* initialize arp structure */
+void mn_arp_init(void)
+
+
+/* look for an arp entry corresponding to the passed ip address. if a valid
+   entry is found in the table return a pointer to it, otherwise send out
+   up to ARP_RESEND_TRYS ARP requests. If we get a reply update the arp cache
+   and return a pointer to the updated entry. If we don't get a reply return
+   PTR_NULL.
+*/
+PARP_INFO mn_arp_lookup(byte ip[])
+
+
+/* called from ether_recv_header to check if we got a valid arp packet,
+   and if so handle it. on entry the sender's hw addr is in
+   eth_dest_hw_addr and the protocol type has been read. the recv_out_ptr
+   is pointing to the start of the ARP data. returns 0 if we processed a
+   valid arp packet, otherwise returns -1.
+*/
+SCHAR mn_arp_process_packet(void)
+
+
+/* wait for an ARP reply. returns 1 if we got an arp reply, otherwise
+   returns 0.
+*/
+static byte mn_arp_recv_reply(void)
+
+
+
+
+/* searches for ip address in arp cache and return pointer to arp cache entry
+   if successful or PTR_NULL if not.
+*/
+static PARP_INFO mn_arp_search_entry(byte ip[])
+
+
+/* send an ARP request. returns 1 if able to send, otherwise returns 0 */
+static byte mn_arp_send_request(byte ip[])
+
+
+
+void mn_arp_update(byte ip[], byte hw[])
+
+
+
+
+
+
+
+
+
+
+											E T H E R N E T .c
+-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------
+Function: This is the place we process the ethernet header
+Input :   None
+Output:   1: IP Packet, 0: ARP Packet, -1: None or Error
+-----------------------------------------------------------------------
+processes the ethernet header, handling ARP calls if necessary. returns 1
+   if the packet is an IP packet, returns 0 if arp packet, otherwise returns
+   -1.
+*/
+SCHAR ether_recv_header(void)
+
+
+
+
+/* returns bitwise AND of an IP address and the subnet mask */
+static word32 ip_net_number(byte *ip_addr)
+
+
+
+int mn_ether_init(void)
+cmx_reentrant {
+
+
+
+/* returns 1 if able to start the packet, otherwise returns a negative number.
+*/
+SCHAR mn_ether_start_packet(PSOCKET_INFO socket_ptr,word16 eth_type,byte isBcast)
+cmx_reentrant {
+
+
+
+/* the next two functions are for use by ethernet drivers */
+
+/* gets a byte to transmit from the xmit buffer. check to make sure that
+   send_out_ptr != send_in_ptr before calling this function.
+*/
+byte mn_get_xmit_byte(void)
+
+
+
+/* puts a byte into the recv buffer. make sure there is enough room first. */
+void mn_put_recv_byte(byte c2)
+
+
+
+/* put hardware addresses in xmit buffer */
+static void sendHWAddr(PSOCKET_INFO socket_ptr,byte isBcast)
+
+
+
+void start_arp_packet(PSOCKET_INFO socket_ptr,byte isBcast)
+cmx_reentrant {
+
+											
+
+
+
+											
+											
+											
+										
+											
+											
+
+
+
+
+
+
+
+															IpSeth16.c
+-------------------------------------------------------------------------------
+									/* driver for CS8900A chip in 16-bit IO-mode */
+									/*
+   Porting Notes:
+
+   1. Make sure that mnconfig.h is configured properly for either ISR
+      driven ethernet or POLLED_ETHERNET as required.
+
+   2. Make sure the ETHER_POLL_RECV, ETHER_INIT and ETHER_SEND(p,n) in
+      ethernet.h are defined properly.
+
+      #define ETHER_POLL_RECV       cs8900_recv()
+      #define ETHER_INIT            cs8900_init()
+      #define ETHER_SEND(p,n)       cs8900_send(p,n)
+
+   3. Set the macro RDWR below to point to the base address for the chip.
+      The Z180 board has a base address of 0x300, but this will be
+      different for other hardware.
+
+   4. Check the writeWord16 macro and the readWord16, readPacketPage16
+      and writePacketPage16 functions to make sure they work correctly
+      on your setup.      
+
+   5. Add code at the start of cs8900_init to do a hardware reset.
+
+   6. If ISR driven ethernet is used, add code to the end of the cs8900_init
+      function to enable the ISR.
+
+   7. Change the function declaration for the ISR function ether_isr to
+      the declaration required for your hardware and C compiler. Every
+      compiler does this differently so consult your compiler manual if
+      necessary. This step is not needed if using POLLED_ETHERNET.
+
+*/
+
+/*-------------------------------------------------------------------------
+#define ETHER_INIT cs8900_init() 
+Funtion: CS8900 Chip Initialization with all the required register entries
+Input :  none
+Output:  Initialization returns 1 if ok or negative number on error. 
+---------------------------------------------------------------------------*/
+
+int cs8900_init(void)
+
+
+
+/*------------------------------------------------------------------
+#define ETHER_POLL_RECV       cs8900_recv()
+Function: Recieve a frame in the buffer of CS8900 Mac Controller
+Input:    None
+Output:   number of bytes if successful or -ve number if unsuccessful
+--------------------------------------------------------------------*/
+
+/* receives a frame in polled mode. returns number of bytes received if
+   successful or negative number on error.
+   Copies entire frame including ethernet header into the r
+   eceive buffer.
+*/
+int cs8900_recv(void)
+
+
+
+#if ( !( defined(POLTRI51_16) || defined(CMXTRI51_16) || defined(POLZ180E) || defined(CMXZ180E) ) )
+static void cs8900_reset(void)
+cmx_reentrant {
+
+
+
+/*-----------------------------------------------------------------------
+ #define   ETHER_SEND(p,n)       cs8900_send(p,n)
+ Function: Send an Ethernet Frame to the Internal Buffer of the CS8900
+           MAC Controller
+ Input:    Socket_pointer, Length of the Data from the socket
+ Output:   (Successful) Number of Bytes or (Unsuccessful) Negative Number
+ -----------------------------------------------------------------------*/
+
+/* Transmit a frame. The ethernet header must in the frame to be sent.
+   Returns the number of bytes sent or negative number on error.
+   The ethernet header and other header info is in the xmit_buff. The TCP
+   or UDP data is pointed to by socket_ptr->send_ptr. xmit_sock_len is the
+   number of data bytes to be sent in the current packet.
+*/
+
+int cs8900_send(PSOCKET_INFO socket_ptr, word16 xmit_sock_len)
+
+
+/* Needed to force compiler to not ignore status & recv_status above */
+static void dummy(word16 d)
+
+
+
+void ether_isr(void) interrupt 0
+
+
+
+/* Returns the data read from PacketPage address, PPadd */
+static word16 readPacketPage16(word16 PPadd)
+
+
+static word16 readWord16(word16 Padd)
+
+
+
+/* Writes the data, PPdata, to the PacketPage address, PPadd */
+static void writePacketPage16(word16 PPadd, word16 PPdata)
+
+
+void DiagSend(char *Str)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+											
+
+																			Vfile.c
+------------------------------------------------------------------------------
+
+/* get the directory entry corresponding to name or NULL if not found */
+VF_PTR mn_vf_get_entry(byte *name)
+
+
+
+/* get the function corresponding to name or NULL if not found */
+GET_FP mn_gf_get_entry(byte *name)
+
+
+/* put function in first empty spot in structure and return pointer
+   to that spot.  Returns NULL if directory is full.
+*/
+GF_PTR mn_gf_set_entry(byte *name, GET_FP func)
+
+
+
+/* remove the function corresponding to name. returns 1 if function found
+   or 0 otherwise.
+*/
+byte mn_pf_del_entry(byte *name)
+
+/* get the function corresponding to name or NULL if not found */
+POST_FP mn_pf_get_entry(byte *name)
+
+
+
+/* put function in first empty spot in structure and return pointer
+   to that spot.  Returns NULL if directory is full.
+*/
+PF_PTR mn_pf_set_entry(byte *name, POST_FP func)
+
+
+/* remove the directory entry corresponding to name. returns 1 if entry
+   found, 0 if not found, and negative number if being used.
+*/
+SCHAR mn_vf_del_entry(byte *name)
+
+
+/* get the directory entry corresponding to name or NULL if not found */
+VF_PTR mn_vf_get_entry(byte *name)
+
+
+
+/* put directory entry in first empty spot in structure and return pointer
+   to that spot.  Returns NULL if directory is full.
+*/
+VF_PTR mn_vf_set_entry(byte *name, word16 size, PCONST_BYTE page, byte type)
+cmx_reentrant {
+
+
+VF_PTR mn_vf_set_ram_entry(byte *name, word16 size, byte * page, byte type)
+
+
+static VF_PTR set_vf_entry(byte *name, word16 size, PCONST_BYTE page, \
+   byte * ram_page, byte type)
+	 
+
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	
+	
+	
+										MNSERVER.c
+-------------------------------------------------------------------------										
+int mn_server(void)
+
+
+
+
+
+
+
+
+
+
+
+
+
+										Mn_timer.c
+-------------------------------------------------------------------------
+word16 mn_get_timer_tick(void)
+
+/* resets a timer */
+void mn_reset_timer(PTIMER_INFO timer_ptr, word16 num_ticks)
+
+
+/* returns 1 if a timer has expired, otherwise returns 0 */
+byte mn_timer_expired(PTIMER_INFO timer_ptr)
+
+
+/* waits for a given number of ticks. only needed for polled mode. */
+void mn_wait_ticks(word16 num_ticks)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+											MN_PORT.C
+--------------------------------------------------------------------------
+/* initialize uart variables. This function must be called by all
+   mn_uart_init functions.
+*/
+void init_io_buffs(void)
+
+
+void mn_timer_init(void)
+cmx_reentrant {
+   /* we use 12.0 Mhz because that is what our emulator is using. if running
+      off the board's clock, change below for 24.0 Mhz.
+
+
+/* waits up to SOCKET_WAIT_TICKS for the previous transmit to be done,
+   i.e. xmit_busy = 0. returns 1 if it is ok to start the next packet or
+   0 if not ok. Resets send_in_ptr and send_out_ptr if ok.
+
+   If SOCKET_WAIT_TICKS is set at the default 6 seconds then returning 0
+   is almost certainly a fatal error. Even the slowest serial link should
+   be able to transmit a packet in less than 6 seconds. If SOCKET_WAIT_TICKS
+   is set for a smaller value than the default then returning 0 may only mean
+   that the packet is not done sending yet.
+*/
+byte mn_transmit_ready(void)
+
+
+
+void mn_uart_init(void)
+
+
+void tcp_timer(void) interrupt 1 using 1
+
+
+void uart_isr(void) interrupt 4 using 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+													MnCSUM.c
+-----------------------------------------------------------------------------
+
+/* update the checksum from the data to be sent */
+word32 mn_data_send_checksum(word32 csum, byte * data_ptr, word16 data_len)
+
+
+/* finish checksum calculation */
+word32 mn_udp_tcp_end_checksum(word32 csum)
+cmx_reentrant {
+
+
+
+/* run checksum on pseudo header and ports. 
+   pseudo header is:
+                  0      7 8     15 16    23 24    31 
+                 +--------+--------+--------+--------+
+                 |          source address           |
+                 +--------+--------+--------+--------+
+                 |        destination address        |
+                 +--------+--------+--------+--------+
+                 |  zero  |protocol| TCP/UDP length  |
+                 +--------+--------+--------+--------+
+*/
+
+/* bww Modified to allow us to specify src ip addr. */
+
+word32 mn_udp_tcp_start_checksum(byte proto,word16 len,word16 port1,word16 port2,byte *srcaddr,byte *dstaddr)			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															HTTP.c
+---------------------------------------------------------------------------------------
+void check_http_parse(PSOCKET_INFO *psocket_ptr)
+
+
+
+static word16 copy_leftovers(PSOCKET_INFO socket_ptr, word16 *pbytes_to_send)
+
+
+
+static byte copyContentType(byte *buff, byte *filename)
+
+
+
+/* clear the in_use_flag set by http_set_in_use_flag() */
+static void http_clear_in_use_flag(PSOCKET_INFO socket_ptr)
+
+
+
+/* checks if the entry pointed to by vf_ptr is flagged as being IN_USE by
+   FTP. returns TRUE if not in use, FALSE if in use or deleted.
+*/
+static byte http_file_ok_to_send(VF_PTR vf_ptr)
+
+
+
+/* set a flag so the vf entry doesn't get deleted by FTP while we are
+   sending it.
+*/
+static void http_set_in_use_flag(PSOCKET_INFO socket_ptr, VF_PTR vf_ptr)
+
+
+
+
+/* makes http header for response to http head request */
+static word16 MakeHTTPHeader(VF_PTR vf_ptr)
+
+
+/* copy str into buff while decoding escaped chars */
+void mn_http_decodeString(byte *str, byte *buff)
+
+
+
+/* find the value of the match in the search_ptr and copies it into buff.
+   Returns 1 if a value found otherwise returns 0.  Looks for match=value
+*/
+int mn_http_find_value(byte *search_ptr, byte *match, byte *buff)
+
+
+
+
+/* initialize http specific variables */
+void mn_http_init(void)
+
+
+
+/* initialization at start of receiving data. Called from mn_app_init_recv(). */
+void mn_http_init_recv(PSOCKET_INFO socket_ptr)
+
+
+
+word16 mn_http_process_includes(PSOCKET_INFO socket_ptr, word16 bytes_to_send)
+
+
+
+/* process a received packet.  called from mn_app_process_packet(). */
+SCHAR mn_http_process_packet(PSOCKET_INFO socket_ptr)
+
+
+
+/* process a received byte.  called from mn_app_recv_byte(). */
+void mn_http_recv_byte(byte c, PSOCKET_INFO socket_ptr)
+
+
+
+
+/* called from mn_server */
+int mn_http_server_recv(PSOCKET_INFO *psocket_ptr)
+
+
+
+/* called from mn_server */
+void mn_http_server_send(PSOCKET_INFO *psocket_ptr, int sent)
+
+
+
+/* called from mn_server */
+void mn_http_server_set_flag(PSOCKET_INFO socket_ptr)
+
+
+
+/* sets up a file pointed to by vf_ptr to be sent by the http server.
+   returns 1 if able to send the file, otherwise returns 0.
+*/
+byte mn_http_set_file(PSOCKET_INFO socket_ptr, VF_PTR vf_ptr)
+
+
+
+
+
+/* prepare to send HTTP message */
+void mn_http_set_message(PSOCKET_INFO socket_ptr, PCONST_BYTE msg, word16 len)
+
+
+
+static SCHAR process_get_func(PSOCKET_INFO socket_ptr, word16 *pbytes_left)
+
+
+
+static SCHAR process_include_char(PSOCKET_INFO socket_ptr,byte c,word16 *pbytes_left)
+
+
+static SCHAR process_ram_includes(PSOCKET_INFO socket_ptr, word16 bytes_to_send)
+
+
+static SCHAR process_rom_includes(PSOCKET_INFO socket_ptr, word16 bytes_to_send)
+			

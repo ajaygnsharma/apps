@@ -1,0 +1,219 @@
+<html>
+<head>
+<script type="text/javascript">
+
+var ip_id = new Array("i1","i2","i3","i4","i5","i6");
+var op_id = new Array("o1","o2","o3","o4","o5","o6");
+var h_id  = new Array("h1","h2","h3","h4","h5","h6");
+var l_id  = new Array("l1","l2","l3","l4","l5","l6");
+var ci_h_id = ["cih1","cih2","cih3", "cih4"]; 
+var ci_l_id = ["cil1","cil2","cil3", "cil4"];
+var co_h_id = ["coh1","coh2","coh3","coh4"];
+var co_l_id = ["col1","col2","col3","col4"];
+
+function cio_en()
+{
+	var i=0;
+	var h=new Array();
+	var l=new Array();
+	var ip=new Array();
+	var op=new Array();
+	var ci_h=new Array();
+	var ci_l=new Array();
+	var co_h=new Array();
+	var co_l=new Array();
+
+	if(document.getElementById("cio").checked==true)
+		{
+		for(i=0;i<6;i++)
+			{
+			ip[i]=document.getElementById(ip_id[i]);
+			op[i]=document.getElementById(op_id[i]);
+			h[i]=document.getElementById(h_id[i]);
+			l[i]=document.getElementById(l_id[i]);
+			ci_h[i]=document.getElementById(ci_h_id[i]);
+			ci_l[i]=document.getElementById(ci_l_id[i]);
+			co_h[i]=document.getElementById(co_h_id[i]);
+			co_l[i]=document.getElementById(co_l_id[i]);
+			
+
+			if(ip[i]!=null)
+				{
+				ip[i].disabled=true;
+				}
+			if(op[i]!=null)
+				{
+				op[i].disabled=true;
+				}
+			if(h[i]!= null)
+			{
+			  h[i].disabled=true;
+			}
+			if(l[i]!= null)
+			{
+			  l[i].disabled=true;
+			}
+			if(ci_h[i]!= null)
+			{
+			  ci_h[i].disabled=false;
+			}
+			if(ci_l[i]!= null)
+			{
+			  ci_l[i].disabled=false;
+			}
+			if(co_h[i]!= null)
+			{
+			  co_h[i].disabled=false;
+			}
+			if(co_l[i]!= null)
+			{
+			  co_l[i].disabled=false;
+			}
+		}
+		}
+	else
+		{
+		for(i=0;i<6;i++)
+			{
+			ip[i]=document.getElementById(ip_id[i]);
+			op[i]=document.getElementById(op_id[i]);
+			h[i]=document.getElementById(h_id[i]);
+			l[i]=document.getElementById(l_id[i]);
+			ci_h[i]=document.getElementById(ci_h_id[i]);
+			ci_l[i]=document.getElementById(ci_l_id[i]);
+			co_h[i]=document.getElementById(co_h_id[i]);
+			co_l[i]=document.getElementById(co_l_id[i]);
+
+			if(ip[i]!=null)
+				{
+				ip[i].disabled=false;
+				}
+			if(op[i]!=null)
+				{
+				op[i].disabled=false;
+				}
+		if(h[i]!= null)
+		{
+		  h[i].disabled=false;
+		}
+		if(l[i]!= null)
+		{
+		  l[i].disabled=false;
+		}
+		if(ci_h[i]!= null)
+		{
+		  ci_h[i].disabled=true;
+		}
+		if(ci_l[i]!= null)
+		{
+		  ci_l[i].disabled=true;
+		}
+		if(co_h[i]!= null)
+		{
+		  co_h[i].disabled=true;
+		}
+		if(co_l[i]!= null)
+		{
+		  co_l[i].disabled=true;
+		}
+
+		}
+		}
+}
+
+//Table 1
+function draw_t1()
+{
+	var dir   = new Array("dir1","dir2","dir3","dir4","dir5","dir6");
+	var i_chk = new Array("checked","checked","checked","checked");
+	var o_chk = new Array(" "," "," "," ");
+	var img_src= new Array("grey.jpg","grey.jpg","grey.jpg","grey.jpg");
+	var op_cdn= new Array("op_cdn1","op_cdn2","op_cdn3","op_cdn4","op_cdn5","op_cdn6");
+	var h_chk = new Array("checked","checked","checked","checked");
+	var l_chk = new Array(" "," "," "," ");
+
+//Row 2
+var t1_r = new Array();
+var t1_c = new Array();
+var i = 0; 
+var j = 0;
+
+for(i = 1; i < 5; i++)
+{
+	t1_r[i] = document.getElementById('t1').insertRow(i); /* Create a row */
+	for(j = 0; j < 4; j++)
+	{
+		t1_c[j] = t1_r[i].insertCell(j); /* Insert 4 cells */
+	}
+	t1_c[0].innerHTML = i;
+	t1_c[1].innerHTML = "<input type=radio name=" + dir[i-1] + " id=" + ip_id[i-1] + " " + i_chk[i-1] + "> Input <input type=radio name=" + dir[i-1] + " id=" + op_id[i-1] + " " + o_chk[i-1] + "> Output";
+	t1_c[2].innerHTML = "<input type=radio name=" + op_cdn[i-1] + " id=" + h_id[i-1] + " " + h_chk[i-1] + "> High <input type=radio name=" + op_cdn[i-1] + " id=" + l_id[i-1] + " " + l_chk[i-1] + "> Low";
+	t1_c[3].innerHTML = "<img src=" + img_src[i-1] + ">";
+}
+
+}
+
+//Table 2
+function draw_t2()
+{
+	var ip_s_no = ["1", "2", "3", "4"]; 
+    var op_s_no = ["4", "5", "6", "7"];
+
+    var ci_name = ["ci1","ci2","ci3", "ci4"];
+	var ci_h_chk = ["checked","checked"];
+	var ci_l_chk = ["",""];
+    
+	var co_name = ["co1","co2","co3","co4"];
+	var co_h_chk = ["checked","checked"];
+	var co_l_chk = ["",""];
+    
+
+//Row 2
+var t2_r = new Array();
+var t2_c = new Array();
+var i = 0; 
+var j = 0;
+
+for(i = 1; i < 3; i++)
+{
+	t2_r[i] = document.getElementById('t2').insertRow(i); /* Create a row */
+	for(j = 0; j < 4; j++)
+	{
+		t2_c[j] = t2_r[i].insertCell(j); /* Insert 4 cells */
+	}
+	t2_c[0].innerHTML = ip_s_no[i-1];
+	t2_c[1].innerHTML = "<input type=radio name=" + ci_name[i-1] + " id=" + ci_h_id[i-1] + " " + ci_h_chk[i-1] + "> High <input type=radio name=" + ci_name[i-1] + " id=" + ci_l_id[i-1] + " " + ci_l_chk[i-1] + "> Low";
+	t2_c[2].innerHTML = op_s_no[i-1];
+	t2_c[3].innerHTML = "<input type=radio name=" + co_name[i-1] + " id=" + co_h_id[i-1] + " " + co_h_chk[i-1] + "> High <input type=radio name=" + co_name[i-1] + " id=" + co_l_id[i-1] + " " + co_l_chk[i-1] + "> Low";
+}
+
+}
+
+</script>
+</head>
+
+<body onLoad="draw_t1(),draw_t2(),cio_en()">
+<input type=checkbox name=cio id=cio onclick="cio_en()">
+Conditional I/O Pins
+<br>
+<table id="t1" border="1">
+<tr> 
+<th> </th>
+<th>Direction </th>
+<th>Output Condition</th>
+<th>Input Condition</th>
+</tr>
+</table>
+
+<br>
+
+<table id="t2" border="1">
+<tr> 
+<th>Input</th>
+<th>If</th>
+<th>Output</th>
+<th>Then</th>
+</tr>
+</table>
+</body>
+</html>

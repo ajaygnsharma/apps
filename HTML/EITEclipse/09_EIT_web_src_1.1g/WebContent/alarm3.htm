@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>MANAGEMENT</title>
+<link rel=stylesheet type=text/css href=eit_style.css>
+<script type="text/javascript">var a3_eml=new Array("Email","a3_e_pr","a3_e_ipc","a3_e_isa","a3_e_c","a3_e_ic","a3_e_spd","a3_c1","a3_ip_pin","a3_ri","a3_msg");var a3_tp=new Array("SNMP Trap","a3_t_pr","a3_t_ipc","a3_t_isa","a3_t_c","a3_t_ic","a3_t_spd","a3_c2","a3_pin_cdn","a3_to","a3_msg");function a3_en()
+{var i=0;var eml=new Array();var tp=new Array();if(document.getElementById("alm_3").checked==false)
+{for(i=1;i<11;i++)
+{eml[i]=document.getElementById(a3_eml[i]);tp[i]=document.getElementById(a3_tp[i]);if(eml[i]!=null)
+{eml[i].disabled=true;}if(tp[i]!=null)
+{tp[i].disabled=true;}}}
+else
+{for(i=1;i<11;i++)
+{eml[i]=document.getElementById(a3_eml[i]);tp[i]=document.getElementById(a3_tp[i]);if(eml[i]!=null)
+{eml[i].disabled=false;}if(tp[i]!=null)
+{
+tp[i].disabled=false;}}}}function insRow()
+{var a3_e_chk=new Array( " "," "," "," "," "," "," "," "," "," ");
+var a3_t_chk=new Array( " "," "," "," "," "," "," "," "," "," ");
+var chr_evt="Character 1 0x<input type=text name=a3_c1 id=a3_c1 value=\"" +0+"\" size=2 maxlength=2> <br> Character 2 0x<input type=text name=a3_c2 id=a3_c2 value=\"" +0+"\" size=2 maxlength=2>";var ic_evt="Input Pin <select name=a3_ip_pin  id=a3_ip_pin> <option value=1  selected=\"selected\">  PIN1 </option> <option value=2  >  PIN2 </option> <option value=3  >  PIN3 </option> <option value=4  >  PIN4 </option> </select> Input Condition <select name=a3_pin_cdn  id=a3_pin_cdn> <option value=1  >  HIGH </option> <option value=2  >  LOW </option> </select>";
+var a3_evt=new Array("Events","Power reset","IP Address changed","iServer accessed",chr_evt,ic_evt,"Serial port disconnected");var a3_r=new Array();var a3_c=new Array();var r=0;var c=0;for(r=0;r< 7 ;r++)
+{a3_r[r]=document.getElementById('t1').insertRow(r);for(c=0;c<3;c++)
+{a3_c[c]=a3_r[r].insertCell(c);}
+if(r==0)
+{a3_c[0].innerHTML="<input type=checkbox name=alm_3  id=alm_3 onclick=\"a3_en()\"" +a3_e_chk[0]+"> Enable";
+}else if(r==1)
+{a3_c[0].innerHTML=a3_evt[r-1];a3_c[1].innerHTML=a3_eml[r-1];a3_c[2].innerHTML=a3_tp[r-1];
+}
+else
+{a3_c[0].innerHTML=a3_evt[r-1];a3_c[1].innerHTML="<input type=checkbox name=" +a3_eml[r-1]+" id=" +a3_eml[r-1]+" " +a3_e_chk[r-1]+">";
+a3_c[2].innerHTML="<input type=checkbox name=" +a3_tp[r]+" id=" +a3_tp[r]+" " +a3_t_chk[r]+">";}}}</script>
+</head>
+<body onLoad=insRow(),a3_en()>
+<div id=left_menu>
+<ul>
+	<li><a href='load?PAGENO=1'>Overview
+	</a></li>
+	<li><a href='load?PAGENO=2'>Network
+	</a></li>
+
+	<li><a href='load?PAGENO=3'>Serial
+	</a></li>
+	<li><a href='load?PAGENO=4'>I/O
+	Pins </a></li>
+	<li style="color: black; font-weight: bold">Management</li>
+	<li><a href='load?PAGENO=6'>Security
+	</a></li>
+	<li><a href='load?PAGENO=7'>Device
+	Query </a></li>
+	<li><a href='load?PAGENO=8'>Device
+	Setup </a></li>
+
+	<li><a href='load?PAGENO=9'>Read
+	Device </a></li>
+	<li><a href='load?PAGENO=10'>Terminal
+	</a></li>
+	<li><a href='load?PAGENO=11'>System
+	</a></li>
+	<li><a href='load?PAGENO=12'>Diagnostics
+	</a></li>
+</ul>
+</div>
+<div id=content>
+<form method=post name=a3 action=alarm3>
+<table width=600px border=0 class=t_heading>
+
+	<tr>
+		<td>
+		<table id=tabmenu cellpadding=0 cellspacing=0>
+			<tr>
+				<td width=15>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=5'>Email,SNMP</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=20'>Alarm
+				1</a></td>
+
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=21'>Alarm2</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab id=selectedtab><a href='load?PAGENO=22'>Alarm3</a></td>
+				<td class=separator>&nbsp;</td>
+				<td class=tab><a href='load?PAGENO=23'>Alarm4</a></td>
+				<td class=separator>&nbsp;</td>
+
+				<td class=tab><a href='load?PAGENO=24'>Alarm5</a></td>
+				<td class=separator>&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		<table border=1 width=100% class=t_content id=t1></table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border=0 width=100% class=t_content>
+			<tr>
+				<td>Reminder Interval</td>
+
+				<td><input type=text name=a3_ri id=a3_ri value="0"
+				size="4" maxlength="4">s</td>
+				</td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td><input type=text name=a3_to id=a3_to value=""
+				size="50" maxlength="50"></td>
+			</tr>
+			<tr>
+
+				<td>Message:</td>
+				<td><input type=text name=a3_msg id=a3_msg value=""
+				size="30" maxlength="30"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type=hidden name=test id=test value=0> <input
+			type=submit value=Save><input type=reset value=Reset></td>
+
+	</tr>
+</table>
+</form>
+</body>
+</html>

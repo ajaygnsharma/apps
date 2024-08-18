@@ -1,0 +1,217 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Interrupt enable and disable functions for CMX-MicroNe
+                       t in polled mode.
+    2 00000000         ; ARM Realview tools.
+    3 00000000         
+    4 00000000 00000080 
+                       I_Bit   EQU              0x80
+    5 00000000 00000040 
+                       F_Bit   EQU              0x40
+    6 00000000 000000C0 
+                       Int_Bits
+                               EQU              0xC0
+    7 00000000         
+    8 00000000 00000000 
+                       FIQ_ON  EQU              0           ;set to 1 to allow 
+                                                            for fiq interrupts
+    9 00000000         
+   10 00000000                 [                FIQ_ON = 1
+   13 00000000 00000080 
+                       INTS_ENABLE
+                               EQU              I_Bit
+   14 00000000                 ]
+   15 00000000         
+   16 00000000                 EXPORT           K_OS_Disable_Interrupts
+   17 00000000                 EXPORT           K_OS_Enable_Interrupts
+   18 00000000         
+   19 00000000         ;   PRESERVE8
+   20 00000000                 AREA             |cmxenv|, CODE, READONLY
+   21 00000000                 CODE32
+   22 00000000         
+   23 00000000         |x$codeseg|
+   24 00000000         
+   25 00000000         ;
+   26 00000000         ;  void K_OS_Disable_Interrupts (void)
+   27 00000000         ;
+   28 00000000         ;  This routine disables all interrupts.  
+   29 00000000         ;
+   30 00000000         K_OS_Disable_Interrupts
+   31 00000000 E10F0000        MRS              r0, cpsr
+   32 00000004 E38000C0        ORR              r0,r0,#Int_Bits ; turn interrup
+                                                            ts off
+   33 00000008 E121F000        MSR              cpsr_c,r0
+   34 0000000C         ; MOV pc,lr
+   35 0000000C E12FFF1E        BX               lr
+   36 00000010         
+   37 00000010         ;
+   38 00000010         ;  void K_OS_Enable_Interrupts (void)
+   39 00000010         ;
+   40 00000010         ;  This routine enables all interrupts. The definition o
+                       f "all" is dependent
+   41 00000010         ;  on the conditional assembly in terms of whether FIQ i
+                       s used or not. These
+   42 00000010         ;  bits are defined in INTS_ENABLE. 
+   43 00000010         ;
+   44 00000010         K_OS_Enable_Interrupts
+   45 00000010 E10F0000        MRS              r0, cpsr
+   46 00000014 E3C00080        BIC              r0,r0,#INTS_ENABLE ; enable irq
+                                                             interrupts
+   47 00000018 E121F000        MSR              cpsr_c,r0
+   48 0000001C         ; MOV pc,lr
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   49 0000001C E12FFF1E        BX               lr
+   50 00000020         
+   51 00000020                 END
+Command Line: --16 --debug --xref --device=DARMP --apcs=interwork -o.\Objects\A
+RM_ENV.o -IC:\Keil\ARM\INC\Philips --predefine="__THUMB_LIBRARY__ SETA 1" --lis
+t=.\Listing\ARM_ENV.lst ..\..\netlib\src\ARM_ENV.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+K_OS_Disable_Interrupts 00000000
+
+Symbol: K_OS_Disable_Interrupts
+   Definitions
+      At line 30 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 16 in file ..\..\netlib\src\ARM_ENV.s
+Comment: K_OS_Disable_Interrupts used once
+K_OS_Enable_Interrupts 00000010
+
+Symbol: K_OS_Enable_Interrupts
+   Definitions
+      At line 44 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 17 in file ..\..\netlib\src\ARM_ENV.s
+Comment: K_OS_Enable_Interrupts used once
+cmxenv 00000000
+
+Symbol: cmxenv
+   Definitions
+      At line 20 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      None
+Comment: cmxenv unused
+x$codeseg 00000000
+
+Symbol: x$codeseg
+   Definitions
+      At line 23 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      None
+Comment: x$codeseg unused
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.debug_info$$$cmxenv 00000000
+
+Symbol: .debug_info$$$cmxenv
+   Definitions
+      None
+   Uses
+      None
+Warning: .debug_info$$$cmxenv undefinedComment: .debug_info$$$cmxenv unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.debug_line$$$cmxenv 00000000
+
+Symbol: .debug_line$$$cmxenv
+   Definitions
+      None
+   Uses
+      None
+Warning: .debug_line$$$cmxenv undefinedComment: .debug_line$$$cmxenv unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.debug_abbrev 00000000
+
+Symbol: .debug_abbrev
+   Definitions
+      None
+   Uses
+      None
+Warning: .debug_abbrev undefinedComment: .debug_abbrev unused
+__ARM_asm.debug_abbrev 00000000
+
+Symbol: __ARM_asm.debug_abbrev
+   Definitions
+      None
+   Uses
+      None
+Warning: __ARM_asm.debug_abbrev undefinedComment: __ARM_asm.debug_abbrev unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+FIQ_ON 00000000
+
+Symbol: FIQ_ON
+   Definitions
+      At line 8 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 10 in file ..\..\netlib\src\ARM_ENV.s
+Comment: FIQ_ON used once
+F_Bit 00000040
+
+Symbol: F_Bit
+   Definitions
+      At line 5 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      None
+Comment: F_Bit unused
+INTS_ENABLE 00000080
+
+Symbol: INTS_ENABLE
+   Definitions
+      At line 13 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 46 in file ..\..\netlib\src\ARM_ENV.s
+Comment: INTS_ENABLE used once
+I_Bit 00000080
+
+Symbol: I_Bit
+   Definitions
+      At line 4 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 13 in file ..\..\netlib\src\ARM_ENV.s
+Comment: I_Bit used once
+Int_Bits 000000C0
+
+Symbol: Int_Bits
+   Definitions
+      At line 6 in file ..\..\netlib\src\ARM_ENV.s
+   Uses
+      At line 32 in file ..\..\netlib\src\ARM_ENV.s
+Comment: Int_Bits used once
+5 symbols
+333 symbols in table

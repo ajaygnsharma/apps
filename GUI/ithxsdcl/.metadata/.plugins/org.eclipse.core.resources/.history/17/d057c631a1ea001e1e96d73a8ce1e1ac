@@ -1,0 +1,16 @@
+#ifndef MAIN_INC
+#define MAIN_INC
+
+typedef struct _MacWidgetData MacWidgetData;
+
+void sendMACAddr( GtkWidget *entry, MacWidgetData *md);
+void setMACAddr( GtkWidget *entry, MacWidgetData *td);
+
+struct _MacWidgetData
+{
+  gchar *macAddr;
+  gint  repeat_delay;
+  GtkWidget *TemperatureDegC;
+};
+
+#endif

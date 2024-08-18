@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<TITLE>MANAGEMENT</TITLE>
+<link rel="stylesheet" type="text/css" href="eit_style.css" />
+</head>
+<script language="JavaScript">  
+  function Alarm4_able () 
+  {
+   if(document.getElementById("Alarm4").checked==false)
+   {
+        document.form_alarm4.a4_e_pr.disabled=true;
+        document.form_alarm4.a4_t_pr.disabled=true;
+		document.form_alarm4.a4_e_ipc.disabled=true;
+		document.form_alarm4.a4_t_ipc.disabled=true;
+		document.form_alarm4.a4_e_isa.disabled=true;
+		document.form_alarm4.a4_t_isa.disabled=true;
+		document.form_alarm4.a4_e_spd.disabled=true;
+		document.form_alarm4.a4_t_spd.disabled=true;		
+		document.form_alarm4.a4_e_ic.disabled=true;
+		document.form_alarm4.a4_t_ic.disabled=true;		
+		document.form_alarm4.a4_e_c.disabled=true;
+		document.form_alarm4.a4_t_c.disabled=true;
+		document.form_alarm4.a4_c1.disabled=true;
+		document.form_alarm4.a4_c2.disabled=true;		
+		document.form_alarm4.a4_ri.disabled=true;
+		document.form_alarm4.a4_to.disabled=true;
+		document.form_alarm4.a4_msg.disabled=true;
+		document.form_alarm4.a4_ip_pin.disabled=true;
+		document.form_alarm4.a4_pin_cdn.disabled=true;
+		document.form_alarm4.a4_e_pr.checked=false;
+		document.form_alarm4.a4_t_pr.checked=false;
+		document.form_alarm4.a4_e_ipc.checked=false;
+		document.form_alarm4.a4_t_ipc.checked=false;
+		document.form_alarm4.a4_e_isa.checked=false;
+		document.form_alarm4.a4_t_isa.checked=false;
+		document.form_alarm4.a4_e_spd.checked=false;
+		document.form_alarm4.a4_t_spd.checked=false;
+		document.form_alarm4.a4_e_ic.checked=false;
+		document.form_alarm4.a4_t_ic.checked=false;
+		document.form_alarm4.a4_e_c.checked=false;
+		document.form_alarm4.a4_t_c.checked=false;
+   }
+   if(document.getElementById("Alarm4").checked==true)
+   {
+        document.form_alarm4.a4_e_pr.disabled=false;
+        document.form_alarm4.a4_t_pr.disabled=false;
+		document.form_alarm4.a4_e_ipc.disabled=false;
+		document.form_alarm4.a4_t_ipc.disabled=false;
+		document.form_alarm4.a4_e_isa.disabled=false;
+		document.form_alarm4.a4_t_isa.disabled=false;
+		document.form_alarm4.a4_e_spd.disabled=false;
+		document.form_alarm4.a4_t_spd.disabled=false;
+		document.form_alarm4.a4_e_ic.disabled=false;
+		document.form_alarm4.a4_t_ic.disabled=false;
+		document.form_alarm4.a4_e_c.disabled=false;
+		document.form_alarm4.a4_t_c.disabled=false;
+		document.form_alarm4.a4_c1.disabled=false;
+		document.form_alarm4.a4_c2.disabled=false;
+		document.form_alarm4.a4_ri.disabled=false;
+		document.form_alarm4.a4_to.disabled=false;
+		document.form_alarm4.a4_msg.disabled=false;
+		document.form_alarm4.a4_ip_pin.disabled=false;
+		document.form_alarm4.a4_pin_cdn.disabled=false;
+   }
+}
+</script>
+
+<body onload="Alarm4_able()">
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PW=&PAGENO=1'> Overview </a></li>
+
+	<li> <a href='load?PW=&PAGENO=2'> Network </a></li>
+	<li> <a href='load?PW=&PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PW=&PAGENO=4'> I/O Pins </a></li>
+	<li><a style="color: black; font-weight: bold"
+		href='snmp_email.htm'> Management </a></li>
+
+	<li> <a href='load?PW=&PAGENO=6'> Security </a></li>
+	<li> <a href='load?PW=&PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PW=&PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PW=&PAGENO=9'> Read Device </a></li>
+
+	<li> <a href='load?PW=&PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PW=&PAGENO=11'> System </a></li>
+	<li> <a href='load?PW=&PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<form method="post" name="form_alarm4" action="alarm4">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+
+				<td class="tab"><a href='load?PW=&PAGENO=5'>Email,SNMP</a></td>
+
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PW=&PAGENO=20'>Alarm 1</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PW=&PAGENO=21'>Alarm 2</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PW=&PAGENO=22'>Alarm 3</a></td>
+
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab" id="selectedtab"><a href='load?PW=&PAGENO=23'>Alarm
+				4</a></td>
+				<td class="separator">&nbsp;</td>
+
+				<td class="tab"><a href='load?PW=&PAGENO=24'>Alarm 5</a></td>
+				<td class="separator">&nbsp;</td>
+
+			</tr>
+
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+		<h2><input type="checkbox" name="Alarm4" id="Alarm4"
+			onclick="Alarm4_able()" > Enable
+		Alarm 4</h2>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+
+		<table border="1" width=100% class="t_content">
+			<tr>
+				<td>Events</td>
+				<td>Email</td>
+				<td>SNMP Trap</td>
+
+			</tr>
+
+			<tr>
+				<td>Power Reset</td>
+				<td><input type="checkbox" name="a4_e_pr" id="a4_e_pr" 
+				></td>
+				<td><input type="checkbox" name="a4_t_pr" id="a4_t_pr" 
+				></td>
+			</tr>
+
+			<tr>
+
+				<td>IP Address Changed</td>
+				<td><input type="checkbox" name="a4_e_ipc" id="a4_e_ipc" ></td>
+				<td><input type="checkbox" name="a4_t_ipc" id="a4_t_ipc" ></td>
+			</tr>
+
+			<tr>
+				<td>IServer Accessed</td>
+
+				<td><input type="checkbox" name="a4_e_isa" id="a4_e_isa" >
+				</td>
+				<td><input type="checkbox" name="a4_t_isa" id="a4_t_isa" >
+				</td>
+			</tr>
+			<tr>
+				<td>Serial Port Disconnected</td>
+				<td><input type="checkbox" name="a4_e_spd" id="a4_e_spd" >
+
+				</td>
+				<td><input type="checkbox" name="a4_t_spd" id="a4_t_spd" >
+				</td>
+			</tr>
+
+			<tr>
+				<td><select name="a4_ip_pin">
+					 <option value="1" selected="selected"> PIN1 </option>
+
+<option value="2" > PIN2 </option>
+<option value="3" > PIN3 </option>
+<option value="4" > PIN4 </option>
+<option value="5" > PIN5 </option>
+<option value="6" > PIN6 </option>
+ 
+				</select> Input Condition <select name="a4_pin_cdn">
+
+					 <option value="1" selected="selected"> LOW </option>
+<option value="2" > HIGH </option>
+ </td>
+
+
+				<td><input type="checkbox" name="a4_e_ic" id="a4_e_ic" >
+				</td>
+				<td><input type="checkbox" name="a4_t_ic" id="a4_t_ic" >
+
+				</td>
+			</tr>
+
+			<tr>
+				<td>Character1 <input type="text" name="a4_c1" value="0"
+				size="2" maxlength="2">0x Character2 <input type="text" name="a4_c2"
+					value="0" size="2" maxlength="2">0x
+				</td>
+				<td><input type="checkbox" name="a4_e_c" id="a4_e_c" >
+				</td>
+				<td><input type="checkbox" name="a4_t_c" id="a4_t_c" >
+
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>Properties</h2>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table border="0" width=100% class="t_content">
+			<tr>
+				<td>Reminder Interval</td>
+				<td><input type="text" name="a4_ri" value="0"
+				size="4" maxlength="4" >s</td>

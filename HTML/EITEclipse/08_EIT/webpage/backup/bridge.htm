@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title> SERIAL </title>
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab"><a href="serial.htm">Serial Port</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab" id="selectedtab"><a href="bridge.htm">Serial Ethernet Bridge</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="packaging.htm">Packing Technique</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="multihost.htm">Multihost Connection</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	</tr>
+  </table>
+	
+  
+  <form name="bridgeconfig" action="bridge" method="get">
+    
+	<h2> NETWORK TO SERIAL </h2> <hr>  
+
+    <table width="100%">
+      <tr>
+	<td> Number of Connections </td>
+	<td align="right"> 
+           <!--#exec cgi="no_of_conns"--> 
+	</td>
+    </tr>
+    
+	<tr> 
+	  <td> Local Port </td>
+	  <td align="right"> <input type="text" name="lp" size="5" maxlength="5" value="<!--#exec cgi="lp"-->" > </td>
+    </tr> 
+    
+	    <!--#exec cgi="connect_on"--> 
+	
+	</table>
+
+    <h2> SERIAL TO NETWORK </h2> <hr> 
+
+    <table width="100%"> 
+      <tr>
+        <td> Remote Access </td>
+        <td align="right"> 
+         <input type="checkbox" name="ren" <!--#exec cgi="rmt_en"--> value="1" >
+        </td>
+      </tr>
+      
+	  <tr> 
+        <td> Remote IP Address </td>
+        <td align="right"> 
+          <input type="text" name=RIP value="<!--#exec cgi="rmt_ip"-->" size="15" maxlength="15">       
+        </td>	
+      </tr>
+      
+	  <tr> 
+        <td> Remote Port </td> 
+        <td align="right"> <input type="text" name=RP value="<!--#exec cgi="rmt_port"-->" size="5" maxlength="5" > </td>
+      </tr>
+   
+      <tr> 
+        <td> Retry Timer </td>
+        <td align="right"> 
+          <input type="text" name="retry_timer" value="<!--#exec cgi="retry_timer"-->" size="5" maxlength="5">
+        </td>	
+      </tr>
+      
+	  <!--#exec cgi="remote_connect_on"--> 
+	 
+    </table>
+
+  <hr>
+  
+  <center>
+      <input type="submit" value="Save Changes" />
+      <input type="reset" value="Reset" />
+  </center>
+  </form>
+  </body>
+</html>

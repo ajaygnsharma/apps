@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title> Multihost </title>
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab"><a href="serial.htm">Serial Port</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab"><a href="bridge.htm">Serial Ethernet Bridge</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="packaging.htm">Packing Technique</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab" id="selectedtab"><a href="multihost.htm">Multihost Connection</a></td>
+	  <td class="separator">&nbsp;</td>
+	</tr>
+  </table>
+	
+  
+  <form name="multihost" action="multihost" method="get">
+    
+	<h2>Multi-Host Connection </h2> 
+	
+	<hr>
+	
+    <table width="100%">	
+    <tr> 
+	  <td> Connection Type </td>
+	
+      <td align="right">
+	    <!--#exec cgi="connection_type"-->
+	  </td>
+    </tr>
+    
+	<tr>
+	  <td> Retry Counter </td> 
+	  <td align="right"> 
+        <input type="text" name="retry_counter"  value="<!--#exec cgi="retry_counter"-->" size="1" maxlength="1">
+      </td> 
+    </tr>
+    
+	<tr>
+	  <td> Retry Timeout </td> 
+	  <td align="right"> 
+        <input type="text" name="retry_timeout"  value="<!--#exec cgi="retry_timeout"-->" size="4" maxlength="4">
+      </td> 
+    </tr>
+    
+	</table>		
+    
+  
+  <p>
+  <p>
+  
+  
+  <script type="text/javascript">
+   var host_address = [<!--#exec cgi="multi_ip_addr"-->];
+   var port = [<!--#exec cgi="multi_port"-->];
+   var ip_name = ["mip1","mip2","mip3","mip4","mip5","mip6","mip7","mip8","mip9","mip10","mip11","mip12"];
+   var p_name = ["mp1","mp2","mp3","mp4","mp5","mp6","mp7","mp8","mp9","mp10","mp11","mp12"];
+  </script>	
+  
+  <table border="1">
+  <tr>
+    <th>S/No</th>
+    <th>Host Address</th>
+    <th>Port</th>
+  </tr>
+	
+  <script type="text/javascript">
+  var i;
+	    
+  for (i = 0; i < 12 ; i++)
+  {
+    document.writeln("<tr>");
+    document.writeln("<td>" + (i + 1) + "</td>");
+	document.writeln("<td>" + "<input type=\"text\"" + "name=\"" + ip_name[i] + "\" value=\"" + host_address[i] + "\" size=\"15\" maxlength=\"15\"> </td>");
+    document.writeln("<td>" + "<input type=\"text\"" + "name=\"" + p_name[i] + "\" value=\"" + port[i] + "\"size=\"5\" maxlength=\"5\"> </td>");
+    document.writeln("</tr>");
+  }
+  </script>
+  </table>
+
+  <br>
+  <hr>
+  <br>
+    
+  <center>
+      <input type="submit" value="Save Changes" />
+      <input type="reset" value="Reset" />
+  </center>
+  </form>
+  </body>
+</html>

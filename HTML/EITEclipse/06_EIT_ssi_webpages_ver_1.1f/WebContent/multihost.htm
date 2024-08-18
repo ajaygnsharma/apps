@@ -1,0 +1,304 @@
+<html>
+<head>
+<title>Multihost</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css">
+</head>
+<script language="JavaScript" type="text/javascript">
+
+   
+
+function Disable() 
+{
+   var host_address = [<!--#exec cgi="multi_ip_addr"-->];
+   var port = [<!--#exec cgi="multi_port"-->];
+   var i;
+   var ip_name = ["mip1","mip2","mip3","mip4","mip5","mip6","mip7","mip8","mip9","mip10","mip11","mip12"];
+   var p_name = ["mp1","mp2","mp3","mp4","mp5","mp6","mp7","mp8","mp9","mp10","mp11","mp12"];
+    if(document.multihost.connection_type.options[0].selected==true)
+    {
+        document.multihost.retry_counter.disabled=true;
+        document.multihost.retry_timeout.disabled=true;
+        document.multihost.mip1.disabled=true;
+		document.multihost.mp1.disabled=true;
+		document.multihost.mip2.disabled=true;
+		document.multihost.mp2.disabled=true;
+        document.multihost.mip3.disabled=true;
+		document.multihost.mp3.disabled=true;
+		document.multihost.mip4.disabled=true;
+		document.multihost.mp4.disabled=true;
+		document.multihost.mip5.disabled=true;
+		document.multihost.mp5.disabled=true;
+		document.multihost.mip6.disabled=true;
+		document.multihost.mp6.disabled=true;
+		document.multihost.mip7.disabled=true;
+		document.multihost.mp7.disabled=true;
+		document.multihost.mip8.disabled=true;
+		document.multihost.mp8.disabled=true;
+		document.multihost.mip9.disabled=true;
+		document.multihost.mp9.disabled=true;
+		document.multihost.mip10.disabled=true;
+		document.multihost.mp10.disabled=true;
+		document.multihost.mip11.disabled=true;
+		document.multihost.mp11.disabled=true;
+		document.multihost.mip12.disabled=true;
+		document.multihost.mp12.disabled=true;
+    }
+    else
+    {
+        document.multihost.retry_counter.disabled=false;
+        document.multihost.retry_timeout.disabled=false;
+		document.multihost.mip1.disabled=false;
+		document.multihost.mp1.disabled=false;
+		document.multihost.mip2.disabled=false;
+		document.multihost.mp2.disabled=false;
+	    document.multihost.mip3.disabled=false;
+		document.multihost.mp3.disabled=false;
+		document.multihost.mip4.disabled=false;
+		document.multihost.mp4.disabled=false;
+		document.multihost.mip5.disabled=false;
+		document.multihost.mp5.disabled=false;
+		document.multihost.mip6.disabled=false;
+		document.multihost.mp6.disabled=false;
+		document.multihost.mip7.disabled=false;
+		document.multihost.mp7.disabled=false;
+		document.multihost.mip8.disabled=false;
+		document.multihost.mp8.disabled=false;
+		document.multihost.mip9.disabled=false;
+		document.multihost.mp9.disabled=false;
+		document.multihost.mip10.disabled=false;
+		document.multihost.mp10.disabled=false;
+		document.multihost.mip11.disabled=false;
+		document.multihost.mp11.disabled=false;
+		document.multihost.mip12.disabled=false;
+		document.multihost.mp12.disabled=false;
+       
+		document.multihost.mip1.value=host_address[0];
+		document.multihost.mp1.value=port[0];
+		document.multihost.mip2.value=host_address[1];
+		document.multihost.mp2.value=port[1];
+		document.multihost.mip3.value=host_address[2];
+		document.multihost.mp3.value=port[2];
+		document.multihost.mip4.value=host_address[3];
+		document.multihost.mp4.value=port[3];
+		document.multihost.mip5.value=host_address[4];
+		document.multihost.mp5.value=port[4];
+		document.multihost.mip6.value=host_address[5];
+		document.multihost.mp6.value=port[5];
+		document.multihost.mip7.value=host_address[6];
+		document.multihost.mp7.value=port[6];
+		document.multihost.mip8.value=host_address[7];
+		document.multihost.mp8.value=port[7];
+		document.multihost.mip9.value=host_address[8];
+		document.multihost.mp9.value=port[8];
+		document.multihost.mip10.value=host_address[9];
+		document.multihost.mp10.value=port[9];
+		document.multihost.mip11.value=host_address[10];
+		document.multihost.mp11.value=port[10];
+		document.multihost.mip12.value=host_address[11];
+		document.multihost.mp12.value=port[11];
+    }
+   
+}
+</script>
+
+<body onload="Disable()">
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=2'> Network </a></li>
+	<li><a style="color: black; font-weight: bold" href='serial.htm'> Serial </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=5'> Management </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=6'> Security </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=8'> Device Setup </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=9'> Read Device </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=11'> System </a></li>
+	<li> <a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content"><script language="JavaScript"
+	type="text/javascript">
+function SetAsLast() 
+{
+   var host_address = [<!--#exec cgi="multi_ip_addr"-->];
+   var port = [<!--#exec cgi="multi_port"-->];
+    if(document.multihost.connection_type.options[0].selected==true)
+    {
+        document.multihost.retry_counter.disabled=true;
+        document.multihost.retry_timeout.disabled=true;
+    }
+    else
+    {
+        document.multihost.retry_counter.disabled=false;
+        document.multihost.retry_timeout.disabled=false;
+    }
+}
+</script>
+
+<form name="multihost" action="multihost" method="post">
+<table width="600" border="0" class="t_heading">
+	<tr>
+		<td>
+		<table id="tabmenu" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="15">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=3'>Serial Port</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=15'>Network-Serial</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=16'>Packing Technique</a></td>
+				<td class="separator">&nbsp;</td>
+				<td class="tab" id="selectedtab"><a href='load?PW=<!--#exec cgi="lpass"-->&PAGENO=17'>Multihost
+				Connection</a></td>
+				<td class="separator">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h2>MULTIHOST CONNECTION</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" class="t_content">
+			<tr>
+				<td>Connection Type</td>
+
+				<td align="right"><select name="connection_type" id="type"
+					onchange="Disable()">
+					<!--#exec cgi="connection_type"-->
+				</select></td>
+			</tr>
+			<tr>
+				<td>Retry Counter</td>
+				<td align="right"><input type="text" name="retry_counter"
+					value="<!--#exec cgi="retry_counter"-->" size="1"
+				maxlength="1"></td>
+			</tr>
+			<tr>
+				<td>Retry Timeout</td>
+				<td align="right"><input type="text" name="retry_timeout"
+					value="<!--#exec cgi="retry_timeout"-->" size="4"
+				maxlength="4"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+
+		<script type="text/javascript">
+   var host_address = [<!--#exec cgi="multi_ip_addr"-->];
+   var port = [<!--#exec cgi="multi_port"-->];
+   var ip_name = ["mip1","mip2","mip3","mip4","mip5","mip6","mip7","mip8","mip9","mip10","mip11","mip12"];
+   var p_name = ["mp1","mp2","mp3","mp4","mp5","mp6","mp7","mp8","mp9","mp10","mp11","mp12"];
+  </script>
+	</tr>
+	<tr>
+		<td>
+		<table id="host" border="1" align="center">
+			<tr>
+				<th>S/No</th>
+				<th>Host Address</th>
+				<th>Port</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td><input type="text" name="mip1" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp1" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td><input type="text" name="mip2" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp2" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td><input type="text" name="mip3" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp3" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td><input type="text" name="mip4" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp4" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td><input type="text" name="mip5" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp5" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td><input type="text" name="mip6" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp6" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td><input type="text" name="mip7" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp7" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td><input type="text" name="mip8" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp8" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td><input type="text" name="mip9" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp9" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td><input type="text" name="mip10" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp10" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>11</td>
+				<td><input type="text" name="mip11" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp11" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+			<tr>
+				<td>12</td>
+				<td><input type="text" name="mip12" value="" size="15"
+					maxlength="15"></td>
+				<td><input type="text" name="mp12" value="" size="5"
+					maxlength="5"></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Save Changes"> <input
+			type="reset" value="Reset"></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

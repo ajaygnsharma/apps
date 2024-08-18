@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>MODIFY DEVICE ENTRY</title>
+  </head>
+
+  <h2> DEVICE PARAMETERS </h2>
+
+  <body>
+  <table>
+  <tr>
+    <td>
+      <b>
+      <center>
+        <h2> Device No. <!--#exec cgi="show_unit_num"--> </h2>
+      </center>
+
+      <form name=f1 method=POST action="updatedevparam">
+      <input type=hidden name=N value="<!--#exec cgi="show_idnum"-->">
+
+      Device Name <input type=text name=NM size=8 value="<!--#exec cgi="show_name"-->"><br>
+      Device Command <input type=text name=CMD size=9 value="<!--#exec cgi="show_cmd"-->"><br>
+      Response Unit <input type=text name=UNT size=9 value="<!--#exec cgi="show_units"-->"><br>
+      <p>
+      &nbsp;
+      <br>
+      
+      <center>
+      <input type=submit VALUE="Save Changes">
+      <input type=reset value=Reset name=X>
+      </form>
+
+    </center>
+    </b>
+    </td>
+  </tr>
+  </table>
+  
+  <p>
+  <center>
+  <p>
+  </body>
+</html>  
+
+

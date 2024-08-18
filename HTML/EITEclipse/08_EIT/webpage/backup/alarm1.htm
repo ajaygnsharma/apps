@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <TITLE> MANAGEMENT </TITLE> 
+    <link rel="stylesheet" type="text/css" 
+    href="ex2.css" />
+  </head>
+  
+  <body>
+  
+  <table id="tabmenu" cellpadding="0" cellspacing="0">
+	<tr>
+   	  <td width="15">&nbsp;</td>
+	    
+	  <td class="tab"><a href="snmp_email.htm">Email,SNMP</a></td>
+	  <td class="separator">&nbsp;</td>
+	    
+	  <td class="tab" id="selectedtab"><a href="alarm1.htm">Alarm 1</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm2.htm">Alarm 2</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm3.htm">Alarm 3</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm4.htm">Alarm 4</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	  <td class="tab"><a href="alarm5.htm">Alarm 5</a></td>
+	  <td class="separator">&nbsp;</td>
+	  
+	</tr>
+  </table>
+  
+  <form method="post" action="alarm1" >
+  <!----Enable Alarm1-->
+  <h2> 
+    <input type="checkbox" name="Alarm1" id="Alarm1" <!--#exec cgi="alarm1_en"-->> Enable Alarm 1 
+  </h2>
+ 
+  <table border="1" width=100%> 
+    <tr> 
+      <td> Events </td>  
+      <td> Email </td> 
+      <td> SNMP Trap </td> 
+    </tr>
+
+    <tr> 
+      <td>Power Reset </td> 
+      <td> <input type="checkbox" name="a1_e_pr" id="a1_e_pr" <!--#exec cgi="a1_e_pr"--> > </td> 
+      <td> <input type="checkbox" name="a1_t_pr" id="a1_t_pr" <!--#exec cgi="a1_t_pr"--> > </td> 
+    </tr>
+  
+    <tr> 
+      <td>IP Address Changed </td> 
+      <td> <input type="checkbox" name="a1_e_ipc" id="a1_e_ipc"<!--#exec cgi="a1_e_ipc"-->></td> 
+      <td> <input type="checkbox" name="a1_t_ipc" id="a1_t_ipc"<!--#exec cgi="a1_t_ipc"-->></td> 
+    </tr>
+    
+    <tr> 
+      <td>IServer Accessed </td> 
+      <td> <input type="checkbox" name="a1_e_isa" id="a1_e_isa"<!--#exec cgi="a1_e_isa"-->> </td> 
+      <td> <input type="checkbox" name="a1_t_isa" id="a1_t_isa"<!--#exec cgi="a1_t_isa"-->> </td> 
+    </tr>
+    <tr> 
+      <td>Serial Port Disconnected</td> 
+      <td> <input type="checkbox" name="a1_e_spd" id="a1_e_spd"<!--#exec cgi="a1_e_spd"-->> </td> 
+      <td> <input type="checkbox" name="a1_t_spd" id="a1_t_spd"<!--#exec cgi="a1_t_spd"-->> </td>
+    </tr>
+
+    <tr> 
+      <td>Input Pin I/O Pins 
+        <!--#exec cgi="a1_ip_pin"-->
+        Input Condition 
+        <!--#exec cgi="a1_pin_cdn"-->
+      </td> 
+      <td> <input type="checkbox" name="a1_e_ic" id="a1_e_ic"<!--#exec cgi="a1_e_ic"-->> </td> 
+      <td> <input type="checkbox" name="a1_t_ic" id="a1_t_ic"<!--#exec cgi="a1_t_ic"-->> </td>
+    </tr>
+
+    <tr> 
+      <td> Character1 <input type="text" name="a1_c1" value="<!--#exec cgi="a1_c1"-->" size="2" maxlength="2">0x
+           Character2 <input type="text" name="a1_c2" value="<!--#exec cgi="a1_c2"-->" size="2" maxlength="2">0x 
+      </td> 
+      <td> <input type="checkbox" name="a1_e_c" id="a1_e_c"<!--#exec cgi="a1_e_c"-->> </td> 
+      <td> <input type="checkbox" name="a1_t_c" id="a1_t_c"<!--#exec cgi="a1_t_c"-->> </td>
+    </tr>
+  </table>
+
+
+  <h2> Properties </h2>
+
+  <center>
+  <table width=100%>
+  <tr>  
+    <td> Reminder Interval </td>
+    <td> <input type="text" name="a1_ri" value="<!--#exec cgi="a1_ri"-->" size="4" maxlength="4" >s </td>
+    </td>
+  </tr>
+  
+  <tr>
+    <td> To: </td>
+    <td> <input type="text" name="a1_to" value="<!--#exec cgi="a1_to"-->" size="50" maxlength="50"> </td>
+  </tr>
+  
+  <tr>
+    <td> Message: </td> 
+    <td> <input type="text" name="a1_msg" value="<!--#exec cgi="a1_msg"-->" size="30" maxlength="30"> </td>
+  </tr>
+  
+  </table>
+
+  <hr>
+  <input type="submit" value="Save"> 
+  <input type="reset" value="Reset">
+  </form> 
+  </center>
+
+</body>
+</html>
+					

@@ -1,0 +1,1 @@
+document.write ('<A HREF="http://a.elecdesign.com/RealMedia/ads/click_lx.ads/www.electronicdesign.com/articles/1700540846/Middle2/default/empty.gif/34316631303139323437666535386430?" target="_top"><IMG SRC="http://a248.e.akamai.net/7/800/14845/0/oasc04.247realmedia.com/RealMedia/ads/Creatives/default/empty.gif"  WIDTH=2 HEIGHT=2 ALT="" BORDER=0 BORDER="0"></A>');

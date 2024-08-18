@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>READ DEVICES</title>
+<link rel="stylesheet" type="text/css" href="eit_style.css" />
+</head>
+
+<body>
+<div id="left_menu">
+<ul>
+	<li> <a href='load?PAGENO=1'> Overview </a></li>
+	<li> <a href='load?PAGENO=2'> Network </a></li>
+	<li> <a href='load?PAGENO=3'> Serial </a></li>
+	<li> <a href='load?PAGENO=4'> I/O Pins </a></li>
+	<li> <a href='load?PAGENO=5'> Management </a></li>
+	<li> <a href='load?PAGENO=6'> Security </a></li>
+	<li> <a href='load?PAGENO=7'> Device Query </a></li>
+	<li> <a href='load?PAGENO=8'> Device Setup </a></li>
+	<li style="color: black; font-weight: bold"> Read Device </li>
+	<li> <a href='load?PAGENO=10'> Terminal </a></li>
+	<li> <a href='load?PAGENO=11'> System </a></li>
+	<li> <a href='load?PAGENO=12'> Diagnostics </a></li>
+</ul>
+</div>
+
+<div id="content">
+<table width="600px" border="0" class="t_heading">
+	<tr>
+		<td><script type="text/javascript">
+  <!--#exec cgi="dev_read"-->
+		
+  </script></td>
+	</tr>
+	<tr>
+		<td>
+		<h2>READ DEVICES</h2>
+		</td>
+	</tr>
+	<tr>
+		<td><script type="text/javascript">
+    document.writeln("<table bgcolor='#000000' border='1' cellpadding='3' cellspacing='3'>");
+	document.writeln("<tbody><tr><td align='center'><table border='0'>");
+    document.writeln("<tr>");
+    if(dev_nc[0] == "")
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + "&nbsp;" + "</td>");
+	else
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + dev_nc[0] + "</td>");
+	
+	if(dev_nc[0] == "")
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + "&nbsp;" + "</td>");
+	else  
+	  document.writeln("<td align='center'><font size='12'color='#7FFF00'face='arial'/>" + dev_nd[0] + "</td>");
+	document.writeln("</tr>");
+	document.writeln("</table></td></tr></tbody></table>");
+  </script></td>
+	</tr>
+	<tr>
+		<td>
+		<table border="1">
+			<tr>
+				<th>S/No</th>
+				<th>Device Name</th>
+				<th>Reading</th>
+				<th>Unit</th>
+			</tr>
+
+			<script type="text/javascript">
+  var i;
+	    
+  for (i = 0; i < <!--#exec cgi="chkd_devs"--> ; i++)
+  {
+    document.writeln("<tr>");
+    document.writeln("<td>" + dev_na[i] + "</td>");
+    document.writeln("<td>" + dev_nb[i] + "</td>");
+    document.writeln("<td>" + dev_nc[i] + "</td>");
+    document.writeln("<td>" + dev_nd[i] + "</td>");
+    document.writeln("</tr>");
+  }
+  </script>
+
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<form name="x" method="GET" action="set_timeout">
+		<input type="hidden" name="PW" value="12345678"> 
+		<!--#exec cgi="timeout_select"-->
+		</form>
+
+		<script type="text/javascript">
+    function AutoReload() 
+    {
+      window.location.href = window.location.href;
+      setTimeout("AutoReload()", <!--#exec cgi="load_timeout"-->000);
+      return true;
+    }
+    <!--#exec cgi="load_on"-->
+  </script>
+  </td>
+</tr>
+</table>
+</div>
+</body>
+</html>

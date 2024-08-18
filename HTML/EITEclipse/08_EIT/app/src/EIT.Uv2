@@ -1,0 +1,250 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+Target (EIT), 0x0004 // Tools: 'ARM-ADS'
+
+Group (app)
+Group (webpage)
+Group (netlib)
+Group (post)
+Group (drivers)
+Group (ssi)
+Group (snmp)
+Group (rs232_full)
+Group (rs232_gpio_ttl)
+Group (rs485)
+Group (doc)
+
+File 1,2,<.\LPC2300.s><LPC2300.s>
+File 1,2,<.\HANDLERS.s><HANDLERS.s>
+File 1,1,<.\CMX_ISRS.c><CMX_ISRS.c>
+File 1,1,<.\Callback.c><Callback.c>
+File 1,1,<.\main.c><main.c>
+File 1,1,<.\serial_cfg.c><serial_cfg.c>
+File 1,1,<.\webpages.c><webpages.c>
+File 1,1,<.\alarm.c><alarm.c>
+File 1,1,<.\email.c><email.c>
+File 1,1,<.\RETARGET.c><RETARGET.c>
+File 1,1,<.\modbus.c><modbus.c>
+File 1,1,<.\data_conf_mode.c><data_conf_mode.c>
+File 1,1,<.\port_2002_handler.c><port_2002_handler.c>
+File 1,1,<.\tcp_local_bridge.c><tcp_local_bridge.c>
+File 1,1,<.\sw_upgrade.c><sw_upgrade.c>
+File 1,1,<.\uFileInterface.c><uFileInterface.c>
+File 1,1,<.\uTasker_LPC23XX.c><uTasker_LPC23XX.c>
+File 1,1,<.\app_flash.c><app_flash.c>
+File 2,1,<..\..\webpage\src\alarm1.c><alarm1.c>
+File 2,1,<..\..\webpage\src\alarm2.c><alarm2.c>
+File 2,1,<..\..\webpage\src\alarm3.c><alarm3.c>
+File 2,1,<..\..\webpage\src\alarm4.c><alarm4.c>
+File 2,1,<..\..\webpage\src\alarm5.c><alarm5.c>
+File 2,1,<..\..\webpage\src\bridge.c><bridge.c>
+File 2,1,<..\..\webpage\src\change_admin.c><change_admin.c>
+File 2,1,<..\..\webpage\src\change_login.c><change_login.c>
+File 2,1,<..\..\webpage\src\change_serial.c><change_serial.c>
+File 2,1,<..\..\webpage\src\defaults.c><defaults.c>
+File 2,1,<..\..\webpage\src\device_query.c><device_query.c>
+File 2,1,<..\..\webpage\src\device_setup.c><device_setup.c>
+File 2,1,<..\..\webpage\src\diagnostics.c><diagnostics.c>
+File 2,1,<..\..\webpage\src\green.c><green.c>
+File 2,1,<..\..\webpage\src\grey.c><grey.c>
+File 2,1,<..\..\webpage\src\index.c><index.c>
+File 2,1,<..\..\webpage\src\iopins.c><iopins.c>
+File 2,1,<..\..\webpage\src\iport.c><iport.c>
+File 2,1,<..\..\webpage\src\logo.c><logo.c>
+File 2,1,<..\..\webpage\src\multihost.c><multihost.c>
+File 2,1,<..\..\webpage\src\network.c><network.c>
+File 2,1,<..\..\webpage\src\overview.c><overview.c>
+File 2,1,<..\..\webpage\src\read_device.c><read_device.c>
+File 2,1,<..\..\webpage\src\reboot.c><reboot.c>
+File 2,1,<..\..\webpage\src\red.c><red.c>
+File 2,1,<..\..\webpage\src\security.c><security.c>
+File 2,1,<..\..\webpage\src\serial.c><serial.c>
+File 2,1,<..\..\webpage\src\setdeviceparam.c><setdeviceparam.c>
+File 2,1,<..\..\webpage\src\snmp_email.c><snmp_email.c>
+File 2,1,<..\..\webpage\src\terminal.c><terminal.c>
+File 2,1,<..\..\webpage\src\upgrade.c><upgrade.c>
+File 2,1,<..\..\webpage\src\white.c><white.c>
+File 2,1,<..\..\webpage\src\admin.c><admin.c>
+File 2,1,<..\..\webpage\src\s_admin.c><s_admin.c>
+File 2,1,<..\..\webpage\src\system_admin.c><system_admin.c>
+File 2,1,<..\..\webpage\src\host_active.c><host_active.c>
+File 2,1,<..\..\webpage\src\host_down.c><host_down.c>
+File 2,1,<..\..\webpage\src\packing.c><packing.c>
+File 2,1,<..\..\webpage\src\eit_style.c><eit_style.c>
+File 2,1,<..\..\webpage\src\t_wait.c><t_wait.c>
+File 2,1,<..\..\webpage\src\rebooting.c><rebooting.c>
+File 3,1,<..\..\netlib\src\ARP.c><ARP.c>
+File 3,1,<..\..\netlib\src\BOOTP.c><BOOTP.c>
+File 3,1,<..\..\netlib\src\Dhcp.c><Dhcp.c>
+File 3,1,<..\..\netlib\src\ETHERNET.c><ETHERNET.c>
+File 3,1,<..\..\netlib\src\Http.c><Http.c>
+File 3,1,<..\..\netlib\src\IGMP.c><IGMP.c>
+File 3,1,<..\..\netlib\src\INTRFACE.c><INTRFACE.c>
+File 3,1,<..\..\netlib\src\IP.c><IP.c>
+File 3,1,<..\..\netlib\src\LPC23xx_ETH.c><LPC23xx_ETH.c>
+File 3,1,<..\..\netlib\src\MN_CSUM.c><MN_CSUM.c>
+File 3,1,<..\..\netlib\src\MN_DNS.c><MN_DNS.c>
+File 3,1,<..\..\netlib\src\MN_MEM.c><MN_MEM.c>
+File 3,1,<..\..\netlib\src\MN_OS.c><MN_OS.c>
+File 3,1,<..\..\netlib\src\Mn_port.c><Mn_port.c>
+File 3,1,<..\..\netlib\src\MN_TIMER.c><MN_TIMER.c>
+File 3,1,<..\..\netlib\src\MNSERVER.c><MNSERVER.c>
+File 3,1,<..\..\netlib\src\MNSTRING.c><MNSTRING.c>
+File 3,1,<..\..\netlib\src\MODEM.c><MODEM.c>
+File 3,1,<..\..\netlib\src\PHYSICAL.c><PHYSICAL.c>
+File 3,1,<..\..\netlib\src\Smtp.c><Smtp.c>
+File 3,1,<..\..\netlib\src\Socket.c><Socket.c>
+File 3,1,<..\..\netlib\src\SUPPORT.c><SUPPORT.c>
+File 3,1,<..\..\netlib\src\Tcp.c><Tcp.c>
+File 3,1,<..\..\netlib\src\TFTP.c><TFTP.c>
+File 3,1,<..\..\netlib\src\TFTPFLSH.c><TFTPFLSH.c>
+File 3,1,<..\..\netlib\src\udp.c><udp.c>
+File 3,1,<..\..\netlib\src\VFILE.c><VFILE.c>
+File 3,2,<..\..\netlib\src\ARM_ENV.s><ARM_ENV.s>
+File 4,1,<..\..\post\src\post_index.c><post_index.c>
+File 4,1,<..\..\post\src\post_network.c><post_network.c>
+File 4,1,<..\..\post\src\post_serial.c><post_serial.c>
+File 4,1,<..\..\post\src\post_management.c><post_management.c>
+File 4,1,<..\..\post\src\post_security.c><post_security.c>
+File 4,1,<..\..\post\src\post_device_setup.c><post_device_setup.c>
+File 4,1,<..\..\post\src\post_system.c><post_system.c>
+File 4,1,<..\..\post\src\post_gpio.c><post_gpio.c>
+File 4,1,<..\..\post\src\post_device_query.c><post_device_query.c>
+File 4,1,<..\..\post\src\post_read_device.c><post_read_device.c>
+File 4,1,<..\..\post\src\post_diagnostics.c><post_diagnostics.c>
+File 4,1,<..\..\post\src\post_alarm1.c><post_alarm1.c>
+File 4,1,<..\..\post\src\post_alarm2.c><post_alarm2.c>
+File 4,1,<..\..\post\src\post_alarm3.c><post_alarm3.c>
+File 4,1,<..\..\post\src\post_alarm4.c><post_alarm4.c>
+File 4,1,<..\..\post\src\post_alarm5.c><post_alarm5.c>
+File 4,1,<..\..\post\src\post_admin.c><post_admin.c>
+File 4,1,<..\..\post\src\post_security_admin.c><post_security_admin.c>
+File 4,1,<..\..\post\src\post_system_admin.c><post_system_admin.c>
+File 4,1,<..\..\post\src\post_login.c><post_login.c>
+File 5,1,<..\..\drivers\flash\flash.c><flash.c>
+File 5,1,<..\..\drivers\wdt\wdt.c><wdt.c>
+File 5,1,<..\..\drivers\timer\timer.c><timer.c>
+File 5,1,<.\irq.c><irq.c>
+File 5,1,<..\..\drivers\uart\uart.c><uart.c>
+File 6,1,<..\..\ssi\src\ssi_overview.c><ssi_overview.c>
+File 6,1,<..\..\ssi\src\ssi_network.c><ssi_network.c>
+File 6,1,<..\..\ssi\src\ssi_serial.c><ssi_serial.c>
+File 6,1,<..\..\ssi\src\ssi_management.c><ssi_management.c>
+File 6,1,<..\..\ssi\src\ssi_security.c><ssi_security.c>
+File 6,1,<..\..\ssi\src\ssi_device_setup.c><ssi_device_setup.c>
+File 6,1,<..\..\ssi\src\ssi_gpio.c><ssi_gpio.c>
+File 6,1,<..\..\ssi\src\ssi_device_query.c><ssi_device_query.c>
+File 6,1,<..\..\ssi\src\ssi_read_device.c><ssi_read_device.c>
+File 6,1,<..\..\ssi\src\ssi_diagnostics.c><ssi_diagnostics.c>
+File 6,1,<..\..\ssi\src\ssi_alarm1.c><ssi_alarm1.c>
+File 6,1,<..\..\ssi\src\ssi_alarm2.c><ssi_alarm2.c>
+File 6,1,<..\..\ssi\src\ssi_alarm3.c><ssi_alarm3.c>
+File 6,1,<..\..\ssi\src\ssi_alarm4.c><ssi_alarm4.c>
+File 6,1,<..\..\ssi\src\ssi_alarm5.c><ssi_alarm5.c>
+File 6,1,<..\..\ssi\src\ssi_bridge.c><ssi_bridge.c>
+File 6,1,<..\..\ssi\src\ssi_multihost.c><ssi_multihost.c>
+File 6,1,<..\..\ssi\src\ssi_packing.c><ssi_packing.c>
+File 7,1,<..\..\netlib\src\snmp\HardwareDependent.c><HardwareDependent.c>
+File 7,1,<..\..\netlib\src\snmp\loadAgentVariable.c><loadAgentVariable.c>
+File 7,1,<..\..\netlib\src\snmp\SNMP.c><SNMP.c>
+File 7,1,<..\..\netlib\src\snmp\snmpresponse.c><snmpresponse.c>
+File 7,1,<..\..\netlib\src\snmp\SNMPTICK.c><SNMPTICK.c>
+File 7,1,<..\..\netlib\src\snmp\SNMPTRAP.c><SNMPTRAP.c>
+File 7,1,<..\..\netlib\src\snmp\SNMPUTIL.c><SNMPUTIL.c>
+File 8,1,<.\rs232_full\rs232_full_snn.c><rs232_full_snn.c>
+File 9,1,<.\rs232_ttl_gpio\rs232_gpio_snn.c><rs232_gpio_snn.c>
+File 10,1,<.\rs485\rs485_snn.c><rs485_snn.c>
+File 11,5,<.\Readme.txt><Readme.txt>
+
+
+Options 1,0,0  // Target 'EIT'
+ Device (LPC2368)
+ Vendor (NXP (founded by Philips))
+ Cpu (IRAM(0x40000000-0x40007FFF) IRAM2(0x7FE00000-0x7FE037FF) IROM(0-0x7FFFF) CLOCK(12000000) CPUTYPE(ARM7TDMI))
+ FlashUt (LPC210x_ISP.EXE ("#H" ^X $D COM1: 38400 1))
+ StupF ("STARTUP\Philips\LPC2300.s" ("Philips LPC2300 Startup Code"))
+ FlashDR (UL2ARM(-U268761108 -O7 -S0 -C0 -FO15 -FD40000000 -FC800 -FN1 -FF0LPC_IAP2_512 -FS00 -FL07D000))
+ DevID (4152)
+ Rgf (LPC23xx.H)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ÿPhilips\)
+ OrgReg (ÿPhilips\)
+ TgStat=16
+ OutDir (.\Objects\)
+ OutName (EIT)
+ GenApp=1
+ GenLib=0
+ GenHex=1
+ Debug=1
+ Browse=1
+ LstDir (.\Listing\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 1 <BM-Convert.bat>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=1790
+ ADSFLGA { 243,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACPUTYP (ARM7TDMI)
+ RVDEV ()
+ ADSTFLGA { 0,12,16,2,99,4,0,194,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSOCM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMADSIRAM { 0,0,0,0,64,0,128,0,0 }
+ OCMADSIROM { 1,0,0,0,0,0,0,8,0 }
+ OCMADSXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCR_RVCT { 1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,16,0,0,0,160,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,0,128,0,0,0,0,0,208,127,255,31,0,0 }
+ RV_STAVEC ()
+ ADSCCFLG { 17,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSCMISC ()
+ ADSCDEFN (POLARM2368)
+ ADSCUDEF ()
+ ADSCINCD (..\..\netlib\src\snmp;..\..\webpage;..\inc;..\..\netlib\inc;..\..\post\inc;..\..\drivers\inc;..\..\ssi\inc;..\..\drivers\wdt;..\..\webpage\inc;.\rs232_full;.\rs232_ttl_gpio;.\rs485)
+ ADSASFLG { 65,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSAMISC ()
+ ADSADEFN (__THUMB_LIBRARY__)
+ ADSAUDEF ()
+ ADSAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ADSLDFG { 17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ADSLDTA (0x00000000)
+ ADSLDDA (0x40000000)
+ ADSLDSC ()
+ ADSLDIB ()
+ ADSLDIC ()
+ ADSLDMC ()
+ ADSLDIF ()
+ ADSLDDW ()
+  OPTDL (SARM.DLL)(-cLPC2100)(DARMP.DLL)(-pLPC2368)(SARM.DLL)()(TARMP.DLL)(-pLPC2368)
+  OPTDBG 49150,0,()()()()()()()()()() (BIN\UL2ARM.DLL)()()()
+ FLASH1 { 1,0,0,0,1,0,0,0,0,16,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 (BIN\UL2ARM.DLL)
+ FLASH3 ("LPC210x_ISP.EXE" ("#H" ^X $D COM1: 38400 1))
+ FLASH4 ()
+EndOpt
+
