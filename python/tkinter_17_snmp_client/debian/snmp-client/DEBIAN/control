@@ -1,0 +1,10 @@
+Package: snmp-client
+Version: 0.1.1
+Architecture: all
+Maintainer: Ajay Sharma <asharma@terrasatinc.com>
+Installed-Size: 10253
+Section: utils
+Priority: optional
+Homepage: https://example.com/snmp-client
+Description: SNMP Client using easysnmp and Tkinter
+ A short description of your application.

@@ -1,0 +1,10 @@
+Metadata-Version: 2.2
+Name: snmp_client
+Version: 0.1
+Summary: A SNMP client using easysnmp and Tkinter with custom MIB support
+Requires-Dist: easysnmp
+Dynamic: description
+Dynamic: requires-dist
+Dynamic: summary
+
+A GUI application for SNMP GET operations using easysnmp and Tkinter.

@@ -1,0 +1,13 @@
+Source: snmp-client
+Section: utils
+Priority: optional
+Maintainer: Ajay Sharma <asharma@terrasatinc.com>
+Build-Depends: debhelper (>= 11), dh-virtualenv, python3-all, python3-setuptools
+Standards-Version: 4.5.0
+Homepage: https://example.com/snmp-client
+
+Package: snmp-client
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Description: SNMP Client using easysnmp and Tkinter
+ A short description of your application.

@@ -1,0 +1,2 @@
+[console_scripts]
+snmp_client = snmp_client11:main
