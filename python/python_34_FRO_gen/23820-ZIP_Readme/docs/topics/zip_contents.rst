@@ -11,13 +11,9 @@ Files:
     4. ArmSerialDownloader.exe - The Windows utility to upload firmware to RX1+1 via serial port
     5. ArmUdpDownloader.exe - The Windows utility to upload firmware to RX1+1 via Ethernet port over UDPs       
     6. Folder: MIB
-       
        Files:
-
        1. TERRASAT-RX1PLUS1-MIB.MIB - The management MIB for RX1+1 products
-
        2. TERRASAT-SMI-MIB.MIB      - The Structure of Management Information for the Terrasat enterprise.
-
        3. TERRASAT-TC-MIB.MIB       - The MIB module for textual conventions for the enterprise
        
        	

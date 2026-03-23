@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2025/dev/Debian) (preloaded format=xelatex 2025.5.13)  13 NOV 2025 10:35
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2025/dev/Debian) (preloaded format=xelatex 2025.5.13)  12 NOV 2025 17:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -935,12 +935,12 @@ Package hyperref Info: Link coloring ON on input line 161.
 
 File: logo.png Graphic file (type bmp)
 <logo.png>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 231
+LaTeX Font Info:    Trying to load font information for U+msa on input line 217
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 231
+LaTeX Font Info:    Trying to load font information for U+msb on input line 217
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -962,7 +962,7 @@ Package rerunfilecheck Info: File `ibuc_manuals.out' has not changed.
 Here is how much of TeX's memory you used:
  19788 strings out of 473835
  383661 string characters out of 5731946
- 836141 words of memory out of 5000000
+ 835141 words of memory out of 5000000
  42487 multiletter control sequences out of 15000+600000
  564161 words of font info for 83 fonts, out of 8000000 for 9000
  1349 hyphenation exceptions out of 8191
