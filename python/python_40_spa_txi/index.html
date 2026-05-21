@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redundant Controller – SSPA Monitor & Control</title>
+
+  <!-- Tailwind (use your local build or CDN). For embedded, prefer local static file. -->
+  <!-- <link rel="stylesheet" href="/static/tailwind.min.css"> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Optional: icons (remove if you don’t want external deps) -->
+  <style>
+    /* Simple “drawer backdrop” fade without extra libs */
+    .backdrop { background: rgba(0,0,0,.45); }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-900 text-slate-100">
+  <!-- APP WRAPPER -->
+  <div class="min-h-screen flex flex-col">
+
+    <!-- HEADER / SYSTEM HEALTH STRIP -->
+    <header class="border-b border-slate-800 bg-slate-950/70 backdrop-blur">
+      <div class="mx-auto max-w-7xl px-4 py-3">
+        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <!-- Left: Branding -->
+          <div class="flex items-center gap-3">
+            <!-- Replace with your logo -->
+            <div class="h-10 w-10 rounded-xl bg-slate-800 flex items-center justify-center text-sm font-bold">TS</div>
+            <div>
+              <div class="text-base font-semibold leading-tight">TX 1:2 Redundant Controller</div>
+              <div class="text-xs text-slate-400">Monitor &amp; Control • 3× SSPA • Waveguide Switching</div>
+            </div>
+          </div>
+
+          <!-- Right: Persistent status strip -->
+          <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2">
+              <div class="text-[11px] text-slate-400">System</div>
+              <div id="sys_status" class="text-sm font-semibold">NORMAL</div>
+            </div>
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2">
+              <div class="text-[11px] text-slate-400">Active</div>
+              <div id="active_sspa" class="text-sm font-semibold">SSPA-A</div>
+            </div>
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2">
+              <div class="text-[11px] text-slate-400">Standby</div>
+              <div id="standby_sspa" class="text-sm font-semibold">SSPA-B</div>
+            </div>
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2">
+              <div class="text-[11px] text-slate-400">Alarms</div>
+              <div class="flex items-center gap-2">
+                <span id="alarm_count" class="text-sm font-semibold">2</span>
+                <span class="text-[11px] text-slate-400">active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN GRID -->
+    <main class="flex-1">
+      <div class="mx-auto max-w-7xl px-4 py-4">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+
+          <!-- LEFT SIDEBAR (always visible) -->
+          <aside class="lg:col-span-4 xl:col-span-3 space-y-4">
+
+            <!-- Alarm List -->
+            <section class="rounded-2xl border border-slate-800 bg-slate-950/40">
+              <div class="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+                <div class="text-sm font-semibold">Alarms</div>
+                <button id="btn_mute" class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-xs hover:bg-slate-900">
+                  Mute
+                </button>
+              </div>
+
+              <div class="p-2">
+                <!-- Alarm items: clickable to focus main view + optionally open drawer -->
+                <button class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-900/60 focus:outline-none focus:ring-2 focus:ring-slate-600"
+                        data-focus-sspa="A" data-focus-sensor="temp" data-open-drawer="true">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="text-sm font-medium">
+                        <span class="inline-flex items-center rounded-md bg-amber-500/15 px-2 py-0.5 text-xs text-amber-300 ring-1 ring-amber-500/30">WARN</span>
+                        <span class="ml-2">SSPA-A Over Temp</span>
+                      </div>
+                      <div class="mt-1 text-xs text-slate-400">Temp 72.4°C • Threshold 75.0°C</div>
+                    </div>
+                    <div class="text-xs text-slate-500">Now</div>
+                  </div>
+                </button>
+
+                <button class="mt-2 w-full text-left rounded-xl px-3 py-2 hover:bg-slate-900/60 focus:outline-none focus:ring-2 focus:ring-slate-600"
+                        data-focus-sspa="B" data-focus-sensor="fan" data-open-drawer="true">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="text-sm font-medium">
+                        <span class="inline-flex items-center rounded-md bg-red-500/15 px-2 py-0.5 text-xs text-red-300 ring-1 ring-red-500/30">ALARM</span>
+                        <span class="ml-2">SSPA-B Fan Failure</span>
+                      </div>
+                      <div class="mt-1 text-xs text-slate-400">Fan RPM 0 • Expected &gt; 1200</div>
+                    </div>
+                    <div class="text-xs text-slate-500">2m</div>
+                  </div>
+                </button>
+
+                <div class="mt-3 px-3 pb-2 text-xs text-slate-500">
+                  Tip: Click an alarm to focus the affected SSPA and open config.
+                </div>
+              </div>
+            </section>
+
+            <!-- SSPA Summary / Selector -->
+            <section class="rounded-2xl border border-slate-800 bg-slate-950/40">
+              <div class="border-b border-slate-800 px-4 py-3">
+                <div class="text-sm font-semibold">SSPA Summary</div>
+              </div>
+
+              <div class="p-3 space-y-2">
+                <!-- SSPA A -->
+                <button class="w-full rounded-xl border border-slate-800 bg-slate-900/40 px-3 py-2 text-left hover:bg-slate-900/60"
+                        data-select-sspa="A">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+                      <div class="text-sm font-medium">SSPA-A</div>
+                      <span class="text-xs text-slate-400">ACTIVE</span>
+                    </div>
+                    <div class="text-xs text-slate-400">72.4°C</div>
+                  </div>
+                  <div class="mt-1 text-xs text-slate-500">48.2 dBm • 48.1 V • 12.4 A</div>
+                </button>
+
+                <!-- SSPA B -->
+                <button class="w-full rounded-xl border border-slate-800 bg-slate-900/30 px-3 py-2 text-left hover:bg-slate-900/60"
+                        data-select-sspa="B">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2.5 w-2.5 rounded-full bg-slate-500"></span>
+                      <div class="text-sm font-medium">SSPA-B</div>
+                      <span class="text-xs text-slate-400">STANDBY</span>
+                    </div>
+                    <div class="text-xs text-slate-400">45.1°C</div>
+                  </div>
+                  <div class="mt-1 text-xs text-slate-500">47.8 dBm • 48.0 V • 11.9 A</div>
+                </button>
+
+                <!-- SSPA C -->
+                <button class="w-full rounded-xl border border-slate-800 bg-slate-900/20 px-3 py-2 text-left hover:bg-slate-900/60"
+                        data-select-sspa="C">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2.5 w-2.5 rounded-full bg-slate-700"></span>
+                      <div class="text-sm font-medium">SSPA-C</div>
+                      <span class="text-xs text-slate-400">OFFLINE</span>
+                    </div>
+                    <div class="text-xs text-slate-500">—</div>
+                  </div>
+                  <div class="mt-1 text-xs text-slate-500">No telemetry</div>
+                </button>
+              </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="rounded-2xl border border-slate-800 bg-slate-950/40">
+              <div class="border-b border-slate-800 px-4 py-3">
+                <div class="text-sm font-semibold">Quick Actions</div>
+              </div>
+              <div class="p-3 grid grid-cols-2 gap-2">
+                <button id="btn_force_switch"
+                        class="rounded-xl bg-indigo-600/80 px-3 py-2 text-sm font-medium hover:bg-indigo-600">
+                  Force Switch
+                </button>
+                <button id="btn_compare"
+                        class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                  Compare Mode
+                </button>
+                <button id="btn_tx_toggle"
+                        class="col-span-2 rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                  Toggle Tx Enable
+                </button>
+              </div>
+              <div class="px-4 pb-4 text-xs text-slate-500">
+                In production: add role-based access + confirmation dialogs for disruptive actions.
+              </div>
+            </section>
+          </aside>
+
+          <!-- MAIN WORKSPACE -->
+          <section class="lg:col-span-8 xl:col-span-9 space-y-4">
+
+            <!-- Top row: Focus + Mode toggles -->
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div class="text-lg font-semibold">SSPA-A <span class="text-slate-400 text-sm font-normal">(ACTIVE)</span></div>
+                <div class="text-xs text-slate-400">Last update: <span id="last_update">just now</span></div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button id="btn_focus_mode" class="rounded-xl bg-slate-800 px-3 py-2 text-sm font-medium hover:bg-slate-700">
+                  Focus
+                </button>
+                <button id="btn_open_config" class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                  Configure
+                </button>
+              </div>
+            </div>
+
+            <!-- Main card: Live sensors + mini alarm state -->
+            <div class="rounded-2xl border border-slate-800 bg-slate-950/40">
+              <div class="flex flex-col gap-3 border-b border-slate-800 px-4 py-3 md:flex-row md:items-center md:justify-between">
+                <div class="text-sm font-semibold">Live Telemetry</div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center rounded-full bg-emerald-500/15 px-3 py-1 text-xs text-emerald-300 ring-1 ring-emerald-500/30">
+                    Link OK
+                  </span>
+                  <span class="inline-flex items-center rounded-full bg-amber-500/15 px-3 py-1 text-xs text-amber-300 ring-1 ring-amber-500/30">
+                    1 Warning
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-4">
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <!-- Sensor tiles -->
+                  <div id="tile_temp" class="rounded-2xl border border-slate-800 bg-slate-900/30 p-4">
+                    <div class="text-[11px] text-slate-400">Temperature</div>
+                    <div class="mt-1 flex items-baseline justify-between">
+                      <div class="text-2xl font-semibold">72.4</div>
+                      <div class="text-sm text-slate-400">°C</div>
+                    </div>
+                    <div class="mt-2 text-xs text-amber-300">⚠ High warn near threshold</div>
+                  </div>
+
+                  <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-4">
+                    <div class="text-[11px] text-slate-400">RF Output</div>
+                    <div class="mt-1 flex items-baseline justify-between">
+                      <div class="text-2xl font-semibold">48.2</div>
+                      <div class="text-sm text-slate-400">dBm</div>
+                    </div>
+                    <div class="mt-2 text-xs text-slate-500">Limit: 50.0 dBm</div>
+                  </div>
+
+                  <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-4">
+                    <div class="text-[11px] text-slate-400">Voltage</div>
+                    <div class="mt-1 flex items-baseline justify-between">
+                      <div class="text-2xl font-semibold">48.1</div>
+                      <div class="text-sm text-slate-400">V</div>
+                    </div>
+                    <div class="mt-2 text-xs text-slate-500">Nominal: 48 V</div>
+                  </div>
+
+                  <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-4">
+                    <div class="text-[11px] text-slate-400">Current</div>
+                    <div class="mt-1 flex items-baseline justify-between">
+                      <div class="text-2xl font-semibold">12.4</div>
+                      <div class="text-sm text-slate-400">A</div>
+                    </div>
+                    <div class="mt-2 text-xs text-slate-500">PSU OK</div>
+                  </div>
+                </div>
+
+                <!-- Inline quick adjustments (optional) -->
+                <div class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                  <div class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm font-semibold">Alarm Threshold (Temp)</div>
+                      <button class="text-xs text-slate-300 underline underline-offset-4 hover:text-white" data-open-drawer="true">
+                        Advanced…
+                      </button>
+                    </div>
+
+                    <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      <label class="block">
+                        <div class="text-xs text-slate-400">High Warn (°C)</div>
+                        <input id="temp_high_warn" type="number" step="0.1" value="75.0"
+                               class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+                      </label>
+                      <label class="block">
+                        <div class="text-xs text-slate-400">High Alarm (°C)</div>
+                        <input id="temp_high_alarm" type="number" step="0.1" value="80.0"
+                               class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+                      </label>
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between">
+                      <div class="text-xs text-slate-500">Live: <span class="text-slate-200">72.4°C</span></div>
+                      <button id="btn_apply_quick_alarm"
+                              class="rounded-xl bg-emerald-600/80 px-3 py-2 text-sm font-medium hover:bg-emerald-600">
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+                    <div class="text-sm font-semibold">Waveguide &amp; Transmitter</div>
+
+                    <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      <div class="rounded-xl border border-slate-800 bg-slate-950/30 p-3">
+                        <div class="text-xs text-slate-400">Path</div>
+                        <div id="wg_path" class="mt-1 text-sm font-medium">A → Output</div>
+                        <div class="mt-2 text-xs text-slate-500">Last switch: 00:12:31</div>
+                      </div>
+
+                      <div class="rounded-xl border border-slate-800 bg-slate-950/30 p-3">
+                        <div class="text-xs text-slate-400">Tx Enable</div>
+                        <div id="tx_state" class="mt-1 text-sm font-medium">ENABLED</div>
+                        <div class="mt-2 text-xs text-slate-500">Interlocks: OK</div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <button id="btn_switch_to_b" class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                        Switch to SSPA-B
+                      </button>
+                      <button id="btn_switch_to_c" class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                        Switch to SSPA-C
+                      </button>
+                      <button id="btn_disable_tx" class="rounded-xl border border-red-900/50 bg-red-950/30 px-3 py-2 text-sm font-medium text-red-200 hover:bg-red-950/40">
+                        Disable Tx
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Compare Mode Panel (hidden by default) -->
+            <div id="compare_panel" class="hidden rounded-2xl border border-slate-800 bg-slate-950/40">
+              <div class="border-b border-slate-800 px-4 py-3">
+                <div class="text-sm font-semibold">Compare Mode</div>
+              </div>
+              <div class="p-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+                  <div class="text-sm font-semibold">SSPA-A</div>
+                  <div class="mt-2 text-xs text-slate-400">Temp</div>
+                  <div class="text-xl font-semibold">72.4°C</div>
+                  <div class="mt-2 text-xs text-amber-300">⚠ Warning</div>
+                </div>
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+                  <div class="text-sm font-semibold">SSPA-B</div>
+                  <div class="mt-2 text-xs text-slate-400">Temp</div>
+                  <div class="text-xl font-semibold">45.1°C</div>
+                  <div class="mt-2 text-xs text-red-300">⛔ Fan Alarm</div>
+                </div>
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+                  <div class="text-sm font-semibold">SSPA-C</div>
+                  <div class="mt-2 text-xs text-slate-400">State</div>
+                  <div class="text-xl font-semibold">OFFLINE</div>
+                  <div class="mt-2 text-xs text-slate-500">No telemetry</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-slate-950/40">
+      <div class="mx-auto max-w-7xl px-4 py-3 text-xs text-slate-500">
+        Embedded UI Skeleton • Add auth/roles, audit logging for config changes, and safe-confirm flows for switching.
+      </div>
+    </footer>
+  </div>
+
+  <!-- CONFIG DRAWER + BACKDROP -->
+  <div id="drawer_backdrop" class="fixed inset-0 hidden backdrop"></div>
+
+  <aside id="config_drawer"
+         class="fixed right-0 top-0 h-full w-full max-w-md translate-x-full border-l border-slate-800 bg-slate-950/95 backdrop-blur transition-transform duration-200">
+    <div class="flex h-full flex-col">
+      <div class="flex items-center justify-between border-b border-slate-800 px-4 py-4">
+        <div>
+          <div class="text-sm font-semibold">SSPA-A Configuration</div>
+          <div class="text-xs text-slate-400">Edit thresholds and RF settings while live data remains visible</div>
+        </div>
+        <button id="btn_close_drawer" class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm hover:bg-slate-900">
+          Close
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <!-- Alarm Thresholds -->
+        <section class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+          <div class="text-sm font-semibold">Alarm Thresholds</div>
+          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <label class="block">
+              <div class="text-xs text-slate-400">Temp High Warn (°C)</div>
+              <input type="number" step="0.1" value="75.0"
+                     class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+            </label>
+            <label class="block">
+              <div class="text-xs text-slate-400">Temp High Alarm (°C)</div>
+              <input type="number" step="0.1" value="80.0"
+                     class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+            </label>
+            <label class="block">
+              <div class="text-xs text-slate-400">Temp Low Warn (°C)</div>
+              <input type="number" step="0.1" value="5.0"
+                     class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+            </label>
+            <label class="block">
+              <div class="text-xs text-slate-400">Temp Low Alarm (°C)</div>
+              <input type="number" step="0.1" value="0.0"
+                     class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+            </label>
+          </div>
+
+          <div class="mt-3 rounded-xl border border-slate-800 bg-slate-950/30 px-3 py-2 text-xs text-slate-400">
+            Live Temp: <span class="text-slate-100 font-medium">72.4°C</span>
+          </div>
+        </section>
+
+        <!-- RF / Tx Settings -->
+        <section class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+          <div class="text-sm font-semibold">Transmitter / RF</div>
+          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <label class="block sm:col-span-2">
+              <div class="text-xs text-slate-400">Output Limit (dBm)</div>
+              <input type="number" step="0.1" value="50.0"
+                     class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600" />
+            </label>
+
+            <label class="block">
+              <div class="text-xs text-slate-400">Tx Enable</div>
+              <select class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600">
+                <option>Enabled</option>
+                <option>Disabled</option>
+              </select>
+            </label>
+
+            <label class="block">
+              <div class="text-xs text-slate-400">Mode</div>
+              <select class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950/40 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-600">
+                <option>Auto</option>
+                <option>Manual</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <!-- Waveguide Switching -->
+        <section class="rounded-2xl border border-slate-800 bg-slate-900/20 p-4">
+          <div class="text-sm font-semibold">Waveguide Switching</div>
+          <div class="mt-3 grid grid-cols-1 gap-2">
+            <div class="rounded-xl border border-slate-800 bg-slate-950/30 px-3 py-2 text-xs text-slate-400">
+              Current Path: <span class="text-slate-100 font-medium">A → Output</span>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                Route A → Output
+              </button>
+              <button class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                Route B → Output
+              </button>
+              <button class="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2 text-sm font-medium hover:bg-slate-900">
+                Route C → Output
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-500">
+              In production: require confirm + interlock checks + audit log for switching.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Drawer footer -->
+      <div class="border-t border-slate-800 p-4">
+        <div class="flex items-center justify-end gap-2">
+          <button id="btn_cancel_config" class="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-2 text-sm font-medium hover:bg-slate-900">
+            Cancel
+          </button>
+          <button id="btn_apply_config" class="rounded-xl bg-emerald-600/80 px-4 py-2 text-sm font-medium hover:bg-emerald-600">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Minimal JS: drawer + compare toggle -->
+  <script>
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    function openDrawer() {
+      $("#drawer_backdrop").classList.remove("hidden");
+      $("#config_drawer").classList.remove("translate-x-full");
+    }
+    function closeDrawer() {
+      $("#drawer_backdrop").classList.add("hidden");
+      $("#config_drawer").classList.add("translate-x-full");
+    }
+
+    $("#btn_open_config").addEventListener("click", openDrawer);
+    $("#btn_close_drawer").addEventListener("click", closeDrawer);
+    $("#btn_cancel_config").addEventListener("click", closeDrawer);
+    $("#drawer_backdrop").addEventListener("click", closeDrawer);
+
+    // Alarm click => focus + optional drawer
+    $$("[data-open-drawer]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const sspa = el.getAttribute("data-focus-sspa");
+        const sensor = el.getAttribute("data-focus-sensor");
+        if (sspa) {
+          // TODO: load/focus SSPA in main pane
+          console.log("Focus SSPA:", sspa, "Sensor:", sensor);
+        }
+        if (el.getAttribute("data-open-drawer") === "true") openDrawer();
+      });
+    });
+
+    // SSPA selection (sidebar)
+    $$("[data-select-sspa]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sspa = btn.getAttribute("data-select-sspa");
+        // TODO: fetch + render SSPA telemetry/config context
+        console.log("Select SSPA:", sspa);
+      });
+    });
+
+    // Compare mode toggle
+    $("#btn_compare").addEventListener("click", () => {
+      $("#compare_panel").classList.toggle("hidden");
+      $("#btn_compare").classList.toggle("bg-slate-900");
+    });
+  </script>
+</body>
+</html>

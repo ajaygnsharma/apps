@@ -1,0 +1,7 @@
+sname,oid,asn,access,get_fn,set_fn,cache_key,src_struct,src_reader,src_field,src_field_type,src_max_len,err_type,err_ok
+tx21SwitchFaultA,1.3.6.1.4.1.21369.6.2.17,ASN_OCTET_STR,RO,snmp_scalars_tx21SwitchFaultA_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS
+tx21SwitchFaultB,1.3.6.1.4.1.21369.6.2.18,ASN_OCTET_STR,RO,snmp_scalars_tx21SwitchFaultB_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS
+tx21VoltageLevel1,1.3.6.1.4.1.21369.6.2.21,ASN_OCTET_STR,RO,snmp_scalars_tx21VoltageLevel1_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS
+tx21VoltageLevel2,1.3.6.1.4.1.21369.6.2.22,ASN_OCTET_STR,RO,snmp_scalars_tx21VoltageLevel2_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS
+tx21Internal10MHz1,1.3.6.1.4.1.21369.6.2.23,ASN_OCTET_STR,RO,snmp_scalars_tx21Inernal10MHz1_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS
+tx21Internal10MHz2,1.3.6.1.4.1.21369.6.2.24,ASN_OCTET_STR,RO,snmp_scalars_tx21Inernal10MHz2_get,,,status_cntrlr_s,j_read_sts_cntrlr,alarms,uint32,MAX_LEN,Err,Err::SUCCESS

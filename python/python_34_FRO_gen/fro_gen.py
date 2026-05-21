@@ -4,6 +4,7 @@ import os
 import shutil
 import subprocess
 import re
+import sys
 import time
 import time
 from zipfile import ZipFile, ZIP_DEFLATED, ZipInfo
@@ -30,6 +31,12 @@ def getq(d: configparser.SectionProxy, key: str, default: str = "") -> str:
     """Get value and strip optional quotes."""
     v = d.get(key, default)
     return v.strip().strip('"')
+
+def getA(d: configparser.SectionProxy, key: str, default: str = "") -> str:
+    """Get value and strip optional quotes."""
+    v   = d.get(key, default)
+    arr = [ s.strip() for s in v.split(",")]
+    return arr
 
 def normalize_where_used(raw: str) -> list[str]:
     """
@@ -65,116 +72,6 @@ def split_first_comma(entry: str) -> tuple[str, str]:
     return left.strip(), right.lstrip()  # lstrip to drop space after first comma
 
 
-#----------------------------------------------------------------------
-# Main logic
-#----------------------------------------------------------------------
-config = read_config_with_default("cfg.ini")
-
-d = config["DEFAULT"]
-model = getq(d, "MODEL")
-rev = getq(d, "REV")
-rev_readme = getq(d, "REV_README")
-family = getq(d, "FAMILY")
-serial = getq(d, "SERIAL_NUM")
-new_fw = truthy(d.get("NEW_FW", ""))
-
-rows = [
-    [f"FWF-{model}-0BIN", f"Firmware, {family} {serial}, BIN", rev],
-    [f"FRN-{model}-0BIN", f"Frmwr Rls Notes, {family} {serial}", rev],
-    [f"ZIP-{model}-0001", f"ZIP file, {family} {serial}, BIN", rev],
-    [f"ZIP-{model}-RM01", f"ZIP file, {family} {serial}, Readme", rev_readme],
-]
-
-# If NEW_FW is truthy, parse COMMON_KIT / WHERE_USED and append rows
-if new_fw and config.has_section("COMMON_KIT"):
-    raw_where_used = config["COMMON_KIT"].get("WHERE_USED", "")
-    entries = normalize_where_used(raw_where_used)
-    for item in entries:
-        pn, desc = split_first_comma(item)
-        if pn:  # only add if we have a part number
-            rows.append([pn, desc, ""])
-
-#---------------------------------------------------------------------- 
-# Write CSV with header; csv module will quote fields with commas 
-# automatically
-#---------------------------------------------------------------------- 
-with open("output.csv", "w", newline="") as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(["File Name", "Description", "Revision"])
-    writer.writerows(rows)
-
-print("✅ output.csv generated successfully.")
-
-
-#----------------------------------------------------------------------
-# Put the output of "log.csv" in the FRO log.xlsx file
-#----------------------------------------------------------------------
-with open("log.csv", "w", newline="") as logf:
-    logwriter = csv.writer(logf)
-    for r in rows:
-        logwriter.writerow([r[0]])
-
-print("✅ output.csv and log.csv generated successfully.")
-
-
-#----------------------------------------------------------------------
-# Create an appropriate FW file as per FRO requirements
-#----------------------------------------------------------------------
-# --- Copy .bin file based on log.csv ---
-assets_dir = "assets"
-# Read the first line of log.csv
-with open("log.csv", "r") as f:
-    first_name = f.readline().strip()
-
-if not first_name:
-    print("⚠️ No entries in log.csv; skipping .bin copy.")
-else:
-    # Find the first .bin file in assets/
-    bin_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(".bin")]
-    if not bin_files:
-        print(f"⚠️ No .bin file found in {assets_dir}/")
-    else:
-        src = os.path.join(assets_dir, bin_files[0])
-        dst = os.path.join(assets_dir, f"{first_name}.bin")
-        shutil.copy2(src, dst)
-        print(f"✅ Copied {src} → {dst}")
-
-
-# --- Variables already known from earlier steps ---
-assets_dir = "assets"          # where the original .bin file resides
-rev = rev.strip('"')           # e.g. "0109"
-first_name = first_name.strip()  # e.g. "FWF-23820-0BIN"
-
-# 1️⃣ Rename the file inside assets folder → add REV suffix
-old_path = os.path.join(assets_dir, f"{first_name}.bin")
-new_filename = f"{first_name}-{rev}.bin"
-new_path = os.path.join(assets_dir, new_filename)
-
-if not os.path.exists(old_path):
-    raise FileNotFoundError(f"❌ File not found: {old_path}")
-
-shutil.move(old_path, new_path)
-print(f"✅ Renamed {old_path} → {new_path}")
-
-# 2️⃣ Parse name for folder structure
-parts = first_name.split("-")
-if len(parts) < 3:
-    raise ValueError(f"Unexpected file name: {first_name}")
-
-_, model, suffix = parts
-
-# 3️⃣ Create full destination folder structure
-base_dir = "/mnt/server1/E drive files from Old server/drafting/FWF"
-dest_dir = os.path.join(base_dir, model, suffix, rev)
-os.makedirs(dest_dir, exist_ok=True)
-
-# 4️⃣ Copy the renamed .bin into the destination folder
-dest_file = os.path.join(dest_dir, new_filename)
-shutil.copy2(new_path, dest_file)
-
-print(f"✅ Copied {new_path} → {dest_file}")
-
-
 
 # assume we already have: model = "23820"
 def update_release_notes_conf(model: str, rev: str, family: str) -> Path:
@@ -184,8 +81,8 @@ def update_release_notes_conf(model: str, rev: str, family: str) -> Path:
     """
     # Be robust to underscore vs lowercase 'notes'
     candidates = [
-        Path(f"{model}-Release_Notes") / "docs" / "conf.py",
-        Path(f"{model}-Release_notes") / "docs" / "conf.py",
+        Path(f"{model}") / "Release_Notes" / "docs" / "conf.py",
+        Path(f"{model}") / "Release_notes" / "docs" / "conf.py",
     ]
     conf_path = next((p for p in candidates if p.exists()), None)
     if conf_path is None:
@@ -232,7 +129,9 @@ def update_release_notes_conf(model: str, rev: str, family: str) -> Path:
     )
     return conf_path.parent  # docs dir
 
-def build_release_notes(docs_dir: Path):
+
+
+def build_latex_file(docs_dir: Path):
     """Build LaTeX PDF with helpful diagnostics."""
     latex_dir = docs_dir / "_build" / "latex"
 
@@ -313,49 +212,19 @@ def pick_doc_number_from_log(log_path: str, model: str) -> str:
             return name
     return names[0]
 
-doc_number = pick_doc_number_from_log("log.csv", model)
-
-# ---- call these after you already have model/rev/family from cfg.ini ----
-# Example:
-# model = "23820"
-# rev   = "0109"
-# family = "RXR/RXI"
-
-docs_dir = update_release_notes_conf(model=model, rev=rev, family=family)
-build_release_notes(docs_dir)
-
-
-
-# ----------------------------------------------------------------------
-# Copy the built PDF to FRN/<MODEL>/0001/<REV>/ as FRN-<MODEL>-0001.pdf
-# ----------------------------------------------------------------------
-latex_dir = docs_dir / "_build" / "latex"
-src_pdf = latex_dir / "ibuc_manuals.pdf"
-
-if not src_pdf.exists():
-    raise FileNotFoundError(f"Expected PDF not found: {src_pdf}")
-
-frn_base = "/mnt/server1/E drive files from Old server/drafting/FRN"
-dest_dir = os.path.join(frn_base, model, "0001", rev)  # .../FRN/23820/0001/0109/
-os.makedirs(dest_dir, exist_ok=True)
-
-dest_pdf = os.path.join(dest_dir, f"FRN-{model}-0001-{rev}.pdf")
-shutil.copy2(src_pdf, dest_pdf)
-
-print(f"✅ Copied {src_pdf} → {dest_pdf}")
-
-
-
-
+#------------------------------------------------------------------------------
+# Update conf.py 
+#------------------------------------------------------------------------------
 def update_zip_readme_conf(model: str, rev_readme: str, family: str) -> Path:
     """
     Locate <MODEL>-ZIP_Readme/docs/conf.py (or -ZIP_readme),
     set release, project, DocDescription, and return docs dir.
     """
     candidates = [
-        Path(f"{model}-ZIP_Readme") / "docs" / "conf.py",
-        Path(f"{model}-ZIP_readme") / "docs" / "conf.py",
+        Path(f"{model}") / "ZIP_Readme" / "docs" / "conf.py",
+        Path(f"{model}") / "ZIP_readme" / "docs" / "conf.py",
     ]
+
     conf_path = next((p for p in candidates if p.exists()), None)
     if conf_path is None:
         raise FileNotFoundError(
@@ -409,64 +278,381 @@ def update_zip_readme_conf(model: str, rev_readme: str, family: str) -> Path:
     return conf_path.parent  # docs dir
 
 
+#----------------------------------------------------------------------
 # Build the ZIP Readme PDF
-zip_docs_dir = update_zip_readme_conf(model=model, rev_readme=rev_readme, family=family)
-build_release_notes(zip_docs_dir)
-
-# Copy ZIP Readme PDF → /drafting/ZIP/<MODEL>/RM01/<REV_README>/ZIP-<MODEL>-RM01-<REV_README>.pdf
-zip_latex_dir = zip_docs_dir / "_build" / "latex"
-src_zip_pdf = zip_latex_dir / "ibuc_manuals.pdf"   # Sphinx default name
-
-if not src_zip_pdf.exists():
-    raise FileNotFoundError(f"Expected ZIP Readme PDF not found: {src_zip_pdf}")
-
-zip_base = "/mnt/server1/E drive files from Old server/drafting/ZIP"
-zip_rm01_dest = os.path.join(zip_base, model, "RM01")
-os.makedirs(zip_rm01_dest, exist_ok=True)
-
-# ----------------------------------------------------------------------
-# Create ZIP file: ZIP-<MODEL>-0001.zip from assets/zip_content/*
-# ----------------------------------------------------------------------
-# Create firmware ZIP: assets/ZIP-<MODEL>-0001.zip from assets/zip_content/*
-zip_src_dir = Path("assets") / "zip_content"
-zip_name = f"ZIP-{model}-0001-{rev}.zip"
-zip_path = Path("assets") / zip_name
-
-if zip_src_dir.exists():
-    epoch_1980 = time.mktime((1980, 1, 1, 0, 0, 0, 0, 0, -1))
-    safe_dt = (1980, 1, 1, 0, 0, 0)
-
-    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as zf:
-        for root, _, files in os.walk(zip_src_dir):
-            for name in files:
-                fpath = os.path.join(root, name)
-                arcname = os.path.relpath(fpath, zip_src_dir)
-
-                st = os.stat(fpath)
-                mtime = max(st.st_mtime, epoch_1980)
-                dt = tuple(time.localtime(mtime))[:6]
-                if dt[0] < 1980:
-                    dt = safe_dt
-
-                zi = ZipInfo(arcname)
-                zi.date_time = dt
-                zi.compress_type = ZIP_DEFLATED
-
-                with open(fpath, "rb") as fp:
-                    zf.writestr(zi, fp.read())
-
-    print(f"✅ Created {zip_path}")
-
-    # Copy firmware ZIP → /drafting/ZIP/<MODEL>/0001/<REV>/
-    zip_0001_dest = os.path.join(zip_base, model, "0001", rev)
-    os.makedirs(zip_0001_dest, exist_ok=True)
-    shutil.copy2(zip_path, os.path.join(zip_0001_dest, zip_name))
-    print(f"✅ Copied {zip_name} → {zip_0001_dest}")
-else:
-    print(f"⚠️ Source folder not found: {zip_src_dir}")
+#----------------------------------------------------------------------
+def build_zip_readme_file(model: str, rev_readme: str, family: str):
+    zip_docs_dir = update_zip_readme_conf(model=model, rev_readme=rev_readme, family=family)
+    build_latex_file(zip_docs_dir)
 
 
-zip_readme_pdf_name = f"ZIP-{model}-RM01.pdf"
-shutil.copy2(src_zip_pdf, os.path.join(zip_rm01_dest, zip_readme_pdf_name))
+#----------------------------------------------------------------------
+# Copy the ZIP Readme PDF to the drafting directory
+#----------------------------------------------------------------------
+def copy_zip_readme_pdf(model: str, rev: str, rev_zip: str, zip_docs_dir: Path):
+    # Copy ZIP Readme PDF → /drafting/ZIP/<MODEL>/RM01/<REV_README>/ZIP-<MODEL>-RM01-<REV_README>.pdf
+    zip_latex_dir = zip_docs_dir / "_build" / "latex"
+    src_zip_pdf = zip_latex_dir / "ibuc_manuals.pdf"   # Sphinx default name
 
-print(f"✅ Copied {src_zip_pdf} → {os.path.join(zip_rm01_dest, zip_readme_pdf_name)}")
+    if not src_zip_pdf.exists():
+        raise FileNotFoundError(f"Expected ZIP Readme PDF not found: {src_zip_pdf}")
+
+    zip_base = "/mnt/server1/E drive files from Old server/drafting/ZIP"
+    zip_rm01_dest = os.path.join(zip_base, model, "RM01", f"Rev{rev_zip}")
+    os.makedirs(zip_rm01_dest, exist_ok=True)
+
+    # ----------------------------------------------------------------------
+    # Create ZIP file: ZIP-<MODEL>-0001.zip from assets/zip_content/*
+    # ----------------------------------------------------------------------
+    # Create firmware ZIP: assets/ZIP-<MODEL>-0001.zip from assets/zip_content/*
+    zip_src_dir = Path(f"{model}") /"assets" / "zip_content"
+    zip_name = f"ZIP-{model}-0001-{rev}.zip"
+    zip_path = Path(f"{model}") /"assets" / zip_name
+
+    if zip_src_dir.exists():
+        epoch_1980 = time.mktime((1980, 1, 1, 0, 0, 0, 0, 0, -1))
+        safe_dt = (1980, 1, 1, 0, 0, 0)
+
+        with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as zf:
+            for root, _, files in os.walk(zip_src_dir):
+                for name in files:
+                    fpath = os.path.join(root, name)
+                    arcname = os.path.relpath(fpath, zip_src_dir)
+
+                    st = os.stat(fpath)
+                    mtime = max(st.st_mtime, epoch_1980)
+                    dt = tuple(time.localtime(mtime))[:6]
+                    if dt[0] < 1980:
+                        dt = safe_dt
+
+                    zi = ZipInfo(arcname)
+                    zi.date_time = dt
+                    zi.compress_type = ZIP_DEFLATED
+
+                    with open(fpath, "rb") as fp:
+                        zf.writestr(zi, fp.read())
+
+        print(f"✅ Created {zip_path}")
+
+        # Copy firmware ZIP → /drafting/ZIP/<MODEL>/0001/<REV>/
+        zip_0001_dest = os.path.join(zip_base, model, "0001", rev)
+        os.makedirs(zip_0001_dest, exist_ok=True)
+        shutil.copy2(zip_path, os.path.join(zip_0001_dest, zip_name))
+        print(f"✅ Copied {zip_name} → {zip_0001_dest}")
+    else:
+        print(f"⚠️ Source folder not found: {zip_src_dir}")
+
+
+    zip_readme_pdf_name = f"ZIP-{model}-RM01.pdf"
+    shutil.copy2(src_zip_pdf, os.path.join(zip_rm01_dest, zip_readme_pdf_name))
+
+    print(f"✅ Copied {src_zip_pdf} → {os.path.join(zip_rm01_dest, zip_readme_pdf_name)}")
+
+
+#----------------------------------------------------------------------
+# Build Release Notes PDF
+#----------------------------------------------------------------------
+def build_release_notes_file(model: str, rev: str, family: str):
+    doc_number = pick_doc_number_from_log("FRO_log.csv", model)
+
+    docs_dir = update_release_notes_conf(model=model, rev=rev, family=family)
+    build_latex_file(docs_dir)
+    return docs_dir
+
+#------------------------------------------------------------------------------
+# Create the fwf...bin file locally
+#------------------------------------------------------------------------------
+def create_fw_filename(model: str):
+    assets_dir = f"{model}/assets"
+    fwf_full_path = ""
+    
+    # Read the first line of log.csv
+    first_name = ""
+    with open("FRO_log.csv", "r") as f:
+        first_name = f.readline().strip()
+
+    new_fwf_filename = f"{first_name}-{rev}.bin"
+    if not first_name:
+        print("No entries in FRO_log.csv; skipping .bin copy.")
+    else:
+        # Find the first .bin file in assets/
+        
+        bin_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(".bin")]
+        if not bin_files:
+            print(f"No .bin file found in {assets_dir}/")
+        else:
+            src = os.path.join(assets_dir, bin_files[0])
+            dst = os.path.join(assets_dir, new_fwf_filename)
+            fwf_full_path = dst
+            shutil.copy2(src, dst)
+            print(f"Copied {src} → {dst}")
+    
+    return first_name, fwf_full_path, new_fwf_filename
+
+
+def extract_major_minor(rev: str) -> tuple[str, str]:
+
+    if len(rev) <= 2:
+        sys.exit("Revision string must be at least 3 characters long to extract major and minor parts.")
+    
+    # str[start:end] slicing is safe even if rev is shorter than expected, 
+    # but we check length above for clarity
+    rev_major = rev[0:2]
+    rev_minor = rev[2:] # Includes last character
+    
+    return rev_major, rev_minor
+
+
+
+
+#------------------------------------------------------------------------------
+# Create the SWU file locally
+# return fwf_full_path: So that is final path to be pused out
+#        new_swu_filename, fwf_img_name
+#------------------------------------------------------------------------------
+def create_linux_swu_filename(model: str, rev: str):
+    fwf_files = {
+        "23719": ["TXI"],
+        "23820": ["23820"],
+    }
+
+    assets_dir = f"{model}/assets"
+    swu_full_path = ""
+    
+    # Read the first line of log.csv
+    swu_name = fwf_files[model][0]  # e.g. "TXI_" or "23820_"
+
+    rev_major, rev_minor = extract_major_minor(rev)
+
+    new_swu_filename = f"{swu_name}_v{rev_major}_{rev_minor}.swu"
+    
+    FRO_swu_filename = f"FWF-{model}-0SWU"
+    
+
+    if not swu_name:
+        print("No entries in FRO_log.csv; skipping .swu copy.")
+        return "", ""
+    
+    else:
+        swu_files = []
+        for f in os.listdir(assets_dir):
+            if f.lower().endswith(".swu"):
+                swu_files.append(f)
+
+        # Find the first .swu file in assets/
+        if not swu_files:
+            print(f"No .swu file found in {assets_dir}/")
+        else:
+            src = os.path.join(assets_dir, swu_files[0]) # Take first .swu file
+            dst = os.path.join(assets_dir, new_swu_filename)
+            swu_full_path = dst
+
+            shutil.copy2(src, dst)
+            print(f"Copied {src} → {dst}")
+    
+
+    return swu_full_path, FRO_swu_filename
+
+
+def create_linux_img_filename(model: str, rev: str):
+    fwf_files = {
+        "23719": ["TXI_sdcard"],
+        "23820": ["23820"],
+    }
+
+    assets_dir = f"{model}/assets"
+    img_full_path = ""
+    
+    # Read the first line of log.csv
+    img_name = fwf_files[model][0]  # e.g. "TXI_sdcard" or "23820"
+    
+    rev_major, rev_minor = extract_major_minor(rev)
+
+    new_img_filename = f"{img_name}_v{rev_major}_{rev_minor}.img"
+    
+    FRO_img_filename = f"FWF-{model}-0IMG"
+
+
+    img_files = []
+    for f in os.listdir(assets_dir):
+        if f.lower().endswith(".img"):
+            img_files.append(f)
+        
+
+        if not img_files:
+            print(f"No .img file found in {assets_dir}/")
+        else:
+            src = os.path.join(assets_dir, img_files[0]) # Take first img file
+            dst = os.path.join(assets_dir, new_img_filename)
+            img_full_path = dst
+            shutil.copy2(src, dst)
+            print(f"Copied {src} → {dst}")
+
+    return img_full_path, FRO_img_filename
+
+#----------------------------------------------------------------------
+# Create an appropriate FW file as per FRO requirements
+#
+# Copy .bin file based on FRO_log.csv 
+# 
+# Basically we need to create a custom named .bin file in assets/
+# So that its copied to an appropriate location during FRO processing
+#----------------------------------------------------------------------
+def copy_fw_file(FRO_name: str, fwf_local_path: str, rev: str):
+    parts = FRO_name.split("-")
+    if len(parts) < 3:
+        raise ValueError(f"Unexpected file name: {FRO_name}")
+
+    _, model, suffix = parts
+
+    base_dir = "/mnt/server1/E drive files from Old server/drafting/FWF"
+    dest_dir = os.path.join(base_dir, model, suffix, rev)
+    os.makedirs(dest_dir, exist_ok=True)
+
+    fwf_name = fwf_local_path.split(os.sep)[-1]  # Get the actual filename from the path
+    dest_file = os.path.join(dest_dir, fwf_name)
+    shutil.copy2(fwf_local_path, dest_file)
+
+    print(f"✅ Copied {fwf_local_path} → {dest_file}")
+
+
+#------------------------------------------------------------------------------
+# Create the Output.csv file
+#------------------------------------------------------------------------------
+def generate_output_csv():
+    config = read_config_with_default("cfg.ini")
+
+    d          = config["DEFAULT"]
+    model      = getq(d, "MODEL")
+    rev        = getq(d, "REV")
+    rev_readme = getq(d, "REV_README")
+    family     = getA(d, "FAMILY")
+    serial     = getA(d, "SERIAL_NUM")
+    new_fw     = truthy(d.get("NEW_FW", ""))
+    linux      = truthy(d.get("LINUX", ""))
+
+    rows = []
+    if linux:
+        if len(family) == 1:
+            rows = [
+                [f"FWF-{model}-0SWU", f"Firmware, {family} {serial}, SWU", rev],
+                [f"FWF-{model}-0IMG", f"Firmware, {family} {serial}, IMG", rev],
+                [f"FRN-{model}-0BIN", f"Frmwr Rls Notes, {family} {serial}", rev],
+                [f"ZIP-{model}-0001", f"ZIP file Frmwr Upgrd Pckg, {family} {serial}, SWU", rev],
+                [f"ZIP-{model}-RM01", f"ZIP file, {family} {serial}, Readme", rev_readme],
+                [f'729-{model}-0001', f"SD Card, {family} {serial}, Programmed", rev],
+            ]
+        else:
+            print("Check cfg.ini for incorrect Family info")
+            sys.exit()
+    else:
+        if len(family) == 1:
+            rows = [
+                [f"FWF-{model}-0BIN", f"Firmware, {family} {serial}, BIN", rev],
+                [f"FRN-{model}-0BIN", f"Frmwr Rls Notes, {family} {serial}", rev],
+                [f"ZIP-{model}-0001", f"ZIP file, {family} {serial}, BIN", rev],
+                [f"ZIP-{model}-RM01", f"ZIP file, {family} {serial}, Readme", rev_readme],
+            ]
+        else:
+            # Dont change the format string for Firmmware, ... it needs to match exactly
+            # there seems to be some space restrictions on FRO side when parsing these fields
+            rows = [
+                [f"FWF-{model}-0BIN", f"Firmware,{family[0]} {serial[0]},{family[1]} {serial[1]}, BIN", rev],
+                [f"FRN-{model}-0BIN", f"Frmwr Rls Notes,{family[0]} {serial[0]},{family[1]} {serial[1]}",      rev],
+                [f"ZIP-{model}-0001", f"ZIP file,{family[0]} {serial[0]},{family[1]} {serial[1]}, BIN", rev],
+                [f"ZIP-{model}-RM01", f"ZIP file,{family[0]} {serial[0]},{family[1]} {serial[1]}, Readme", rev_readme],
+            ]
+
+
+    # If NEW_FW is truthy, parse COMMON_KIT / WHERE_USED and append rows
+    if new_fw and config.has_section("COMMON_KIT"):
+        raw_where_used = config["COMMON_KIT"].get("WHERE_USED", "")
+        entries = normalize_where_used(raw_where_used)
+        for item in entries:
+            pn, desc = split_first_comma(item)
+            if pn:  # only add if we have a part number
+                rows.append([pn, desc, ""])
+
+    #---------------------------------------------------------------------- 
+    # Write CSV with header; csv module will quote fields with commas 
+    # automatically. This is the file used to populate actual FRO .
+    #---------------------------------------------------------------------- 
+    with open("FRO_output.csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["File Name", "Description", "Revision"])
+        writer.writerows(rows)
+
+    print("✅ FRO_output.csv generated successfully.")
+
+    return rows, model, rev, rev_readme, family, serial, new_fw, linux
+
+#----------------------------------------------------------------------
+# Put the output of "log.csv" in the FRO log.xlsx file
+#----------------------------------------------------------------------
+def generate_log_csv(rows):
+    with open("FRO_log.csv", "w", newline="") as logf:
+        logwriter = csv.writer(logf)
+        for r in rows:
+            logwriter.writerow([r[0]])
+    print("✅ FRO_log.csv generated successfully.")
+
+#----------------------------------------------------------------------
+# Generate output.csv
+
+# Main logic
+#----------------------------------------------------------------------
+if __name__ == "__main__":
+    
+    # Generate Output.csv
+    rows, model, rev, rev_readme, family, serial, new_fw, linux = generate_output_csv()
+
+    # Generate FRO_log.csv
+    generate_log_csv(rows)
+
+    
+    if linux:
+        swu_local_path, FRO_swu_filename = create_linux_swu_filename(model=model, rev=rev)
+        img_local_path, FRO_img_filename = create_linux_img_filename(model=model, rev=rev)
+
+        if not swu_local_path:
+            print("No firmware file found.")
+            exit(1)
+        
+        # For Linux copy both SWU and IMG files
+        copy_fw_file(FRO_name=FRO_swu_filename, fwf_local_path=swu_local_path,  rev=rev)
+        copy_fw_file(FRO_name=FRO_img_filename, fwf_local_path=img_local_path,  rev=rev)
+
+        docs_dir = build_release_notes_file(model=model, rev=rev, family=family)
+        
+        latex_dir = docs_dir / "_build" / "latex"
+        src_pdf = latex_dir / "ibuc_manuals.pdf"
+
+        if not src_pdf.exists():
+            raise FileNotFoundError(f"Expected PDF not found: {src_pdf}")
+
+        frn_base = "/mnt/server1/E drive files from Old server/drafting/FRN"
+        dest_dir = os.path.join(frn_base, model, "0SWU", rev)  # .../FRN/23820/0001/0109/
+        os.makedirs(dest_dir, exist_ok=True)
+
+        dest_pdf = os.path.join(dest_dir, f"FRN-{model}-0001-{rev}.pdf")
+        shutil.copy2(src_pdf, dest_pdf)
+
+        print(f"✅ Copied {src_pdf} → {dest_pdf}")
+
+    else:
+        first_name, fwf_local_path, fwf_name = create_fw_filename(model=model)
+        #copy_fw_file(first_name=first_name, fwf_local_path=fwf_local_path, fwf_name=fwf_name, rev=rev)
+
+    # Work on Zip file
+    build_zip_readme_file(model=model, rev_readme=rev_readme, family=family)
+    copy_zip_readme_pdf(model=model, rev=rev, rev_zip=rev_readme, zip_docs_dir=Path(f"{model}") / "ZIP_Readme" / "docs")
+    
+
+    # ----------------------------------------------------------------------
+    # Copy the built PDF to FRN/<MODEL>/0001/<REV>/ as FRN-<MODEL>-0001.pdf
+    # ----------------------------------------------------------------------
+    
+
+
+    
+

@@ -1,0 +1,7 @@
+table_name,col,name,asn,get_fn,src_struct,src_reader,src_field,src_field_type,src_max_len,err_type,err_ok
+tx21BucSensorTable,2,tx21BucSupplyVoltage,ASN_INTEGER,snmp_tx21_buc_supply_voltage_get,IBUC_Status,ibuc_status.read,sts.supply_volts,int32,MAX_LEN,Err,Err::SUCCESS
+tx21BucSensorTable,3,tx21BucSupplyCurrent,ASN_INTEGER,snmp_tx21_buc_supply_current_get,IBUC_Status,ibuc_status.read,sts.supply_amps,int32,MAX_LEN,Err,Err::SUCCESS
+tx21BucSensorTable,4,tx21BucDROVoltage,ASN_INTEGER,snmp_tx21_buc_DRO_voltage_get,IBUC_Status,ibuc_status.read,sts.dro_volts,int32,MAX_LEN,Err,Err::SUCCESS
+tx21BucSensorTable,5,tx21BucTemperature,ASN_INTEGER,snmp_tx21_buc_temperatue_get,IBUC_Status,ibuc_status.read,sts.temperature_inside,int32,MAX_LEN,Err,Err::SUCCESS
+tx21BucSensorTable,6,tx21BucInputPowerLevel,ASN_INTEGER,snmp_tx21_buc_input_power_level_get,IBUC_Status,ibuc_status.read,sts.input_power_mB,int32,,Err,Err::SUCCESS
+tx21BucSensorTable,7,tx21BucOutputPowerLevel,ASN_INTEGER,snmp_tx21_buc_output_power_level_get,IBUC_Status,ibuc_status.read,sts.output_power_mB,int32,MAX_LEN,Err,Err::SUCCESS

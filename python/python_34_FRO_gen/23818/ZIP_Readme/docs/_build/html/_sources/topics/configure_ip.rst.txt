@@ -1,0 +1,22 @@
+Configure IP Address
+====================
+
+This procedure sets a static IP address so the controller can be accessed on the network.
+
+Before you begin
+----------------
+* Connect the Ethernet cable
+* Have administrator credentials available
+
+Steps
+-----
+#. Press **Menu**.
+#. Select **System**.
+#. Select **Network**.
+#. Select **Static IP**.
+#. Enter the **IP Address**, **Subnet Mask**, and **Gateway**.
+#. Select **Save**.
+
+Result
+------
+The controller restarts its network interface and applies the new settings.

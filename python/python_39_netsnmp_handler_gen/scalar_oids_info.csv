@@ -1,0 +1,5 @@
+name,oid,asn,access,get_fn,set_fn,cache_key,src_struct,src_reader,src_field,src_field_type,src_max_len,err_type,err_ok
+tx21ModelNumber,1.3.6.1.4.1.21369.6.1.2,ASN_OCTET_STR,RO,snmp_scalars_tx21ModelNumber_get,,,cfg_cntrlr_factory_s,j_read_fcfg_cntrlr,model_number,string,MAX_LEN,Err,Err::SUCCESS
+tx21SerialNumber,1.3.6.1.4.1.21369.6.1.3,ASN_OCTET_STR,RO,snmp_scalars_tx21SerialNumber_get,,,cfg_cntrlr_factory_s,j_read_fcfg_cntrlr,serial_number,string,MAX_LEN,Err,Err::SUCCESS
+tx21FirmwareVersion,1.3.6.1.4.1.21369.6.1.4,ASN_OCTET_STR,RO,snmp_scalars_tx21FirmwareVersion_get,,,cfg_cntrlr_s,j_read_cfg_cntrlr,firmware_version,string,MAX_LEN,Err,Err::SUCCESS
+tx21HardwareVersion,1.3.6.1.4.1.21369.6.1.5,ASN_OCTET_STR,RO,snmp_scalars_tx21HardwareVersion_get,,,cfg_cntrlr_factory_s,j_read_fcfg_cntrlr,hardware_revision,string,MAX_LEN,Err,Err::SUCCESS

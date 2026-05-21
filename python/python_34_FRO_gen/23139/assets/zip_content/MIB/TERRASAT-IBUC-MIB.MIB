@@ -1,0 +1,3087 @@
+TERRASAT-IBUC-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        terrasat                
+                FROM TERRASAT-SMI-MIB
+        OBJECT-GROUP, NOTIFICATION-GROUP, MODULE-COMPLIANCE
+                FROM SNMPv2-CONF
+        ProtocolMode, NoYesValue, AlarmLevel, MsgResponseMode,
+        DisableEnableValue, OffOnValue, PowerMonitorMode,
+        GainMode, AlarmState, RedundancyEnable, RedundancyMode,
+        PositionAB, RedundSwitchType, TxMute, PowerWatts,
+        FrequencyBand, TenMHzMode
+                FROM TERRASAT-TC-MIB
+        IpAddress, OBJECT-TYPE, MODULE-IDENTITY, Integer32, NOTIFICATION-TYPE
+                FROM SNMPv2-SMI
+        sysName
+                FROM RFC1213-MIB
+        DisplayString
+                FROM SNMPv2-TC;
+
+ibucMIB MODULE-IDENTITY
+    LAST-UPDATED    "202402270000Z"
+    ORGANIZATION    "Terrasat Communications, Inc."
+    CONTACT-INFO
+            "Terrasat Communications
+            Customer Service
+
+            Address: 235 Vineyard Court
+            Morgan Hill, CA  95037
+            USA
+
+            Tel: +1 408 782-2166
+
+            E-mail: techsupport@terrasatinc.com"
+    DESCRIPTION
+        "The management MIB for IBUC products."
+
+        REVISION        "202507180000Z"
+        DESCRIPTION
+                "Modified RF(Commercial added) and Reverse Power"
+        REVISION        "202402270000Z"
+        DESCRIPTION
+                "Added ibucTxMultiBandSelect, ibucInputFreqRngSelect"
+
+        REVISION        "202212060000Z"
+        DESCRIPTION
+                "Changed ibucPowerupDelay minimum to 30 seconds."
+
+        REVISION        "202204150000Z"
+        DESCRIPTION
+                "Added ibucTxLoadSwitch oid."
+
+        REVISION        "202202030000Z"
+        DESCRIPTION
+                "Changed the ranges for ibucInputThresholdLo,
+		ibucInputThresholdHi, and ibucStatLogInterval."
+
+        REVISION        "202005120000Z"
+        DESCRIPTION
+                "Added ibucPoutOffset."
+
+        REVISION        "201810110000Z"
+        DESCRIPTION
+                "Added ibucKeylineDisable for IBUC3."
+
+        REVISION        "201803130000Z"
+        DESCRIPTION
+                "Updated for M&C V2 firmware."
+
+        REVISION        "201703310000Z"
+        DESCRIPTION
+                "Added ibucCouplingFactor."
+        
+        REVISION        "201609060000Z"
+        DESCRIPTION
+                "Corrected type mismatch of ibucAlarmLogType."
+                
+        REVISION        "201501220000Z"
+        DESCRIPTION
+                "Added ibucInputOverdriveFault."
+                
+        REVISION        "201412110000Z"
+        DESCRIPTION
+                "Added ibucBurstTimeout."
+                
+        REVISION        "201411120000Z"
+        DESCRIPTION
+                "Added 10MHzMode to imports section."
+                
+        REVISION        "201409090000Z"
+        DESCRIPTION
+                "Added ibuc10MHzSource."
+                
+        REVISION        "201407020000Z"
+        DESCRIPTION
+                "Added ibucWarmStandby."
+                
+        REVISION        "201406170000Z"
+        DESCRIPTION
+                "Changed ibucAttenuation range."
+                
+        REVISION    "201306070000Z"
+        DESCRIPTION
+                "Added ibucTotalSystemHours.
+                 Added ibucTotalTransmitHours."
+
+        REVISION    "201112120000Z"
+        DESCRIPTION
+                "Added notifications for individual alarms.
+                 Added Redundant alarms."
+
+        REVISION    "201109220000Z"
+        DESCRIPTION
+                "Added notifications ibucRebootEvent, ibucAlarmEvent, and 
+                ibucAlarmClearEvent."
+
+        REVISION    "201102080000Z"
+        DESCRIPTION
+                "Added ibucInternal10MHzTrim to ibucTx."
+
+        REVISION    "201102040000Z"
+        DESCRIPTION
+                "Added AC Power supply Hertz adjustment."
+
+        REVISION    "201012200000Z"
+        DESCRIPTION
+                "Changed the size of ibucModelNumber to 32 characters."
+
+        REVISION        "200909280000Z"
+        DESCRIPTION
+                "The intial version."
+    ::= { terrasat 1 }
+
+
+ibucCfg			OBJECT IDENTIFIER ::= { ibucMIB 1 }
+ibucIP			OBJECT IDENTIFIER ::= { ibucCfg 1 }
+ibucRS485		OBJECT IDENTIFIER ::= { ibucCfg 2 }
+ibucAlarm		OBJECT IDENTIFIER ::= { ibucCfg 3 }
+ibucSystem		OBJECT IDENTIFIER ::= { ibucCfg 4 }
+ibucTx			OBJECT IDENTIFIER ::= { ibucCfg 5 }
+ibucRedund		OBJECT IDENTIFIER ::= { ibucCfg 6 }
+ibucControl		OBJECT IDENTIFIER ::= { ibucMIB 2 }
+ibucStatus		OBJECT IDENTIFIER ::= { ibucMIB 3 }
+ibucUnitInfo	OBJECT IDENTIFIER ::= { ibucStatus 1 }
+ibucAlarms		OBJECT IDENTIFIER ::= { ibucStatus 2 }
+ibucDetector	OBJECT IDENTIFIER ::= { ibucStatus 3 }
+ibucAlarmLog	OBJECT IDENTIFIER ::= { ibucStatus 4 }
+ibucConformance	OBJECT IDENTIFIER ::= { ibucMIB 4 }
+ibucEvents		OBJECT IDENTIFIER ::= { ibucMIB 5 }
+ibucMonCtrlV2	OBJECT IDENTIFIER ::= { ibucMIB 6 }
+ibucCompliances	OBJECT IDENTIFIER ::= { ibucConformance 1 }
+ibucGroups		OBJECT IDENTIFIER ::= { ibucConformance 2 }
+--
+-- The Config Group
+--
+
+--
+-- ip Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.1.1
+ibucIPAddress OBJECT-TYPE
+        SYNTAX  IpAddress
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the network IP address for this IBUC. Legal values are
+        1.0.0.0 to 224.0.0.0 excluding the endpoints. xx.xx.xx.00
+        and xx.xx.xx.255 are excluded also. This item requires an IBUC
+        F/W reboot to take affect."
+        ::= { ibucIP 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.1.2
+ibucIPGateway OBJECT-TYPE
+        SYNTAX  IpAddress
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the network IP gateway address for this IBUC. Legal 
+        values are 1.0.0.0 to 224.0.0.0 excluding the endpoints.
+        xx.xx.xx.00 and xx.xx.xx.255 are excluded also. This item 
+        requires an IBUC F/W reboot to take affect."
+        ::= { ibucIP 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.1.3
+ibucIPSubnet OBJECT-TYPE
+        SYNTAX  Integer32 ( 8..30)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the network IP subnet mask for this IBUC. Values range
+        from 8 to 30. This is the number of 1 bits in the mask with 8 
+        representing 255.0.0.0 and 30 representing 255.255.255.252.This 
+        item requires an IBUC F/W reboot to take affect."
+        ::= { ibucIP 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.1.4
+ibucIPAddressOtherIBUC OBJECT-TYPE
+        SYNTAX  IpAddress
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the network IP address of the other IBUC configured as
+        a protected pair. Legal values are 1.0.0.0 to 224.0.0.0 
+        excluding the endpoints. xx.xx.xx.00 and xx.xx.xx.255 
+        are excluded also. This item requires an IBUC F/W reboot to take
+        affect."
+        ::= { ibucIP 4 }
+
+-- 1.3.6.1.4.1.21369.1.1.1.5
+ibucIPTelnetPort OBJECT-TYPE
+        SYNTAX  Integer32 (1..65534)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the telnet port for this IBUC. Values can range from
+        1 to 65534. This item requires an IBUC F/W reboot to take
+        effect."
+        ::= { ibucIP 5 }
+
+--
+-- rs485 Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.2.1
+ibucRS485Address OBJECT-TYPE
+        SYNTAX  Integer32 (1..254)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is 485 network address for this IBUC. Legal values are based
+        on the setting of the rs485Mode below. If set to ASCII mode
+        values can be 1 to 254. If set to Legacy binary values can be 1 to
+        15."
+        ::= { ibucRS485 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.2.2
+ibucRS485Baudrate OBJECT-TYPE
+        SYNTAX  Integer32 (1200|2400|4800|9600|19200|38400|56700|115200)
+        UNITS           "baud"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the 485 baudrate of this IBUC. The only values supported are:
+        1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200"
+        ::= { ibucRS485 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.2.3
+ibucRS485Mode OBJECT-TYPE
+        SYNTAX  ProtocolMode
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the 485 protocol mode for this IBUC. Legal Values are
+        (0) enable ASCII protocol
+        (1) enable Legacy binary mode."
+        ::= { ibucRS485 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.2.4
+ibucRS485Delay OBJECT-TYPE
+        SYNTAX  Integer32 (1..255)
+        UNITS           "milliseconds"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the RS485 line delay for this IBUC. Legal Values are
+        1 to 255 in milliseconds."
+        ::= { ibucRS485 4 }
+
+--
+-- alarm Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.3.1
+ibucTemperatureSuppressible OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures temperature alarm suppression.
+        (0) disallow suppression
+        (1) allow suppression"
+        ::= { ibucAlarm 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.2
+ibucInputLowThresholdSuppressible OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures Input Low Threshold
+        alarm suppression.
+        (0) disallow suppression
+        (1) allow suppression"
+        ::= { ibucAlarm 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.3
+ibucInputHighThresholdSuppressible OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures Input High Threshold
+        alarm suppression.
+        (0) disallow suppression
+        (1) allow suppression"
+        ::= { ibucAlarm 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.4
+ibucOutputLowThresholdSuppressible OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures Output Low Threshold
+        alarm suppression.
+        (0) disallow suppression
+        (1) allow suppression"
+        ::= { ibucAlarm 4 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.5
+ibucOutputHighThresholdSuppressible OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures Output High Threshold
+        alarm suppression.
+        (0) disallow suppression
+        (1) allow suppression"
+        ::= { ibucAlarm 5 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.6
+ibucTemperatureAlarmLevel OBJECT-TYPE
+        SYNTAX  AlarmLevel
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures whether the Temperature alarm
+        generates no alarm, a minor alarm, or a major alarm.
+        (0) no alarm
+        (1) minor alarm
+        (2) major alarm"
+        ::= { ibucAlarm 6 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.7
+ibucInputLowThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX  AlarmLevel
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures whether the Input Low Threshold 
+        alarm generates no alarm, a minor alarm, or a major alarm.
+        (0) no alarm
+        (1) minor alarm
+        (2) major alarm"             
+        ::= { ibucAlarm 7 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.8
+ibucInputHighThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX  AlarmLevel
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures whether the Input High Threshold
+        alarm generates no alarm, a minor alarm, or a major alarm.
+        (0) no alarm
+        (1) minor alarm
+        (2) major alarm"             
+        ::= { ibucAlarm 8 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.9
+ibucOutputLowThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX  AlarmLevel
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures whether the Output Low Threshold
+        alarm generates no alarm, a minor alarm, or a major alarm.
+        (0) no alarm
+        (1) minor alarm
+        (2) major alarm"             
+        ::= { ibucAlarm 9 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.10
+ibucOutputHighThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX  AlarmLevel
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures whether the Output High Threshold
+        alarm generates no alarm, a minor alarm, or a major alarm.
+        (0) no alarm
+        (1) minor alarm
+        (2) major alarm"             
+        ::= { ibucAlarm 10 }
+
+-- 1.3.6.1.4.1.21369.1.1.3.11
+ibucTemperatureShutdownThreshold OBJECT-TYPE
+        SYNTAX          Integer32 (65..85)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the internal temperature threshold for muting the PA
+		to avoid over temperature damage"             
+        ::= { ibucAlarm 11 }
+
+--
+-- system Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.4.1
+ibucVerboseMode OBJECT-TYPE
+        SYNTAX  MsgResponseMode
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the response type for messages
+        utilizing the telnet command set.
+        (0) Terse messages   (no formatting)
+        (1) Verbose messages (formatted output)"
+        ::= { ibucSystem 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.4.2
+ibucEcho OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the echo type for messages
+        utilizing the telnet command set.
+        (0) No Echo (no response from the unit on Set commands)
+        (1) Echo (IBUC echoes any Set command back to user)"
+        ::= { ibucSystem 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.4.3
+ibucPasswordTimeOut OBJECT-TYPE
+        SYNTAX          Integer32 (0..65535)
+        UNITS           "minutes"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the password timeout for all
+        interfaces excluding snmp.
+        (0) no password timeout
+        (1..65535) number of minutes"
+        ::= { ibucSystem 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.4.4
+ibucWebServerRefresh OBJECT-TYPE
+        SYNTAX  Integer32 (0..3600)
+        UNITS           "seconds"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the web server refresh rate
+        (0) no refresh
+        (1..3600) number of seconds"
+        ::= { ibucSystem 4 }
+
+-- 1.3.6.1.4.1.21369.1.1.4.5
+ibucAC50HzCorrection OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the AC power supply frequency correction
+        (0) Disable
+        (1) Enable"
+        ::= { ibucSystem 5 }
+
+--
+-- tx Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.5.1
+ibucFrequency OBJECT-TYPE
+        SYNTAX  Integer32 (1..65535)
+        UNITS           "MHz"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        monitored frequency in MHz at the output of the IBUC.
+        This can be input as an IF or RF frequency inside the
+        passband of the unit."
+        ::= { ibucTx 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.2
+ibucPowerupState OBJECT-TYPE
+        SYNTAX  OffOnValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        powerup state of the IBUC transmitter.
+        (0) TX OFF
+        (1) TX ON"
+        ::= { ibucTx 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.3
+ibucPowerupDelay OBJECT-TYPE
+        SYNTAX  Integer32 (30..500)
+        UNITS           "seconds"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        powerup delay of the IBUC Transmitter before enabling.
+        30-500 in 1 second intervals."
+        ::= { ibucTx 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.4
+ibucReadPowerMode OBJECT-TYPE
+        SYNTAX  PowerMonitorMode
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        mode the IBUC reports its output power level.
+        (0) Continuous Signal Mode
+        (1) Burst Mode"
+        ::= { ibucTx 4 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.5
+ibucBurstThreshold OBJECT-TYPE
+        SYNTAX  Integer32 (1..65535)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        burst threshold setting of the IBUC. 0 to 6000 millibels
+        further qualified by the power output range. Rated Power + 1
+        to Rated Power - 20 db."
+        ::= { ibucTx 5 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.6
+ibucBurstCount OBJECT-TYPE
+        SYNTAX  Integer32 (1..16)
+        UNITS           "samples"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        number of readings to sample in the burst power measurement.
+        Ranges from 1 - 16"
+        ::= { ibucTx 6 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.7
+ibucGainMode OBJECT-TYPE
+        SYNTAX  GainMode
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        gain mode of the IBUC.
+        (0) Open Loop
+        (1) ALC
+        (2) AGC"
+        ::= { ibucTx 7 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.8
+ibucAttenuation OBJECT-TYPE
+        SYNTAX  Integer32 (0..3000)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        attenuation setting of this IBUC. If the IBUC is 
+        Option Z this has no meaning and writes will return
+        snmp error.
+        Ranges from 0 to 1600 millibels
+        Option -002 0 to 2000 millibels
+        IBR 0 to 3000 millibels"
+        ::= { ibucTx 8 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.9
+ibucInputThresholdLo OBJECT-TYPE
+        SYNTAX  Integer32 (-9900..9900)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        Input Low Threshold setting in millibels for this IBUC.
+        Range is -9900 to -9900.
+        Must be below cfgInputThresholdHigh."
+        ::= { ibucTx 9 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.10
+ibucInputThresholdHi OBJECT-TYPE
+        SYNTAX  Integer32 (-9900..9900)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        Input High Threshold setting in millibels for this IBUC. 
+        Range is -9900 to 9900
+        Must be above cfgInputThresholdLow."
+        ::= { ibucTx 10 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.11
+ibucOutputThresholdLo OBJECT-TYPE
+        SYNTAX  Integer32 (0..6000)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        Output Low Threshold setting in milliBels for this IBUC. 
+        Range is 0 to 6000 further qualified by the output
+        range of the IBUC(Rated Power to Rated Power - 20 db).
+        Must be below cfgInputThresholdHigh."
+        ::= { ibucTx 11 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.12
+ibucOutputThresholdHi OBJECT-TYPE
+        SYNTAX  Integer32 (0..6000)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        Output High Threshold setting for this IBUC. 0 to 6000
+        millibels. Further qualified by the output
+        range of the IBUC(Rated Power+1dB to Rated Power - 20 dB).
+        Must be above cfgOutputThresholdLow."
+        ::= { ibucTx 12 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.13
+ibucHighTemperatureShutdown OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        High Temperature Shutdown. Enables or disables the
+        high temp TX shutdown when temperature exceeds ratings.
+        (0) Disables
+        (1) Enables"
+        ::= { ibucTx 13 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.14
+ibucZAttenuation OBJECT-TYPE
+        SYNTAX  Integer32 (0..4000)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        40 dB attenuation setting of this IBUC. If
+        the IBUC is not Option Z this return value has no
+        meaning, and writes will return snmp error.
+        Ranges from 0 to 4000 millibels."
+        ::= { ibucTx 14 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.15
+ibucZLevelTarget OBJECT-TYPE
+        SYNTAX  Integer32 (0..6000)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        level target for ALC mode of this IBUC. If the IBUC
+        is not Option Z this return value has no meaning,
+        and writes will return an snmp error.
+        Ranges from 0 to 6000 millibels."
+        ::= { ibucTx 15 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.16
+ibucZGainTarget OBJECT-TYPE
+        SYNTAX  Integer32 (0..9900)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        gain target for AGC mode of this IBUC. If the IBUC
+        is not Option Z this return value has no meaning,
+        and writes will return an snmp error.
+        Ranges from 0 to 9900 millibels."
+        ::= { ibucTx 16 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.17
+ibucInternal10MHzTrim OBJECT-TYPE
+        SYNTAX  Integer32 (0..255)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This value modifies the internal 10 MHz oscillator
+        frequency on IBUC option I only."
+        ::= { ibucTx 17 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.18
+ibucBurstTimeout OBJECT-TYPE
+        SYNTAX  Integer32 (0..300)
+		UNITS	"seconds"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This value modifies the burst time out period."
+        ::= { ibucTx 18 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.19
+ibucCouplingFactor OBJECT-TYPE
+        SYNTAX  Integer32 (-32768..32767)
+		UNITS	"millibels"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "For units equipped with an output sample port,
+		this is the coupling factor in milliBels."
+        ::= { ibucTx 19 }
+
+-- 1.3.6.1.4.1.21369.1.1.5.20
+ibucReverseThresholdHi OBJECT-TYPE
+        SYNTAX  Integer32 (0..6000)
+		UNITS	"millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        Reverse High Threshold setting for this IBUC. 0 to 6000
+        millibels. Further qualified by the output
+        range of the IBUC(Rated Power +1dB to Rated Power -20 dB).
+        Must be above cfgOutputThresholdLow."
+        ::= { ibucTx 20 }
+		
+-- 
+-- redund Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.1.6.1
+ibucRedundancyEnabled OBJECT-TYPE
+        SYNTAX  RedundancyEnable
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        redundancy mode of the IBUC.
+        (0) Not redundant
+        (1) Redundancy enabled"
+        ::= { ibucRedund 1 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.2
+ibucRedundancyMode OBJECT-TYPE
+        SYNTAX  RedundancyMode
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        redundancy switching mode of IBUC.
+        Valid only if redundancyEnabled is 1.
+        (0) Reverting
+        (1) NonReverting"
+        ::= { ibucRedund 2 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.3
+ibucPositionOnSwitch OBJECT-TYPE
+        SYNTAX  PositionAB
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        position of the IBUC on the waveguide switch.
+        Valid only if redundancyEnabled is 1.
+        (0) A side
+        (1) B side"
+        ::= { ibucRedund 3 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.4
+ibucAutoCloning OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        cloning mode the IBUC.
+        Valid only if redundancyEnabled is 1.
+        (0) Disable automatic cloning of configuration data to slave.
+        (1) Enable automatic cloning of configuration data to slave."
+        ::= { ibucRedund 4 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.5
+ibucSwitchingType OBJECT-TYPE
+        SYNTAX  RedundSwitchType
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        switching type of the IBUC.
+        Valid only if redundancyEnabled is 1.
+        (0) Manual switching
+        (1) Automatic switching"
+        ::= { ibucRedund 5 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.6
+ibucSwitchPosition OBJECT-TYPE
+        SYNTAX  PositionAB
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        switch positon of the IBUC. Reading this variable
+        shows the current waveguide switch position. Writing
+        this variable changes the current switch position.
+        Valid only if redundancyEnabled is 1.
+        (0) Switch position A
+        (1) Switch position B"
+        ::= { ibucRedund 6 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.7
+ibucSystemStatus OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE (0..100))
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        redundant system status of the IBUC.
+        Valid only if redundancyEnabled is 1."
+        ::= { ibucRedund 7 }
+
+-- 1.3.6.1.4.1.21369.1.1.6.8
+ibucWarmStandby OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        redundancy switching mode of IBUC.
+        Valid only if redundancyEnabled is 1.
+        (0) Hot Standby(Standby PA not muted
+        (1) Warm Standby(Standby PA muted"
+        ::= { ibucRedund 8 }
+        
+          --
+          -- The Control Group
+          --
+
+-- 1.3.6.1.4.1.21369.1.2.1
+ibucSuppressAlarms OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes configured threshold
+        alarms to be suppressed.
+        (0) No Suppression
+        (1) Suppress configured threshold alarms"
+        ::= { ibucControl 1 }
+
+-- 1.3.6.1.4.1.21369.1.2.2
+ibucSimulateAlarm OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes a major alarm
+        in the IBUC.
+        (0) No Alarm
+        (1) Simulate a Tx alarm"
+        ::= { ibucControl 2 }
+
+-- 1.3.6.1.4.1.21369.1.2.3
+ibucClearAlarmLog OBJECT-TYPE
+        SYNTAX  Integer32 (0)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes the IBUC to clear
+        its alarm history."
+        ::= { ibucControl 3 }
+
+-- 1.3.6.1.4.1.21369.1.2.4
+ibucMute OBJECT-TYPE
+        SYNTAX  TxMute
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes the transmitter to
+        be muted.
+        (0) Transmit disabled.
+        (1) Transmit enabled.
+        (2) Transmit muted due to alarms.
+        (3) Transmit muted from external pin.
+        (4) Transmit muted due to power up delay."
+        ::= { ibucControl 4 }
+
+-- 1.3.6.1.4.1.21369.1.2.5
+ibucResetGainControl OBJECT-TYPE
+        SYNTAX  Integer32 (0)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes the Gain Control
+        attenuator to be reset to 0 db. If this IBUC is 
+        Option Z then this will return snmp error.
+        (0) Reset Gain Control"
+        ::= { ibucControl 5 }
+
+-- 1.3.6.1.4.1.21369.1.2.6
+ibucFirmwareReboot OBJECT-TYPE
+        SYNTAX  Integer32 (0)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object causes the firmware to
+        restart. Writing this object will cause a momentary
+        interruption to traffic.
+        (0) Reboot Firmware"
+        ::= { ibucControl 6 }
+
+--
+-- The Status Group
+--
+
+
+--
+-- statusUnitInfo Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.3.1.1
+ibucModelNumber OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE (0..32))
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        model number of this IBUC."
+        ::= { ibucUnitInfo 1 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.2
+ibucSerialNumber OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE (0..20))
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        serial number of this IBUC."
+        ::= { ibucUnitInfo 2 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.3
+ibucFirmwareVersion OBJECT-TYPE
+        SYNTAX  OCTET STRING (SIZE (0..50))
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        Firmware Version of this IBUC."
+        ::= { ibucUnitInfo 3 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.4
+ibucPowerClass OBJECT-TYPE
+        SYNTAX  PowerWatts
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        Power class of this IBUC."
+        ::= { ibucUnitInfo 4 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.5
+ibucFrequencyBand OBJECT-TYPE
+        SYNTAX  FrequencyBand
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        frequency band of this IBUC."
+        ::= { ibucUnitInfo 5 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.6
+ibucTotalSystemHours OBJECT-TYPE
+        SYNTAX  Integer32
+		UNITS	"hours"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        total operating hours of the unit."
+        ::= { ibucUnitInfo 6 }
+
+-- 1.3.6.1.4.1.21369.1.3.1.7
+ibucTotalTransmitHours OBJECT-TYPE
+        SYNTAX  Integer32
+		UNITS	"hours"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        total transmitting hours of the unit."
+        ::= { ibucUnitInfo 7 }
+        
+--
+-- statusAlarm Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.3.2.1
+ibucDROLock OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        DRO/Synthesizer(IBUC3) lock alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 1 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.2
+ibucAgcAlcNotSettled OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether an 
+        AGC ALC not settled alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 2 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.3
+ibucAgcAlcTargetOOR OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        AGC ALC Target Out of Range alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 3 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.4
+ibucInputThresholdLow OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        Input Threshold Low alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 4 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.5
+ibucInputThresholdHigh OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        Input Threshold High alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 5 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.6
+ibucOutputThresholdLow OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        Output Threshold Low alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 6 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.7
+ibucOutputThresholdHigh OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        OutputThreshold High alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 7 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.8
+ibuc10MHz OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        10 MHz alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 8 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.9
+ibucAgcAlcRange OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether an 
+        AGC/ALC out of range alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 9 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.10
+ibucTemperatureAlarm OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether an 
+        high temperature alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 10 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.11
+ibucTxSimulated OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether an 
+        Tx Simulated alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 11 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.12
+ibucSupplyVoltageOor OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a
+        voltage out of range alarm exists. This alarm
+        applies to both DC and AC powered IBUCs.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 12 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.13
+ibucSupplyCurrentOor OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        Current out of range alarm exists. This alarm
+        applies to both DC and AC powered IBUCs.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 13 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.14
+ibucLogAlignError OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        alarm log alignment error alarm exists.
+        This indicates a corruption in the alarm log.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 14 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.15
+ibucCfgDataError OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        configuration data read error alarm exists.
+        This indicates an error has occurred reading
+        the saved configuration data.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 15 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.16
+ibucEthernetDownload OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether 
+        the IBUC is downloading new firmware over
+        the ethernet link.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 16 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.17
+ibucSerialDownload OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        the IBUC is downloading new firmware over
+        the serial link.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 17 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.18
+ibucFWReboot OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether 
+        the IBUC firmware has been rebooted.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 18 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.19
+ibucWGSwitchFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this shows whether a waveguide switch fault
+        has occurred"
+        ::= { ibucAlarms 19 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.20
+ibucCloneCommFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this shows whether the slave has timeout waiting
+        for the master to send clone update data"
+        ::= { ibucAlarms 20 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.21
+ibucCloneReadFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this shows whether the slave can read from the
+        clone link."
+        ::= { ibucAlarms 21 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.22
+ibucCloneWriteFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this shows whether the master can write to the
+        clone link."
+        ::= { ibucAlarms 22 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.23
+ibucInputOverdriveFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether 
+        the input power level is to high for a GaN unit.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 23 }
+
+-- 1.3.6.1.4.1.21369.1.3.2.24
+ibucReverseThresholdHigh OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of object identifies whether a 
+        ReverseThreshold High alarm exists.
+        (0) No Alarm
+        (1) Alarm
+        (2) Informational
+        (3) Minor
+        (4) Major
+        "
+        ::= { ibucAlarms 24 }
+--
+-- statusDetector Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.3.3.1
+ibucSupplyVoltage OBJECT-TYPE
+        SYNTAX  Integer32 (1..3000)
+		UNITS	"decivolts"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        AC/DC voltage level of the IBUC. Values range
+        from 0 to 600 decivolts for DC supplied IBUCs
+        and 0 to 3000 decivolts for AC supplied IBUCs."
+        ::= { ibucDetector 1 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.2
+ibucSupplyCurrent OBJECT-TYPE
+        SYNTAX  Integer32 (1..250)
+		UNITS	"deciamps"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        AC/DC current consumption of the IBUC. Values range
+        from 0 to 250 deciamps."
+        ::= { ibucDetector 2 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.3
+ibucDROVoltage OBJECT-TYPE
+        SYNTAX  Integer32 (1..100)
+		UNITS	"decivolts"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        DRO voltage of the IBUC. Values range
+        from 0 to 100 decivolts. This value has no
+		meaning for IBUC3 since it has a synthesizer.
+		It is defaulted to 0 for IBUC3."
+        ::= { ibucDetector 3 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.4
+ibucTemperature OBJECT-TYPE
+        SYNTAX  Integer32 (-127..100)
+		UNITS	"degrees C"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        internal temperature level of the IBUC. Values range
+        from -50C to 100C in 1 degree C increments. -127 indicates
+        out of range."
+        ::= { ibucDetector 4 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.5
+ibucGainControl OBJECT-TYPE
+        SYNTAX  Integer32 (1..65535)
+		UNITS	"millibels"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        gain control level of the IBUC. Values range
+        from -800 db to +800 millibels in 1 millibel increments."
+        ::= { ibucDetector 5 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.6
+ibucInputPowerLevel OBJECT-TYPE
+        SYNTAX  Integer32 (-6000..-1500)
+		UNITS	"millibels"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        input power level of the IBUC. Values range
+        from -1500 to -6000 millibels."
+        ::= { ibucDetector 6 }
+
+
+-- 1.3.6.1.4.1.21369.1.3.3.7
+ibucOutputPowerLevel OBJECT-TYPE
+        SYNTAX  Integer32 (-9900..6000)
+		UNITS	"millibels"
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies the
+        output power level of the IBUC. Values range
+        from 0 to 6000 millibels.
+        (-9600) IBUC Out of Lock.
+        (-9900) IBUC is muted."
+        ::= { ibucDetector 7 }
+
+-- 1.3.6.1.4.1.21369.1.3.3.8
+ibuc10MHzSource OBJECT-TYPE
+        SYNTAX  TenMHzMode
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This identifies the the 10MHz source
+        currently driving the DRO or synthesizer(IBUC3).
+        (0) Internal 10MHz.
+        (1) External 10MHz."
+        ::= { ibucDetector 8 }
+
+--
+-- alarmLog Subtree
+--
+
+-- 1.3.6.1.4.1.21369.1.3.4.1
+ibucAlarmLogNumber OBJECT-TYPE
+        SYNTAX  Integer32 (1..40)
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies the
+        current number of alarm log entries."
+        ::= { ibucAlarmLog 1 }
+
+ibucAlarmLogTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF IbucAlarmLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of alarm log entries."
+        ::= { ibucAlarmLog 2 }
+
+ibucAlarmLogEntry OBJECT-TYPE
+        SYNTAX  IbucAlarmLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of alarm log entries."
+        INDEX {ibucAlarmLogIndex}
+        ::= { ibucAlarmLogTable 1 }
+
+IbucAlarmLogEntry ::= SEQUENCE {
+        ibucAlarmLogIndex               Integer32,
+        ibucAlarmLogType                INTEGER,
+        ibucAlarmLogAlarms              Integer32
+}
+
+ibucAlarmLogIndex OBJECT-TYPE
+        SYNTAX  Integer32 (1..40)
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies this
+        alarm log entry."
+        ::= { ibucAlarmLogEntry 1 }
+
+-- 1.3.6.1.4.1.21369.1.3.4.2.1.2
+ibucAlarmLogType OBJECT-TYPE
+        SYNTAX  INTEGER {tx(0), misc(1)}
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies this
+        alarm log entry's alarm type
+        (0) Tx Alarms
+        (1) Misc Alarms."
+        ::= { ibucAlarmLogEntry 2 }
+
+-- 1.3.6.1.4.1.21369.1.3.4.2.1.3
+ibucAlarmLogAlarms OBJECT-TYPE
+        SYNTAX  Integer32 (1..65535)
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object uniquely identifies this
+        alarm log entry's alarms. The values of this entry 
+        is based on the value of the 0x8000 bit.
+        If the value is 0 then the following bitmap applies:
+
+        (0x0001) AGC/ALC out of range
+        (0x0002) AGC/ALC not settled
+        (0x0004) Loss of lock
+        (0x0008) Output level high
+        (0x0010) Output level low
+        (0x0020) Input level high
+        (0x0040) Input level low
+        (0x0080) Over maximum temperature
+        (0x0100) Tx simulated
+        (0x0200) 10 MHz reference
+        (0x0400) AC/DC voltage out of range
+        (0x0800) Waveguide switch fault
+        (0x1000) Not used
+        (0x2000) AC/DC current out of range
+        (0x4000) AGC/ALC target out of range
+        (0x8000) Not used
+
+        If the value is 1 then the following bitmap applies:
+
+        (0x0001) Event log corrupted
+        (0x0002) Configuration reset
+        (0x0004) Ethernet download
+        (0x0008) Serial download
+        (0x0010) Reboot
+        (0x0020) Clone communications fault
+        (0x0040) Clone read fault
+        (0x0080) Clone write fault
+        (0xFF00) Not used"
+        ::= { ibucAlarmLogEntry 3 }
+
+--
+-- ibucMonCtrlV2
+--		
+		
+-- 1.3.6.1.4.1.21369.1.6.1
+ibucIPAddressOtherPublic OBJECT-TYPE
+        SYNTAX  IpAddress
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "When redundancy is enabled this gives the public address of the
+        other BUC when using port forwarding on a router. This is only 
+		needed by the web server."
+        ::= { ibucMonCtrlV2 1 }
+		
+-- 1.3.6.1.4.1.21369.1.6.2
+ibucRealTimeClock OBJECT-TYPE
+        SYNTAX  DisplayString (SIZE (19))
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the real time clock of the IBUC.
+        Format is MM/dd/yyyy hh:mm:ss.
+        Time is based on 24 hour clock."
+        ::= { ibucMonCtrlV2 2 }
+        
+-- 1.3.6.1.4.1.21369.1.6.3
+ibucNtpIpAddr OBJECT-TYPE
+        SYNTAX  IpAddress
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the NTP server IP address. Legal values are
+        1.0.0.0 to 224.0.0.0 excluding network, loopback,
+        and broadcast addresses. 0.0.0.0 disables NTP."
+        ::= { ibucMonCtrlV2 3 }
+
+-- 1.3.6.1.4.1.21369.1.6.4
+ibucTimezoneOffset OBJECT-TYPE
+        SYNTAX  Integer32 (-720..840)
+		UNITS	"minutes"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the offset for GMT served by NTP. It may range from
+        GMT+14 to GMT-12."
+        ::= { ibucMonCtrlV2 4 }
+        
+-- 1.3.6.1.4.1.21369.1.6.5
+ibucWebPageTitle OBJECT-TYPE
+        SYNTAX  DisplayString (SIZE (0..32))
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This is the user configurable title displayed at the top
+        of web pages."
+        ::= { ibucMonCtrlV2 5 }
+        
+-- 1.3.6.1.4.1.21369.1.6.6
+ibucEnableExtLED OBJECT-TYPE
+        SYNTAX  DisableEnableValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object sets the external LED.
+        (0) LED is disabled for display of alarms.
+        (1) LED is enabled for display of alarms"
+        ::= { ibucMonCtrlV2 6 }
+		
+-- 1.3.6.1.4.1.21369.1.6.7
+ibucInternal10MHzV2Trim OBJECT-TYPE
+        SYNTAX  Integer32 (0..4095)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This value modifies the internal 10 MHz oscillator
+		for F/W revisions greater than or equal to 5.00 (V2 M&C)
+		For revisions below 5.00 (V1 M&C) use ibucInternal10MHzTrim."
+        ::= { ibucMonCtrlV2 7 }
+		
+-- 1.3.6.1.4.1.21369.1.6.8
+ibucHardwareVersion OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This is the hardware revision of the unit."
+        ::= { ibucMonCtrlV2 8 }
+  
+-- 1.3.6.1.4.1.21369.1.6.9
+ibucRFRange OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This is the RF frequency range of this unit."
+        ::= { ibucMonCtrlV2 9 }
+
+-- 1.3.6.1.4.1.21369.1.6.10
+ibucIFRange OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This is the IF frequency range of this unit."
+        ::= { ibucMonCtrlV2 10 }
+
+-- 1.3.6.1.4.1.21369.1.6.11
+ibucLOFrequency OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This is the frequency of the local oscillator
+        of this unit."
+        ::= { ibucMonCtrlV2 11 }
+        
+-- 1.3.6.1.4.1.21369.1.6.12
+ibucSpectralInversion OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This gives the type inversion of the unit."
+        ::= { ibucMonCtrlV2 12 }
+        
+-- 1.3.6.1.4.1.21369.1.6.13
+ibucVoltageRange OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This is the operating voltage range of the unit."
+        ::= { ibucMonCtrlV2 13 }
+
+-- 1.3.6.1.4.1.21369.1.6.14
+ibucInternal10MHz OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies whether
+        internal 10MHz is installed in this unit."
+        ::= { ibucMonCtrlV2 14 }
+		
+-- 1.3.6.1.4.1.21369.1.6.15
+ibucTxMutedFault OBJECT-TYPE
+        SYNTAX  AlarmState
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "This identifies whether the transmitter
+        is muted either by an alarm condition or
+        the user disabling the transmitter."
+        ::= { ibucMonCtrlV2 15 }
+		
+--
+-- Alarm Log table for V2 Monitor and Control.
+--
+
+ibucEventLogTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF IbucEventLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of alarm log entries
+		for Version 2 Monitor and Control cards
+		with firmware versions greater than or
+		equal to 5.00."
+        ::= { ibucMonCtrlV2 16 }
+
+
+ibucEventLogEntry OBJECT-TYPE
+        SYNTAX  IbucEventLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of alarm log entries."
+        INDEX {ibucEventLogIndex}
+        ::= { ibucEventLogTable 1 }
+
+IbucEventLogEntry ::= SEQUENCE {
+        ibucEventLogIndex                Integer32,
+        ibucEventLogEvent                DisplayString
+}
+
+ibucEventLogIndex OBJECT-TYPE
+        SYNTAX  Integer32 (1..1000)
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "Index to the table."
+        ::= { ibucEventLogEntry 1 }
+
+-- 1.3.6.1.4.1.21369.1.6.16.1.2
+ibucEventLogEvent OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies this
+        alarm log entry's alarm."
+        ::= { ibucEventLogEntry 2 }
+		
+-- 1.3.6.1.4.1.21369.1.6.17
+ibucClearStatLog OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object clears the statistics
+        history."
+        ::= { ibucMonCtrlV2 17 }
+
+-- 1.3.6.1.4.1.21369.1.6.18
+ibucStatLogInterval OBJECT-TYPE
+        SYNTAX  Integer32 (0..1440)
+		UNITS	"minutes"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "Statistics collection interval
+		1 minute to 1440 minutes
+		0 disables statistics."
+        ::= { ibucMonCtrlV2 18 }
+		
+ibucStatLogTable OBJECT-TYPE
+        SYNTAX  SEQUENCE OF IbucStatLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of statistics log entries."
+        ::= { ibucMonCtrlV2 19 }
+
+ibucStatLogEntry OBJECT-TYPE
+        SYNTAX  IbucStatLogEntry
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "This is a table of statistics log entries."
+        INDEX {ibucStatLogIndex}
+        ::= { ibucStatLogTable 1 }
+
+IbucStatLogEntry ::= SEQUENCE {
+        ibucStatLogIndex                Integer32,
+        ibucStatLogValue                DisplayString
+}
+
+ibucStatLogIndex OBJECT-TYPE
+        SYNTAX  Integer32 (1..1000)
+        MAX-ACCESS      not-accessible
+        STATUS  current
+        DESCRIPTION
+        "Index to the table."
+        ::= { ibucStatLogEntry 1 }
+
+-- 1.3.6.1.4.1.21369.1.6.19.1.2
+ibucStatLogValue OBJECT-TYPE
+        SYNTAX  DisplayString
+        MAX-ACCESS      read-only
+        STATUS  current
+        DESCRIPTION
+        "The value of this object identifies above
+		statistics entry. DRO always reads 0 for IBUC3.
+		Format:
+		date time Pout Pin Temperature DRO Volts Amps 10MHz
+		Example:
+		01/01/2000 09:08:23 47.5 -35.9 25 5.5 48.0 2.5 -10.8"
+        ::= { ibucStatLogEntry 2 }
+	
+-- 1.3.6.1.4.1.21369.1.6.20
+ibucKeylineDisable OBJECT-TYPE
+        SYNTAX  NoYesValue
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "IBUC3 keyline disable. 0 - enable keyline external
+		control. 1 - disable keyline external control. Used
+		on IBUC model numbers starting with IBA."
+        ::= { ibucMonCtrlV2 20 }
+
+-- 1.3.6.1.4.1.21369.1.6.21
+ibucPoutOffset OBJECT-TYPE
+        SYNTAX  Integer32 (-300..300)
+        UNITS           "millibels"
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This can be configured to offset the power out
+		reading. Power out may be offset -300 to 300 millibels."
+        ::= { ibucMonCtrlV2 21 }
+	
+-- 1.3.6.1.4.1.21369.1.6.22
+ibucTXLoadSwitch OBJECT-TYPE
+        SYNTAX  INTEGER {antenna(0), load(1)}
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "This variable applies only to non-protected
+	BUCs connected to a waveguide switch.
+        The value of this object uniquely identifies the
+        transmit load switch positon of the IBUC. Reading 
+        this variable shows the current transmit load switch 
+        position. Writing this variable changes the 
+        current switch position.
+        Valid only if redundancyEnabled is 1.
+        (0) Transmit to antenna.
+        (1) Transmit to Load."
+        ::= { ibucMonCtrlV2 22 }
+
+-- 1.3.6.1.4.1.21369.1.6.23
+ibucTXMultiBandSelect OBJECT-TYPE
+        SYNTAX  Integer32 (0..5)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures the RF band.
+        (0) Single Band
+        (1) Commercial RF Band 1
+        (2) Commercial RF Band 2
+        (3) Commercial RF Band 3
+        (4) Military RF Band 1
+        (5) Military RF Band 2"
+        ::= { ibucMonCtrlV2 23 }
+
+-- 1.3.6.1.4.1.21369.1.6.24
+ibucIFSelect OBJECT-TYPE
+        SYNTAX  Integer32 (0..1)
+        MAX-ACCESS      read-write
+        STATUS  current
+        DESCRIPTION
+        "The value of this object configures the IF band.
+        (0) IF Band 1 (1-2 GHz)
+        (1) IF Band 2 (950-1950 MHz)"
+        ::= { ibucMonCtrlV2 24 }
+
+
+ibucEventsV2    OBJECT IDENTIFIER ::= { ibucEvents 0 }
+
+ibucRebootEvent NOTIFICATION-TYPE
+        OBJECTS { 
+                sysName
+        }
+        STATUS current
+        DESCRIPTION
+        "The trap is issued on cold or warm startup of firmware."
+        ::= {ibucEventsV2 1}
+
+
+
+ibucAlarmEvent NOTIFICATION-TYPE
+        OBJECTS { 
+                ibucDROLock,
+                ibucAgcAlcNotSettled,
+                ibucAgcAlcTargetOOR,
+                ibucInputThresholdLow,
+                ibucInputThresholdHigh,
+                ibucOutputThresholdLow,
+                ibucOutputThresholdHigh,
+                ibuc10MHz,
+                ibucAgcAlcRange,
+                ibucTemperatureAlarm,
+                ibucTxSimulated,
+                ibucSupplyVoltageOor,
+                ibucSupplyCurrentOor,
+                ibucLogAlignError,
+                ibucCfgDataError,
+                ibucEthernetDownload,
+                ibucSerialDownload,
+                ibucFWReboot
+        }
+        STATUS current
+        DESCRIPTION
+        "This indicates an alarm has occurred with severity level indicated."
+        ::= {ibucEventsV2 2}
+
+ibucAlarmClearEvent NOTIFICATION-TYPE
+        OBJECTS { 
+                ibucDROLock,
+                ibucAgcAlcNotSettled,
+                ibucAgcAlcTargetOOR,
+                ibucInputThresholdLow,
+                ibucInputThresholdHigh,
+                ibucOutputThresholdLow,
+                ibucOutputThresholdHigh,
+                ibuc10MHz,
+                ibucAgcAlcRange,
+                ibucTemperatureAlarm,
+                ibucTxSimulated,
+                ibucSupplyVoltageOor,
+                ibucSupplyCurrentOor,
+                ibucLogAlignError,
+                ibucCfgDataError,
+                ibucEthernetDownload,
+                ibucSerialDownload,
+                ibucFWReboot
+        }
+        STATUS current
+        DESCRIPTION
+        "This indicates an alarm has cleared."
+        ::= {ibucEventsV2 3}
+
+ibucDROLockMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a Major DRO/Synthesizer lock alarm has occurred."
+        ::= {ibucEventsV2 4}
+
+ibucDROLockClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates the DRO/Synthesizer lock alarm has cleared."
+        ::= {ibucEventsV2 5}
+
+ibucInputThresholdLowMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an major input low threshold alarm has occurred."
+        ::= {ibucEventsV2 6}
+
+ibucInputThresholdLowMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an minor input low threshold alarm has occurred."
+        ::= {ibucEventsV2 7}
+
+ibucInputThresholdLowClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an input low threshold alarm has cleared."
+        ::= {ibucEventsV2 8}
+
+ibucInputThresholdHighMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an major input high threshold alarm has occurred."
+        ::= {ibucEventsV2 9}
+
+ibucInputThresholdHighMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an minor input high threshold alarm has occurred."
+        ::= {ibucEventsV2 10}
+
+ibucInputThresholdHighClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an input high threshold alarm has cleared."
+        ::= {ibucEventsV2 11}
+
+ibucOutputThresholdLowMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an major output low threshold alarm has occurred."
+        ::= {ibucEventsV2 12}
+
+ibucOutputThresholdLowMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an minor output low threshold alarm has occurred."
+        ::= {ibucEventsV2 13}
+
+ibucOutputThresholdLowClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an output low threshold alarm has cleared."
+        ::= {ibucEventsV2 14}
+
+ibucOutputThresholdHighMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an major output high threshold alarm has occurred."
+        ::= {ibucEventsV2 15}
+
+ibucOutputThresholdHighMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an minor output high threshold alarm has occurred."
+        ::= {ibucEventsV2 16}
+
+ibucOutputThresholdHighClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates an output high threshold alarm has cleared."
+        ::= {ibucEventsV2 17}
+
+ibuc10MHzMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a minor 10 MHz input alarm has occurred."
+        ::= {ibucEventsV2 18}
+
+ibuc10MHzClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a 10 MHz input alarm has cleared."
+        ::= {ibucEventsV2 19}
+
+ibucTemperatureMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a major temperature alarm has occurred."
+        ::= {ibucEventsV2 20}
+
+ibucTemperatureMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a minor temperature alarm has occurred."
+        ::= {ibucEventsV2 21}
+
+ibucTemperatureClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a temperature alarm has cleared."
+        ::= {ibucEventsV2 22}
+
+ibucTxSimulatedMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a Major TX simulated alarm has occurred."
+        ::= {ibucEventsV2 23}
+
+ibucTxSimulatedClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a TX simulated alarm has cleared."
+        ::= {ibucEventsV2 24}
+
+ibucSupplyVoltageOorMinorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a minor supply voltage alarm has occurred."
+        ::= {ibucEventsV2 25}
+
+ibucSupplyVoltageOorClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates supply voltage alarm has cleared."
+        ::= {ibucEventsV2 26}
+
+ibucWGSwitchFaultMajorEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates a waveguide switch alarm has occurred."
+        ::= {ibucEventsV2 27}
+
+ibucWGSwitchFaultClearEvent NOTIFICATION-TYPE
+        STATUS current
+        DESCRIPTION
+        "This indicates waveguide switch alarm has cleared."
+        ::= {ibucEventsV2 28}
+
+-- 1.3.6.1.4.1.21369.1.5.0.29
+ibucInputOverdriveEvent NOTIFICATION-TYPE
+        OBJECTS { ibucInputOverdriveFault }
+        STATUS current
+        DESCRIPTION
+        "This indicates a change in the state of the IF input 
+        overdrive alarm."
+        ::= {ibucEventsV2 29}
+        
+-- 1.3.6.1.4.1.21369.1.5.0.30
+ibucTxMutedEvent NOTIFICATION-TYPE
+        OBJECTS { ibucTxMutedFault }
+        STATUS current
+        DESCRIPTION
+        "This indicates a change in the mute state of the
+        transmitter."
+        ::= {ibucEventsV2 30}
+
+-- 1.3.6.1.4.1.21369.1.5.0.31
+ibucAgcAlcRangeEvent NOTIFICATION-TYPE
+        OBJECTS { ibucAgcAlcRange }
+        STATUS current
+        DESCRIPTION
+        "This indicates AGC/ALC has run out of attenuator
+        range to correct the level."
+        ::= {ibucEventsV2 31}
+
+-- 1.3.6.1.4.1.21369.1.5.0.32
+ibucAgcAlcTargetOOREvent NOTIFICATION-TYPE
+        OBJECTS { ibucAgcAlcTargetOOR }
+        STATUS current
+        DESCRIPTION
+        "This indicates the AGC/ALC target level is out of
+        range of the input/output detector calibration range."
+        ::= {ibucEventsV2 32}
+
+-- 1.3.6.1.4.1.21369.1.5.0.33
+ibucCloneCommFaultEvent NOTIFICATION-TYPE
+        OBJECTS { ibucCloneCommFault }
+        STATUS current
+        DESCRIPTION
+        "This indicates the off line unit in a protected pair
+        has timed out waiting for a clone update message."
+        ::= {ibucEventsV2 33}
+
+-- 1.3.6.1.4.1.21369.1.5.0.34
+ibucSwitchOverEvent NOTIFICATION-TYPE
+        OBJECTS { ibucSwitchPosition }
+        STATUS current
+        DESCRIPTION
+        "This indicates a change in the online unit."
+        ::= {ibucEventsV2 34}
+
+--
+-- Group definitions
+--
+		
+ibucCfgGroup OBJECT-GROUP
+        OBJECTS {
+                ibucIPAddress,
+                ibucIPGateway,
+                ibucIPSubnet,
+                ibucIPAddressOtherIBUC,
+                ibucIPTelnetPort,
+                ibucRS485Address,
+                ibucRS485Baudrate,
+                ibucRS485Mode,
+                ibucRS485Delay,
+                ibucTemperatureSuppressible,
+                ibucInputLowThresholdSuppressible,
+                ibucInputHighThresholdSuppressible,
+                ibucOutputLowThresholdSuppressible,
+                ibucOutputHighThresholdSuppressible,
+                ibucTemperatureAlarmLevel,
+                ibucInputLowThresholdAlarmLevel,
+                ibucInputHighThresholdAlarmLevel,
+                ibucOutputLowThresholdAlarmLevel,
+                ibucOutputHighThresholdAlarmLevel,
+                ibucVerboseMode,
+                ibucEcho,
+                ibucPasswordTimeOut,
+                ibucWebServerRefresh,
+                ibucFrequency,
+                ibucPowerupState,
+                ibucPowerupDelay,
+                ibucReadPowerMode,
+                ibucBurstThreshold,
+                ibucBurstCount,
+                ibucGainMode,
+                ibucAttenuation,
+                ibucInputThresholdLo,
+                ibucInputThresholdHi,
+                ibucOutputThresholdLo,
+                ibucOutputThresholdHi,
+                ibucHighTemperatureShutdown,
+                ibucZAttenuation,
+                ibucZLevelTarget,
+                ibucZGainTarget
+        }
+        STATUS          current
+        DESCRIPTION
+        "The collection of objects which are used to provide
+        the IBUC configuration parameters starting with 0.89
+		revision firmware."
+        ::= {  ibucGroups 1 }
+
+ibucControlGroup OBJECT-GROUP
+        OBJECTS {
+                ibucSuppressAlarms,
+                ibucSimulateAlarm,
+                ibucClearAlarmLog,
+                ibucMute,
+                ibucResetGainControl,
+                ibucFirmwareReboot
+        }
+        STATUS          current
+        DESCRIPTION
+        "The collection of objects which are used to provide
+        the IBUC control parameters starting with 0.89
+		revision firmware."
+        ::= {  ibucGroups 2 }
+
+ibucStatusGroup OBJECT-GROUP
+        OBJECTS {
+                ibucModelNumber,
+                ibucSerialNumber,
+                ibucFirmwareVersion,
+                ibucPowerClass,
+                ibucFrequencyBand,
+                ibucDROLock,
+                ibucAgcAlcNotSettled,
+                ibucAgcAlcTargetOOR,
+                ibucInputThresholdLow,
+                ibucInputThresholdHigh,
+                ibucOutputThresholdLow,
+                ibucOutputThresholdHigh,
+                ibuc10MHz,
+                ibucAgcAlcRange,
+                ibucTemperatureAlarm,
+                ibucTxSimulated,
+                ibucSupplyVoltageOor,
+                ibucSupplyCurrentOor,
+                ibucLogAlignError,
+                ibucCfgDataError,
+                ibucEthernetDownload,
+                ibucSerialDownload,
+                ibucFWReboot,
+                ibucSupplyVoltage,
+                ibucSupplyCurrent,
+                ibucDROVoltage,
+                ibucTemperature,
+                ibucGainControl,
+                ibucInputPowerLevel,
+                ibucOutputPowerLevel,
+                ibucAlarmLogNumber,
+                ibucAlarmLogType,
+                ibucAlarmLogAlarms
+        }
+        STATUS          current
+        DESCRIPTION
+        "The collection of objects which are used to provide
+        the IBUC status information starting with 0.89
+		revision firmware."
+        ::= {  ibucGroups 3 }
+
+ibucRedundancyGroup OBJECT-GROUP
+        OBJECTS {
+                ibucRedundancyEnabled,
+                ibucRedundancyMode,
+                ibucPositionOnSwitch,
+                ibucAutoCloning,
+                ibucSwitchingType,
+                ibucSwitchPosition,
+                ibucSystemStatus
+        }
+        STATUS          current
+        DESCRIPTION
+        "The collection of objects which are used to provide
+        the IBUC redundant only parameters starting with 0.89
+		revision firmware."
+        ::= {  ibucGroups 4 }
+
+ibucNotificationGroup NOTIFICATION-GROUP
+        NOTIFICATIONS {
+                ibucAlarmEvent,
+                ibucAlarmClearEvent,
+                ibucRebootEvent
+        }
+        STATUS          current
+        DESCRIPTION
+        "The notifier group starting with 0.89 revision firmware."
+        ::= {  ibucGroups 5 }
+
+ibucCfgV1dot14Group OBJECT-GROUP
+        OBJECTS {
+			ibucAC50HzCorrection,
+			ibucInternal10MHzTrim
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality added with 1.14
+		revision firmware."
+        ::= {  ibucGroups 6 }
+		
+ibucStatusV1dot19Group OBJECT-GROUP
+        OBJECTS {
+                ibucWGSwitchFault,
+                ibucCloneCommFault,
+                ibucCloneReadFault,
+                ibucCloneWriteFault
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality added with 1.19
+		revision firmware."
+        ::= {  ibucGroups 7 }
+			
+ibucNotificationV1dot19Group NOTIFICATION-GROUP
+        NOTIFICATIONS {
+                ibucRebootEvent,
+                ibucDROLockMajorEvent,
+                ibucDROLockClearEvent,
+                ibucInputThresholdLowMajorEvent,
+                ibucInputThresholdLowMinorEvent,
+                ibucInputThresholdLowClearEvent,
+                ibucInputThresholdHighMajorEvent,
+                ibucInputThresholdHighMinorEvent,
+                ibucInputThresholdHighClearEvent,
+                ibucOutputThresholdLowMajorEvent,
+                ibucOutputThresholdLowMinorEvent,
+                ibucOutputThresholdLowClearEvent,
+                ibucOutputThresholdHighMajorEvent,
+                ibucOutputThresholdHighMinorEvent,
+                ibucOutputThresholdHighClearEvent,
+                ibuc10MHzMinorEvent,
+                ibuc10MHzClearEvent,
+                ibucTemperatureMajorEvent,
+                ibucTemperatureMinorEvent,
+                ibucTemperatureClearEvent,
+                ibucTxSimulatedMajorEvent,
+                ibucTxSimulatedClearEvent,
+                ibucSupplyVoltageOorMinorEvent,
+                ibucSupplyVoltageOorClearEvent,
+                ibucWGSwitchFaultMajorEvent,
+                ibucWGSwitchFaultClearEvent
+        }
+        STATUS          current
+        DESCRIPTION
+        "The notifier group starting with 1.19 firmware."
+        ::= {  ibucGroups 8 }
+
+        
+ibucStatusV1dot27Group OBJECT-GROUP
+        OBJECTS {
+                ibucTotalSystemHours,
+                ibucTotalTransmitHours
+        }
+        STATUS          current
+        DESCRIPTION
+        "The collection of objects which are used to provide
+        the IBUC status information."
+        ::= {  ibucGroups 9 }
+   
+ibucRedundancyV1dot37Group OBJECT-GROUP
+        OBJECTS {
+                ibucWarmStandby
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality added with 1.37
+		revision firmware."
+        ::= {  ibucGroups 10 }   
+  
+ibucStatusV1dot38Group OBJECT-GROUP
+        OBJECTS {
+                ibuc10MHzSource
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality starting with version 1.38
+        firmware."
+        ::= {  ibucGroups 11 }
+ 
+ibucCfgV1dot39Group OBJECT-GROUP
+        OBJECTS {
+			ibucBurstTimeout
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality added with 1.39
+		revision firmware."
+        ::= {  ibucGroups 12 }
+ 
+ibucStatusV1dot42Group OBJECT-GROUP
+        OBJECTS {
+                ibucInputOverdriveFault
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality starting with version 1.42
+        firmware."
+        ::= {  ibucGroups 13 }
+
+ibucCfgV1dot52Group OBJECT-GROUP
+        OBJECTS {
+			ibucCouplingFactor
+        }
+        STATUS          current
+        DESCRIPTION
+        "Additional functionality added with 1.52
+		revision firmware."
+        ::= {  ibucGroups 14 }
+
+ibucMonCtrlV2Group OBJECT-GROUP
+		OBJECTS {
+			ibucIPAddressOtherPublic,
+			ibucRealTimeClock,
+			ibucNtpIpAddr,
+			ibucTimezoneOffset,
+			ibucWebPageTitle,
+			ibucEnableExtLED,
+			ibucInternal10MHzV2Trim,
+			ibucHardwareVersion,
+			ibucRFRange,
+			ibucIFRange,
+			ibucLOFrequency,
+			ibucSpectralInversion,
+			ibucVoltageRange,
+			ibucInternal10MHz,
+			ibucTxMutedFault,
+			ibucEventLogEvent,
+			ibucClearStatLog,
+			ibucStatLogInterval,
+			ibucStatLogValue
+		}
+		STATUS	current
+		DESCRIPTION
+		"Additional functionality added with version 2 of the
+		processor card. Version 2 can be identified by an IBUC
+		serial number starting with TE80."
+        ::= {  ibucGroups 15 }
+		
+ibucNotificationMCv2Group NOTIFICATION-GROUP
+        NOTIFICATIONS {
+			ibucInputOverdriveEvent,
+			ibucTxMutedEvent,
+			ibucAgcAlcRangeEvent,
+			ibucAgcAlcTargetOOREvent,
+			ibucCloneCommFaultEvent,
+			ibucSwitchOverEvent
+        }
+        STATUS          current
+        DESCRIPTION
+        "The notifier group starting with 1.19 firmware."
+        ::= {  ibucGroups 16 }
+
+ibuc3Group OBJECT-GROUP
+		OBJECTS {
+			ibucKeylineDisable
+		}
+		STATUS	current
+		DESCRIPTION
+		"Additional functionality added with IBUC3. IBUC3 can be identified by an IBUC
+		model number starting with IBA."
+        ::= {  ibucGroups 17 }
+
+ibucPoutOffsetGroup OBJECT-GROUP
+		OBJECTS {
+			ibucPoutOffset
+		}
+		STATUS	current
+		DESCRIPTION
+		"Added ability to offset the power out reading display."
+        ::= {  ibucGroups 18 }
+
+ibucTempShutThreshGroup OBJECT-GROUP
+		OBJECTS {
+			ibucTemperatureShutdownThreshold
+		}
+		STATUS	current
+		DESCRIPTION
+		"Added ability to offset the power out reading display."
+        ::= {  ibucGroups 19 }
+
+ibucTxLoadSwitchGroup OBJECT-GROUP
+		OBJECTS {
+			ibucTxLoadSwitch
+		}
+		STATUS	current
+		DESCRIPTION
+		"Added ability to control an external Waveguide switch
+		for installing a tx load switch at a non-protected BUC."
+        ::= {  ibucGroups 20 }
+
+ibucMultiBandGroup OBJECT-GROUP
+		OBJECTS {
+			ibucTxMultiBandSelect,
+			ibucInputFreqRngSelect
+		}
+		STATUS	current
+		DESCRIPTION
+		"Support for multiband Ka"
+        ::= {  ibucGroups 21 }
+
+--
+-- Compliances		
+--
+
+ibucComplianceV0dot89  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 0.89."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucRedundancyGroup,
+						ibucNotificationGroup
+                } 
+        ::= { ibucCompliances 1 }
+		
+ibucV1dot14Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.14."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucRedundancyGroup,
+						ibucNotificationGroup
+                } 
+        ::= { ibucCompliances 2 }
+
+ibucV1dot19Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.19."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucRedundancyGroup,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 3 }
+
+ibucV1dot27Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.27."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucRedundancyGroup,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 4 }
+
+ibucV1dot37Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.37."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 5 }
+
+ibucV1dot38Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.38."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 6 }
+
+ibucV1dot39Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.39."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 7 }
+
+ibucV1dot42Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.42."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 8 }
+
+ibucV1dot52Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement starting with firmware
+				revision 1.52."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group
+                } 
+        ::= { ibucCompliances 9 }
+
+ibucMCv2Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement for Monitor and
+				Control Version 2 card. This applies to
+				IBUC serial numbers beginning with TE8"
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 10 }
+
+ibuc3Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement IBUC3. This applies to
+				IBUC model numbers beginning with IBA."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group,
+						ibuc3Group
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 11 }
+
+ibucMCv2V5dot31Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement for Monitor and
+				Control Version 2 cards beginning with firmware
+				version 5.31. This applies to IBUC serial numbers 
+				beginning with TE80"
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group,
+						ibucPoutOffsetGroup
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 12 }
+
+ibucIBDCompliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement for the LPBUC
+				used in the Phase Combined System with
+				serial numbers starting with TEBD."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group,
+						ibucPoutOffsetGroup,
+						ibucTempShutThreshGroup,
+						ibuc3Group
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 13 }
+	
+ibucMCv2V5dot41Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement for Monitor and
+				Control Version 2 cards beginning with firmware
+				version 5.41. This applies to IBUC serial numbers 
+				beginning with TE80"
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group,
+						ibucPoutOffsetGroup,
+						ibucTxLoadSwitchGroup
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 14 }
+
+ibucMCv2V5dot52Compliance  MODULE-COMPLIANCE
+        STATUS     current
+        DESCRIPTION 
+                "The compliance statement for Monitor and
+				Control Version 2 cards beginning with firmware
+				version 5.52."
+        MODULE
+                MANDATORY-GROUPS { 
+                        ibucCfgGroup,
+						ibucCfgV1dot14Group,
+						ibucCfgV1dot39Group,
+						ibucCfgV1dot52Group,
+						ibucControlGroup,
+						ibucStatusGroup,
+						ibucStatusV1dot19Group,
+						ibucStatusV1dot27Group,
+						ibucStatusV1dot38Group,
+						ibucStatusV1dot42Group,
+						ibucRedundancyGroup,
+						ibucRedundancyV1dot37Group,
+						ibucNotificationV1dot19Group,
+						ibucNotificationMCv2Group,
+						ibucMonCtrlV2Group,
+						ibucPoutOffsetGroup,
+						ibucTxLoadSwitchGroup,
+						ibucMultiBandGroup
+                }
+				OBJECT	ibucIPTelnetPort
+					MIN-ACCESS	read-only
+					DESCRIPTION
+						"Telnet is a well known port (23)"
+				OBJECT	ibucZAttenuation
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZLevelTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucZGainTarget
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Not supported yet"
+				OBJECT	ibucInternal10MHzTrim
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Use ibucInternal10MHzV2Trim instead"
+				OBJECT	ibucBurstCount
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"No longer used."
+				OBJECT	ibucAlarmLogNumber
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogType
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+				OBJECT	ibucAlarmLogAlarms
+					MIN-ACCESS	not-accessible
+					DESCRIPTION
+						"Replaced by ibucEventLogTable."
+        ::= { ibucCompliances 15 }
+	
+END
