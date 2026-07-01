@@ -1,0 +1,32 @@
+TERRASAT-TRAPDEF-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	TRAP-TYPE
+		FROM RFC-1215 
+	sysName
+		FROM RFC1213-MIB
+	terrasat
+		FROM TERRASAT-SMI-MIB;
+
+major-alarm-trap TRAP-TYPE
+	ENTERPRISE terrasat
+	VARIABLES { sysName }
+	DESCRIPTION 
+	"This indicates a major alarm has occurred."
+	::= 9999
+
+minor-alarm-trap TRAP-TYPE
+	ENTERPRISE terrasat
+	VARIABLES { sysName }
+	DESCRIPTION
+	"This indicates a minor alarm has occurred."
+	::= 9998
+
+coldstart-trap TRAP-TYPE
+	ENTERPRISE terrasat
+	VARIABLES { sysName }
+	DESCRIPTION
+	"This indicates a reboot has occurred."
+	::= 9997
+
+END

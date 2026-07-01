@@ -1,0 +1,1082 @@
+TERRASAT-SSPA-V2-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, IpAddress, Integer32
+        FROM SNMPv2-SMI
+    terrasat
+        FROM TERRASAT-SMI-MIB
+	OffOnValue, NoYesValue, AlarmLevel, AlarmState,
+	FrequencyBand, PowerWatts, TxMute, PositionAB,
+	RedundSwitchType, DisableEnableValue, RedundancyMode,
+	RedundancyEnable, GainMode, PowerMonitorMode
+		FROM TERRASAT-TC-MIB
+    OBJECT-GROUP
+        FROM SNMPv2-CONF;
+
+sspaMIB  MODULE-IDENTITY
+    LAST-UPDATED "201203070000Z"
+    ORGANIZATION "Terrasat Communications, Inc."
+    CONTACT-INFO
+            "Address: Terrasat Communications, Inc.
+             235 Vineyard Court
+             Morgan Hill, CA 95037
+             USA
+
+             Tel: +1 408 782-2166
+
+             E-mail: techsupport@terrasatinc.com"
+    DESCRIPTION
+            "The SMIv2 MIB module for the SSPA."
+
+	REVISION    "201203070000Z"
+	DESCRIPTION
+		"Added sspaAC50HzCorrection."
+
+	REVISION	"200909280000Z"
+	DESCRIPTION
+			"The initial revision."
+    ::= { terrasat 3 }
+
+    sspaCfg OBJECT IDENTIFIER ::= { sspaMIB 1 }
+    sspaCtrl OBJECT IDENTIFIER ::= { sspaMIB 2 }
+    sspaStatus OBJECT IDENTIFIER ::= { sspaMIB 3 }
+
+    sspaCfgIP OBJECT IDENTIFIER ::= { sspaCfg 1 }
+
+    --
+    --The Config Group
+    --
+    --
+    --cfgIP Subtree
+    --
+    sspaCfgIPAddress OBJECT-TYPE
+        SYNTAX              IpAddress
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the network IP address for this SSPA.
+                            Legal values are 1.0.0.0 to 224.0.0.0 excluding
+                            the endpoints. xx.xx.xx.00 and xx.xx.xx.255 are
+                            excluded also. This item requires an SSPA F/W
+                            reboot to take affect."
+        ::= { sspaCfgIP 1 }
+
+    sspaCfgIPGateway OBJECT-TYPE
+        SYNTAX              IpAddress
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the network IP gateway address for this
+                            SSPA. Legal values are 1.0.0.0 to 224.0.0.0 excluding
+                            the endpoints. xx.xx.xx.00 and xx.xx.xx.255 are
+                            excluded also. This item requires an SSPA F/W
+                            reboot to take affect."
+        ::= { sspaCfgIP 2 }
+
+    sspaCfgIPSubnet OBJECT-TYPE
+        SYNTAX              Integer32 (8..30)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         
+		"This is the network IP subnet mask for this IBUC. Values range
+	    from 8 to 30. This is the number of 1 bits in the mask with 8 
+	    representing 255.0.0.0 and 30 representing 255.255.255.252.This 
+	    item requires an IBUC F/W reboot to take affect."
+        ::= { sspaCfgIP 3 }
+
+    sspaCfgIPAddressOtherSSPA OBJECT-TYPE
+        SYNTAX              IpAddress
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the network IP address of the other SSPA
+                            configured as a protected pair. Legal values
+                            are 1.0.0.0 to 224.0.0.0 excluding the endpoints.
+                            xx.xx.xx.00 and xx.xx.xx.255 are excluded also.
+                            This item requires an SSPA F/W reboot to take
+                            affect."
+        ::= { sspaCfgIP 4 }
+
+    sspaCfgIPTelnetPort OBJECT-TYPE
+        SYNTAX              Integer32 (1..65534)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the telnet port for this SSPA. Values
+                            can range from 1 to 65534. This item requires
+                            an SSPA F/W reboot to take effect."
+        ::= { sspaCfgIP 5 }
+
+    sspaCfgRS485 OBJECT IDENTIFIER ::= { sspaCfg 2 }
+
+    --
+    --cfgRS485 Subtree
+    --
+    sspaCfgRS485Address OBJECT-TYPE
+        SYNTAX              Integer32 (1..254)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is 485 network address for this SSPA. Legal
+                            values are based on the setting of the cfgRS485Mode
+                            below. If set to ASCII mode values can be 1 to
+                            254."
+        ::= { sspaCfgRS485 1 }
+
+    sspaCfgRS485Baudrate OBJECT-TYPE
+        SYNTAX              Integer32 (1200|2400|4800|9600|19200|38400|57600|115200)
+		UNITS				"baud"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the 485 baudrate of this SSPA. The only
+                            values supported are: 1200, 2400, 4800, 9600,
+                            19200, 38400, 57600, 115200"
+        ::= { sspaCfgRS485 2 }
+
+    sspaCfgRS485Delay OBJECT-TYPE
+        SYNTAX              Integer32 (1..255)
+		UNITS				"milliseconds"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "This is the RS485 line delay for this SSPA. Legal
+                            Values are 1 to 255 in milliseconds."
+        ::= { sspaCfgRS485 3 }
+
+    sspaCfgAlarm OBJECT IDENTIFIER ::= { sspaCfg 3 }
+
+    --
+    --cfgAlarm Subtree
+    --
+    sspaCfgTemperatureSuppressible OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures temperature
+                            alarm suppression. (0) disallow suppression (1)
+                            allow suppression"
+        ::= { sspaCfgAlarm 1 }
+
+    sspaCfgInputLowThresholdSuppressible OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures Input Low
+                            Threshold alarm suppression. (0) disallow suppression
+                            (1) allow suppression"
+        ::= { sspaCfgAlarm 2 }
+
+    sspaCfgInputHighThresholdSuppressible OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures Input High
+                            Threshold alarm suppression. (0) disallow suppression
+                            (1) allow suppression"
+        ::= { sspaCfgAlarm 3 }
+
+    sspaCfgOutputLowThresholdSuppressible OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures Output Low
+                            Threshold alarm suppression. (0) disallow suppression
+                            (1) allow suppression"
+        ::= { sspaCfgAlarm 4 }
+
+    sspaCfgOutputHighThresholdSuppressible OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures Output High
+                            Threshold alarm suppression. (0) disallow suppression
+                            (1) allow suppression"
+        ::= { sspaCfgAlarm 5 }
+
+    sspaCfgTemperatureAlarmLevel OBJECT-TYPE
+        SYNTAX              AlarmLevel
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures whether the
+                            Temperature alarm generates no alarm, a minor
+                            alarm, or a major alarm. (0) no alarm (1) minor
+                            alarm (2) major alarm"
+        ::= { sspaCfgAlarm 6 }
+
+    sspaCfgInputLowThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX              AlarmLevel
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures whether the
+                            Input Low Threshold alarm generates no alarm,
+                            a minor alarm, or a major alarm. (0) no alarm
+                            (1) minor alarm (2) major alarm"
+        ::= { sspaCfgAlarm 7 }
+
+    sspaCfgInputHighThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX              AlarmLevel
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures whether the
+                            Input High Threshold alarm generates no alarm,
+                            a minor alarm, or a major alarm. (0) no alarm
+                            (1) minor alarm (2) major alarm"
+        ::= { sspaCfgAlarm 8 }
+
+    sspaCfgOutputLowThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX              AlarmLevel
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures whether the
+                            Output Low Threshold alarm generates no alarm,
+                            a minor alarm, or a major alarm. (0) no alarm
+                            (1) minor alarm (2) major alarm"
+        ::= { sspaCfgAlarm 9 }
+
+    sspaCfgOutputHighThresholdAlarmLevel OBJECT-TYPE
+        SYNTAX              AlarmLevel
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object configures whether the
+                            Output High Threshold alarm generates no alarm,
+                            a minor alarm, or a major alarm. (0) no alarm
+                            (1) minor alarm (2) major alarm"
+        ::= { sspaCfgAlarm 10 }
+
+    sspaCfgSystem OBJECT IDENTIFIER ::= { sspaCfg 4 }
+
+    --
+    --cfgSystem Subtree
+    --
+    sspaCfgPasswordTimeOut OBJECT-TYPE
+        SYNTAX              Integer32 (0..65535)
+		UNITS				"minutes"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object sets the password timeout
+                            for all interfaces excluding snmp. (0) no password
+                            timeout (1..65535) number of minutes"
+        ::= { sspaCfgSystem 1 }
+
+    sspaCfgWebServerRefresh OBJECT-TYPE
+        SYNTAX              Integer32 (0..3600)
+		UNITS				"seconds"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object sets the web server refresh
+                            rate (0) no refresh (1..3600) number of seconds"
+        ::= { sspaCfgSystem 2 }
+
+	sspaAC50HzCorrection OBJECT-TYPE
+		SYNTAX	DisableEnableValue
+		MAX-ACCESS	read-write
+		STATUS	current
+		DESCRIPTION
+		"The value of this object sets the AC power supply frequency correction
+		(0) Disable
+		(1) Enable"
+		::= { sspaCfgSystem 3 }
+
+    sspaCfgTx OBJECT IDENTIFIER ::= { sspaCfg 5 }
+
+    --
+    --cfgTx Subtree
+    --
+    sspaCfgFrequency OBJECT-TYPE
+        SYNTAX              Integer32 (1..65535)
+		UNITS				"megahertz"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            monitored frequency in MHz at the output of the
+                            SSPA. This can be input as an RF frequency inside
+                            the passband of the unit."
+        ::= { sspaCfgTx 1 }
+
+    sspaCfgPowerupState OBJECT-TYPE
+        SYNTAX              OffOnValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            powerup state of the SSPA transmitter. (0) TX
+                            OFF (1) TX ON"
+        ::= { sspaCfgTx 2 }
+
+    sspaCfgPowerupDelay OBJECT-TYPE
+        SYNTAX              Integer32 (0..500)
+		UNITS				"seconds"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            powerup delay of the SSPA Transmitter before
+                            enabling. 0-500 in 1 second intervals."
+        ::= { sspaCfgTx 3 }
+
+    sspaCfgReadPowerMode OBJECT-TYPE
+        SYNTAX              PowerMonitorMode
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            mode the SSPA reports its output power level.
+                            (0) Continuous Signal Mode (1) Burst Mode"
+        ::= { sspaCfgTx 4 }
+
+    sspaCfgBurstThreshold OBJECT-TYPE
+        SYNTAX              Integer32 (1..65535)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            burst threshold setting of the SSPA. 0 to 6000
+                            millibels further qualified by the power output
+                            range. Rated Power + 1 to Rated Power - 20 db."
+        ::= { sspaCfgTx 5 }
+
+    sspaCfgGainMode OBJECT-TYPE
+        SYNTAX              GainMode
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            gain mode of the SSPA. (0) Open Loop (1) ALC
+                            (2) AGC"
+        ::= { sspaCfgTx 6 }
+
+    sspaCfgAttenuation OBJECT-TYPE
+        SYNTAX              Integer32 (0..2000)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            attenuation setting of this SSPA. Ranges from
+                            0 to 2000 millibels."
+        ::= { sspaCfgTx 7 }
+
+    sspaCfgInputThresholdLow OBJECT-TYPE
+        SYNTAX              Integer32 (-2500..-500)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            Input Low Threshold setting in millibels for
+                            this SSPA. Range is -500 to -2500. Must be below
+                            cfgInputThresholdHigh."
+        ::= { sspaCfgTx 8 }
+
+    sspaCfgInputThresholdHigh OBJECT-TYPE
+        SYNTAX              Integer32 (-2500..-500)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            Input High Threshold setting in millibels for
+                            this SSPA. Range is -500 to -2500 Must be above
+                            cfgInputThresholdLow."
+        ::= { sspaCfgTx 9 }
+
+    sspaCfgOutputThresholdLow OBJECT-TYPE
+        SYNTAX              Integer32 (0..6000)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            Output Low Threshold setting in milliBels for
+                            this SSPA. Range is 0 to 6000 further qualified
+                            by the output range of the SSPA(Rated Power to
+                            Rated Power - 20 db). Must be below cfgInputThresholdHigh."
+        ::= { sspaCfgTx 10 }
+
+    sspaCfgOutputThresholdHigh OBJECT-TYPE
+        SYNTAX              Integer32 (0..6000)
+		UNITS				"millibels"
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            Output High Threshold setting for this SSPA.
+                            0 to 6000 millibels. Further qualified by the
+                            output range of the SSPA(Rated Power+1dB to Rated
+                            Power - 20 dB). Must be above cfgOutputThresholdLow."
+        ::= { sspaCfgTx 11 }
+
+    sspaCfgHighTemperatureShutdown OBJECT-TYPE
+        SYNTAX              DisableEnableValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            High Temperature Shutdown. Enables or disables
+                            the high temp TX shutdown when temperature exceeds
+                            ratings. (0) Disables (1) Enables"
+        ::= { sspaCfgTx 12 }
+
+    sspaCfgRedund OBJECT IDENTIFIER ::= { sspaCfg 6 }
+
+    --
+    --cfgRedund Subtree
+    --
+    sspaCfgRedundancyEnabled OBJECT-TYPE
+        SYNTAX              RedundancyEnable
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            redundancy mode of the SSPA. (0) Not redundant
+                            (1) Redundancy enabled"
+        ::= { sspaCfgRedund 1 }
+
+    sspaCfgRedundancyMode OBJECT-TYPE
+        SYNTAX              RedundancyMode
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            redundancy switching mode of SSPA. Valid only
+                            if cfgRedundancyEnabled is 1. (0) Reverting (1)
+                            NonReverting"
+        ::= { sspaCfgRedund 2 }
+
+    sspaCfgPositionOnSwitch OBJECT-TYPE
+        SYNTAX              PositionAB
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            position of the SSPA on the waveguide switch.
+                            Valid only if cfgRedundancyEnabled is 1. (0)
+                            A side (1) B side"
+        ::= { sspaCfgRedund 3 }
+
+    sspaCfgAutoCloning OBJECT-TYPE
+        SYNTAX              DisableEnableValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            cloning mode the SSPA. Valid only if cfgRedundancyEnabled
+                            is 1. (0) Disable automatic cloning of configuration
+                            data to slave. (1) Enable automatic cloning of
+                            configuration data to slave."
+        ::= { sspaCfgRedund 4 }
+
+    sspaCfgSwitchingType OBJECT-TYPE
+        SYNTAX              RedundSwitchType
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            switching type of the SSPA. Valid only if cfgRedundancyEnabled
+                            is 1. (0) Manual switching (1) Automatic switching"
+        ::= { sspaCfgRedund 5 }
+
+    sspaCfgSwitchPosition OBJECT-TYPE
+        SYNTAX              PositionAB
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            switch positon of the SSPA. Reading this variable
+                            shows the current waveguide switch position.
+                            Writing this variable changes the current switch
+                            position. Valid only if cfgRedundancyEnabled
+                            is 1. (0) Switch position A (1) Switch position
+                            B"
+        ::= { sspaCfgRedund 6 }
+
+    sspaCfgSystemStatus OBJECT-TYPE
+        SYNTAX              OCTET STRING (SIZE(0..100))
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            redundant system status of the SSPA. Valid only
+                            if cfgRedundancyEnabled is 1."
+        ::= { sspaCfgRedund 7 }
+
+    --
+    --The Control Group
+    --
+    sspaCtrlSuppressAlarms OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes configured threshold
+                            alarms to be suppressed. (0) No Suppression (1)
+                            Suppress configured threshold alarms"
+        ::= { sspaCtrl 1 }
+
+    sspaCtrlSimulateAlarm OBJECT-TYPE
+        SYNTAX              NoYesValue
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes a major alarm
+                            in the SSPA. (0) No Alarm (1) Simulate a Tx alarm"
+        ::= { sspaCtrl 2 }
+
+    sspaCtrlClearAlarmLog OBJECT-TYPE
+        SYNTAX              Integer32 (0)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes the SSPA to clear
+                            its alarm history. This object cannot be read."
+        ::= { sspaCtrl 3 }
+
+    sspaCtrlMute OBJECT-TYPE
+        SYNTAX              TxMute
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes the transmitter
+                            to be muted. (0) Transmit muted (1) Transmit
+                            enabled"
+        ::= { sspaCtrl 4 }
+
+    sspaCtrlResetGainControl OBJECT-TYPE
+        SYNTAX              Integer32 (0)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes the Gain Control
+                            attenuator to be reset to 0 db. 
+							This object cannot be read.
+							(0) Reset Gain Control"
+        ::= { sspaCtrl 5 }
+
+    sspaCtrlFirmwareReboot OBJECT-TYPE
+        SYNTAX              Integer32 (0)
+        MAX-ACCESS          read-write
+        STATUS              current
+        DESCRIPTION         "The value of this object causes the firmware to
+                            restart. Writing this object will cause a momentary
+                            interruption to traffic. 
+							This object cannot be read.
+							(0) Reboot Firmware"
+        ::= { sspaCtrl 6 }
+
+    sspaStatusUnitInfo OBJECT IDENTIFIER ::= { sspaStatus 1 }
+
+    --
+    --The Status Group
+    --
+    --
+    --statusUnitInfo Subtree
+    --
+    sspaStatusModelNumber OBJECT-TYPE
+        SYNTAX              OCTET STRING (SIZE(0..20))
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the model
+                            number of this SSPA."
+        ::= { sspaStatusUnitInfo 1 }
+
+    sspaStatusSerialNumber OBJECT-TYPE
+        SYNTAX              OCTET STRING (SIZE(0..20))
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the serial
+                            number of this SSPA."
+        ::= { sspaStatusUnitInfo 2 }
+
+    sspaStatusFirmwareVersion OBJECT-TYPE
+        SYNTAX              OCTET STRING (SIZE(0..50))
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the Firmware
+                            Version of this SSPA."
+        ::= { sspaStatusUnitInfo 3 }
+
+    sspaStatusPowerClass OBJECT-TYPE
+        SYNTAX              PowerWatts
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the Power
+                            class of this SSPA."
+        ::= { sspaStatusUnitInfo 4 }
+
+    sspaStatusFrequencyBand OBJECT-TYPE
+        SYNTAX              FrequencyBand
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the frequency
+                            band of this SSPA."
+        ::= { sspaStatusUnitInfo 5 }
+
+    sspaStatusAlarm OBJECT IDENTIFIER ::= { sspaStatus 2 }
+
+    --
+    --statusAlarm Subtree
+    --
+    sspaStatusAgcAlcNotSettled OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+		STATUS				current
+        DESCRIPTION         "The value of object identifies whether an AGC
+                            ALC not settled alarm exists. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 1 }
+
+    sspaStatusAgcAlcTargetOOR OBJECT-TYPE
+        SYNTAX              AlarmState
+		MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a AGC ALC
+                            Target Out of Range alarm exists. (0) No Alarm
+                            (1) Alarm"
+        ::= { sspaStatusAlarm 2 }
+
+    sspaStatusInputThresholdLow OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a Input
+                            Threshold Low alarm exists. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 3 }
+
+    sspaStatusInputThresholdHigh OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a Input
+                            Threshold High alarm exists. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 4 }
+
+    sspaStatusOuputThresholdLow OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a Output
+                            Threshold Low alarm exists. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 5 }
+
+    sspaStatusOutputThresholdHigh OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a OutputThreshold
+                            High alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 6 }
+
+    sspaStatusAgcAlcRange OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether an AGC/ALC
+                            out of range alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 7 }
+
+    sspaStatusTemperatureAlarm OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+       DESCRIPTION         "The value of object identifies whether an high
+                            temperature alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 8 }
+
+    sspaStatusTxSimulated OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether an Tx Simulated
+                            alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 9 }
+
+    sspaStatusVdcOor OBJECT-TYPE
+       SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a voltage
+                            out of range alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 10 }
+
+    sspaStatusIdcOor OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a Current
+                            out of range alarm exists. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 11 }
+
+	sspaStatusWGSwitch	OBJECT-TYPE
+		SYNTAX				AlarmState
+		MAX-ACCESS			read-only
+		STATUS				current
+		DESCRIPTION			"The value of object identifies whether the 
+							waveguide switch is faulted. (0) No Alarm (1) Alarm"
+		::= { sspaStatusAlarm 12 }
+
+    sspaStatusLogAlignError OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a alarm
+                            log alignment error alarm exists. This indicates
+                            a corruption in the alarm log. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 13 }
+
+    sspaStatusCfgDataError OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a configuration
+                            data read error alarm exists. This indicates
+                            an error has occurred reading the saved configuration
+                            data. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 14 }
+
+    sspaStatusEthernetDownload OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether the SSPA
+                            is downloading new firmware over the ethernet
+                            link. (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 15 }
+
+    sspaStatusSerialDownload OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether a the SSPA
+                            is downloading new firmware over the serial link.
+                            (0) No Alarm (1) Alarm"
+        ::= { sspaStatusAlarm 16 }
+
+    sspaStatusFWReboot OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether the SSPA
+                            firmware has been rebooted. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 17 }
+
+    sspaStatusCloneTimeout OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether the SSPA
+                            firmware has been rebooted. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 18 }
+
+    sspaStatusCloneRead OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether the SSPA
+                            firmware has been rebooted. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 19 }
+
+    sspaStatusCloneWrite OBJECT-TYPE
+        SYNTAX              AlarmState
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of object identifies whether the SSPA
+                            firmware has been rebooted. (0) No Alarm (1)
+                            Alarm"
+        ::= { sspaStatusAlarm 20 }
+
+	sspaStatusDetector OBJECT IDENTIFIER ::= { sspaStatus 3 }
+
+    --
+    --statusDetector Subtree
+    --
+    sspaStatusDCVoltage OBJECT-TYPE
+        SYNTAX              Integer32 (1..600)
+		UNITS				"decivolts"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the DC voltage
+                            level of the SSPA. Values range from 0 to 600
+                            decivolts."
+        ::= { sspaStatusDetector 1 }
+
+    sspaStatusDCCurrent OBJECT-TYPE
+        SYNTAX              Integer32 (1..250)
+		UNITS				"deciamps"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the DC current
+                            consumption of the SSPA. Values range from 0
+                            to 250 deciamps."
+        ::= { sspaStatusDetector 2 }
+
+    sspaStatusTemperature OBJECT-TYPE
+        SYNTAX              Integer32 (-127..100)
+		UNITS				"degrees C"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the internal
+                            temperature level of the SSPA. Values range from
+                            -50C to 100C in 1 degree C increments. -127 indicates
+                            out of range."
+        ::= { sspaStatusDetector 3 }
+
+    sspaStatusGainControl OBJECT-TYPE
+        SYNTAX              Integer32 (-1000..1000)
+		UNITS				"millibels"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the gain control
+                            level of the SSPA. Values range from -1000 db
+                            to +1000 millibels in 1 millibel increments."
+        ::= { sspaStatusDetector 4 }
+
+    sspaStatusInputPowerLevel OBJECT-TYPE
+        SYNTAX              Integer32 (-2500..-500)
+		UNITS				"millibels"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the input
+                            power level of the SSPA. Values range from -500
+                            to -2500 millibels."
+        ::= { sspaStatusDetector 5 }
+
+    sspaStatusOutputPowerLevel OBJECT-TYPE
+        SYNTAX              Integer32 (-9900..6000)
+		UNITS				"millibels"
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object identifies the output
+                            power level of the SSPA. Values range from 0
+                            to 6000 millibels. (-9900) SSPA is muted."
+        ::= { sspaStatusDetector 6 }
+
+    sspaStatusAlarmLog OBJECT IDENTIFIER ::= { sspaStatus 4 }
+
+    --
+    --statusAlarmLog Subtree
+    --
+    sspaStatusAlarmLogNumber OBJECT-TYPE
+        SYNTAX              Integer32 (1..40)
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies the
+                            current number of alarm log entries."
+        ::= { sspaStatusAlarmLog 1 }
+
+    sspaStatusAlarmLogTable OBJECT-TYPE
+        SYNTAX              SEQUENCE OF StatusAlarmLogEntry
+        MAX-ACCESS          not-accessible
+        STATUS              current
+        DESCRIPTION         "This is a table of alarm log entries."
+        ::= { sspaStatusAlarmLog 2 }
+
+    sspaStatusAlarmLogEntry OBJECT-TYPE
+        SYNTAX              StatusAlarmLogEntry
+        MAX-ACCESS          not-accessible
+        STATUS              current
+        DESCRIPTION         "This is a table of alarm log entries."
+        INDEX               {
+                                sspaStatusAlarmLogIndex
+                            }
+        ::= { sspaStatusAlarmLogTable 1 }
+
+    StatusAlarmLogEntry ::= SEQUENCE {
+        sspaStatusAlarmLogIndex
+            Integer32,
+        sspaStatusAlarmLogType
+            INTEGER,
+        sspaStatusAlarmLogAlarms
+            Integer32
+    }
+
+    sspaStatusAlarmLogIndex OBJECT-TYPE
+        SYNTAX              Integer32 (1..40)
+        MAX-ACCESS          not-accessible
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies this
+                            alarm log entry."
+        ::= { sspaStatusAlarmLogEntry 1 }
+
+    sspaStatusAlarmLogType OBJECT-TYPE
+        SYNTAX              INTEGER {tx(0), misc(1)}
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies this
+                            alarm log entry's alarm type (0) Tx Alarms (1)
+                            Misc Alarms."
+        ::= { sspaStatusAlarmLogEntry 2 }
+
+    sspaStatusAlarmLogAlarms OBJECT-TYPE
+        SYNTAX              Integer32 (1..65535)
+        MAX-ACCESS          read-only
+        STATUS              current
+        DESCRIPTION         "The value of this object uniquely identifies this
+                            alarm log entry's alarms. The values of this
+                            entry is based on the value of sspaStatusAlarmType.
+                            If the value is tx then the following bitmap applies:
+                            
+                            (0x0001) AGC/ALC out of range
+							(0x0002) AGC/ALC not settled
+							(0x0004) Output level high
+							(0x0008) Output level low
+							(0x0010) Input level high
+							(0x0020) Input level low
+							(0x0040) Over maximum temperature
+							(0x0080) Tx simulated
+							(0x0100) DC voltage out of range
+							(0x0200) Waveguide switch fault
+							(0x0400) DC current out of range
+							(0x0800) AGC/ALC target out of range
+							(0xF000) Not used
+                            
+                            If the value is misc then the following bitmap applies:
+                            
+                            (0x0001) Event log corrupted
+							(0x0002) Configuration reset
+							(0x0004) Ethernet download
+							(0x0008) Serial download
+							(0x0010) Reboot
+							(0x0020) Clone communications fault
+							(0x0040) Clone read fault
+							(0x0080) Clone write fault
+							(0xFF00) Not used"
+        ::= { sspaStatusAlarmLogEntry 3 }
+
+sspaGroups	OBJECT IDENTIFIER ::= { sspaMIB 4 }
+
+sspaCfgGroup OBJECT-GROUP
+        OBJECTS {
+			sspaCfgIPAddress,
+			sspaCfgIPGateway,
+			sspaCfgIPSubnet,
+			sspaCfgIPTelnetPort,
+			sspaCfgRS485Address,
+			sspaCfgRS485Baudrate,
+			sspaCfgRS485Delay,
+			sspaCfgTemperatureSuppressible,
+			sspaCfgInputLowThresholdSuppressible,
+			sspaCfgInputHighThresholdSuppressible,
+			sspaCfgOutputLowThresholdSuppressible,
+			sspaCfgOutputHighThresholdSuppressible,
+			sspaCfgTemperatureAlarmLevel,
+			sspaCfgInputLowThresholdAlarmLevel,
+			sspaCfgInputHighThresholdAlarmLevel,
+			sspaCfgOutputLowThresholdAlarmLevel,
+			sspaCfgOutputHighThresholdAlarmLevel,
+			sspaCfgPasswordTimeOut,
+			sspaCfgWebServerRefresh,
+			sspaCfgFrequency,
+			sspaCfgPowerupState,
+			sspaCfgPowerupDelay,
+			sspaCfgReadPowerMode,
+			sspaCfgBurstThreshold,
+			sspaCfgGainMode,
+			sspaCfgAttenuation,
+			sspaCfgInputThresholdLow,
+			sspaCfgInputThresholdHigh,
+			sspaCfgOutputThresholdLow,
+			sspaCfgOutputThresholdHigh,
+			sspaCfgHighTemperatureShutdown
+		}
+        STATUS current
+        DESCRIPTION
+            "The collection of objects which are used to provide
+             the TCP/IP configuration parameters."
+        ::= { sspaGroups 1 }
+
+sspaCfgRedundGroup	OBJECT-GROUP
+        OBJECTS {
+			sspaCfgRedundancyEnabled,
+			sspaCfgRedundancyMode,
+			sspaCfgPositionOnSwitch,
+			sspaCfgAutoCloning,
+			sspaCfgSwitchingType,
+			sspaCfgSwitchPosition,
+			sspaCfgSystemStatus,
+			sspaCfgIPAddressOtherSSPA,
+			sspaStatusWGSwitch,
+			sspaStatusCloneTimeout,
+			sspaStatusCloneRead,
+			sspaStatusCloneWrite
+		}
+        STATUS current
+        DESCRIPTION
+            "The collection of objects which are used to provide
+             the redundancy configuration parameters."
+		::= { sspaGroups 2 }
+
+sspaCtrlGroup OBJECT-GROUP
+        OBJECTS {
+			sspaCtrlSuppressAlarms,
+			sspaCtrlSimulateAlarm,
+			sspaCtrlClearAlarmLog,
+			sspaCtrlMute,
+			sspaCtrlResetGainControl,
+			sspaCtrlFirmwareReboot
+        }
+        STATUS current
+        DESCRIPTION
+            "The collection of objects which are used to provide
+             the SSPA control functionality."
+        ::= {  sspaGroups 3 }
+
+sspaStatusGroup OBJECT-GROUP
+        OBJECTS {
+            sspaStatusModelNumber,
+			sspaStatusSerialNumber,
+			sspaStatusFirmwareVersion,
+			sspaStatusPowerClass,
+			sspaStatusFrequencyBand,
+			sspaStatusAgcAlcNotSettled,
+			sspaStatusAgcAlcTargetOOR,
+			sspaStatusInputThresholdLow,
+			sspaStatusInputThresholdHigh,
+			sspaStatusOuputThresholdLow,
+			sspaStatusOutputThresholdHigh,
+			sspaStatusAgcAlcRange,
+			sspaStatusTemperatureAlarm,
+			sspaStatusTxSimulated,
+			sspaStatusVdcOor,
+			sspaStatusIdcOor,
+			sspaStatusLogAlignError,
+			sspaStatusCfgDataError,
+			sspaStatusEthernetDownload,
+			sspaStatusSerialDownload,
+			sspaStatusFWReboot,
+			sspaStatusDCVoltage,
+			sspaStatusDCCurrent,
+			sspaStatusTemperature,
+			sspaStatusGainControl,
+			sspaStatusInputPowerLevel,
+			sspaStatusOutputPowerLevel,
+			sspaStatusAlarmLogNumber,
+			sspaStatusAlarmLogType,
+			sspaStatusAlarmLogAlarms
+        }
+        STATUS current
+        DESCRIPTION
+            "The collection of objects which are used to provide
+             status information."
+        ::= {  sspaGroups 4 }
+
+sspaCfgGroupV0dot02 OBJECT-GROUP
+        OBJECTS {
+			sspaCfgIPAddress,
+			sspaCfgIPGateway,
+			sspaCfgIPSubnet,
+			sspaCfgIPTelnetPort,
+			sspaCfgRS485Address,
+			sspaCfgRS485Baudrate,
+			sspaCfgRS485Delay,
+			sspaCfgTemperatureSuppressible,
+			sspaCfgInputLowThresholdSuppressible,
+			sspaCfgInputHighThresholdSuppressible,
+			sspaCfgOutputLowThresholdSuppressible,
+			sspaCfgOutputHighThresholdSuppressible,
+			sspaCfgTemperatureAlarmLevel,
+			sspaCfgInputLowThresholdAlarmLevel,
+			sspaCfgInputHighThresholdAlarmLevel,
+			sspaCfgOutputLowThresholdAlarmLevel,
+			sspaCfgOutputHighThresholdAlarmLevel,
+			sspaCfgPasswordTimeOut,
+			sspaCfgWebServerRefresh,
+			sspaAC50HzCorrection,
+			sspaCfgFrequency,
+			sspaCfgPowerupState,
+			sspaCfgPowerupDelay,
+			sspaCfgReadPowerMode,
+			sspaCfgBurstThreshold,
+			sspaCfgGainMode,
+			sspaCfgAttenuation,
+			sspaCfgInputThresholdLow,
+			sspaCfgInputThresholdHigh,
+			sspaCfgOutputThresholdLow,
+			sspaCfgOutputThresholdHigh,
+			sspaCfgHighTemperatureShutdown
+		}
+        STATUS current
+        DESCRIPTION
+            "The collection of objects which are used to provide
+             the TCP/IP configuration parameters."
+        ::= { sspaGroups 5 }
+
+END

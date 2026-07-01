@@ -1,0 +1,1239 @@
+TERRASAT-TX-2-1-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	terrasat                
+		FROM TERRASAT-SMI-MIB
+	OBJECT-GROUP, NOTIFICATION-GROUP, MODULE-COMPLIANCE
+		FROM SNMPv2-CONF
+	IpAddress, OBJECT-TYPE, MODULE-IDENTITY, Integer32, NOTIFICATION-TYPE
+		FROM SNMPv2-SMI
+	DisplayString, TEXTUAL-CONVENTION
+		FROM SNMPv2-TC;
+
+tx21MIB MODULE-IDENTITY
+    LAST-UPDATED    "202605070000Z"
+    ORGANIZATION    "Terrasat Communications, Inc."
+    CONTACT-INFO
+            "Terrasat Communications
+            Customer Service
+
+            Address: 315 Digital Dr
+            Morgan Hill, CA  95037
+            USA
+
+            Tel: +1 408 782-5911
+
+            E-mail: techsupport@terrasatinc.com"
+    DESCRIPTION
+        "The management MIB for TX1:2 products."
+
+        REVISION        "202605070000Z"
+        DESCRIPTION
+                "Version 6"
+    ::= { terrasat 6 }
+
+tx21Info			OBJECT IDENTIFIER ::= { tx21MIB 1 }	
+tx21Alarm			OBJECT IDENTIFIER ::= { tx21MIB 2 }
+tx21Sensor			OBJECT IDENTIFIER ::= { tx21MIB 3 }
+tx21Tx				OBJECT IDENTIFIER ::= { tx21MIB 4 }
+tx21Redundancy		OBJECT IDENTIFIER ::= { tx21MIB 7 }
+
+
+Tx21BucAlarm ::= TEXTUAL-CONVENTION
+	STATUS			current
+	DESCRIPTION
+		"BUC alarm structure.
+		0  - Undefined
+		1  - Agc/Alc target out of range
+		2  - Supply amperes
+		3  - Input IF overdrive
+		4  - Waveguide switch
+		5  - Supply voltage
+		6  - External 10MHz
+		7  - Transmitter simulated
+		8  - Temperature
+		9  - Input threshold low
+		10 - Input threshold high
+		11 - Output threshold low
+		12 - Output threshold high
+		13 - DRO out of lock
+		14 - Transmitter muted
+		15 - AGC/ALC out of range"
+	SYNTAX		BITS {	undef(0), agcalctgt(1), amps(2), ovrdrv(3),
+						wg(4), volts(5), tenmeg(6), txsim(7),
+						temp(8), inlo(9), inhi(10), outlo(11),
+						outhi(12), dro(13), mute(14), agcalc(15) }
+--
+-- Information
+--
+
+--Info scalars--
+tx21InfoScalars OBJECT IDENTIFIER ::= { tx21Info 1 }
+
+tx21ModelNumber OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the same as the model
+		number barcode on the side of the IBUC."
+	::= { tx21InfoScalars 1 }
+
+tx21SerialNumber OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the same as the serial
+		number barcode on the side of the IBUC."
+	::= { tx21InfoScalars 2 }
+
+tx21FirmwareVersion OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The M&C firmware version."
+	::= { tx21InfoScalars 3 }
+
+tx21HardwareVersion OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The IBUC hardware version."
+	::= { tx21InfoScalars 4 }
+
+tx21Internal10MHz OBJECT-TYPE
+	SYNTAX			Integer32 (0..2)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies whether internal 10MHz is 
+		installed in this unit. If it is 2 then its redundant 10MHz."
+	::= { tx21InfoScalars 5 }
+
+
+-- Info Table --
+tx21BucInfoTable OBJECT-TYPE
+	SYNTAX			SEQUENCE OF Tx21BucInfoEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	::= { tx21Info 2 }
+
+tx21BucInfoEntry OBJECT-TYPE
+	SYNTAX			Tx21BucInfoEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	INDEX {tx21BucInfoIndex}
+	::= { tx21BucInfoTable 1 }
+
+Tx21BucInfoEntry ::= SEQUENCE {
+	tx21BucInfoIndex			Integer32,
+	tx21BucModelNumber			DisplayString,
+	tx21BucSerialNumber			DisplayString,
+	tx21BucFirmwareVersion		DisplayString,
+	tx21BucHardwareVersion		DisplayString,
+	tx21BucPowerWatts			INTEGER,
+	tx21BucRFRange				DisplayString,
+	tx21BucIFRange				DisplayString,
+	tx21BucLOFrequency			DisplayString,
+	tx21BucSpectralInvert		DisplayString,
+	tx21BucInternal10MHz		INTEGER,
+	tx21BucTotalSysHours		INTEGER
+}
+
+tx21BucInfoIndex OBJECT-TYPE
+	SYNTAX			Integer32 (1..3)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies this
+		alarm log entry."
+	::= { tx21BucInfoEntry 1 }
+
+tx21BucModelNumber OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the same as the model
+		number barcode on the side of the IBUC."
+	::= { tx21BucInfoEntry 2 }
+
+tx21BucSerialNumber OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the same as the serial
+		number barcode on the side of the IBUC."
+	::= { tx21BucInfoEntry 3 }
+
+tx21BucFirmwareVersion OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The M&C firmware version."
+	::= { tx21BucInfoEntry 4 }
+
+tx21BucHardwareVersion OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The IBUC hardware version."
+	::= { tx21BucInfoEntry 5 }
+
+tx21BucPowerWatts OBJECT-TYPE
+	SYNTAX			Integer32
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		Power class of this IBUC."
+	::= { tx21BucInfoEntry 6 }
+
+tx21BucFrequencyBand OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the RF frequency band of this unit."
+	::= { tx21BucInfoEntry 7 }
+
+tx21BucRFRange OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the RF frequency range of this unit."
+	::= { tx21BucInfoEntry 8 }
+
+tx21BucIFRange OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the IF frequency range of this unit."
+	::= { tx21BucInfoEntry 9 }
+
+tx21BucLOFrequency OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This is the frequency of the local oscillator
+		of this unit."
+	::= { tx21BucInfoEntry 10 }
+        
+tx21BucSpectralInvert OBJECT-TYPE
+	SYNTAX			DisplayString
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This gives the type inversion of the unit."
+	::= { tx21BucInfoEntry 11 }
+        
+tx21BucInternal10MHz OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies whether
+		internal 10MHz is installed in this unit."
+	::= { tx21BucInfoEntry 12 }
+
+tx21BucTotalSysHours OBJECT-TYPE
+	SYNTAX			INTEGER
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		total operating hours of the unit."
+	::= { tx21BucInfoEntry 13 }
+				
+
+--------------------------------------------------------------------------------
+--    _    _                          
+--   / \  | | __ _ _ __ _ __ ___  ___ 
+--  / _ \ | |/ _` | '__| '_ ` _ \/ __|
+-- / ___ \| | (_| | |  | | | | | \__ \
+--/_/   \_\_|\__,_|_|  |_| |_| |_|___/
+--
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--- 
+--- BUC Alarms Suppressible and Configuration
+---
+--------------------------------------------------------------------------------
+tx21BucAlarmCfgTable OBJECT-TYPE
+	SYNTAX			SEQUENCE OF Tx21BucAlarmCfgEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	::= { tx21Alarm 1 }
+
+tx21BucAlarmCfgEntry OBJECT-TYPE
+	SYNTAX			Tx21BucAlarmCfgEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	INDEX {tx21BucAlarmCfgIndex}
+	::= { tx21BucAlarmCfgTable 1 }
+
+Tx21BucAlarmCfgEntry ::= SEQUENCE {
+	tx21BucAlarmCfgIndex			Integer32,
+	tx21BucTempSuppressible			INTEGER,
+	tx21BucInputLowSuppressible		INTEGER,
+	tx21BucInputHighSuppressible	INTEGER,
+	tx21BucOutputLowSuppressible	INTEGER,
+	tx21BucOutputHighSuppressible	INTEGER,
+	tx21BucTempAlarmLevel			INTEGER,
+	tx21BucInputLowAlarmLevel		INTEGER,
+	tx21BucInputHighAlarmLevel		INTEGER,
+	tx21BucOutputLowAlarmLevel		INTEGER,
+	tx21BucOutputHighAlarmLevel		INTEGER,
+	tx21BucHighTempShutdown			INTEGER,
+	tx21BucSuppressAlarms			INTEGER,
+	tx21BucSimulateAlarm			INTEGER
+}
+
+tx21BucAlarmCfgIndex OBJECT-TYPE
+	SYNTAX			Integer32 (1..3)
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies this
+		alarm log entry."
+	::= { tx21BucAlarmCfgEntry 1 }
+
+tx21BucTempSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures temperature alarm suppression."
+	::= { tx21BucAlarmCfgEntry 2 }
+
+tx21BucInputLowSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures Input Low Threshold
+		alarm suppression."
+	::= { tx21BucAlarmCfgEntry 3 }
+
+tx21BucInputHighSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures Input High Threshold
+		alarm suppression."
+	::= { tx21BucAlarmCfgEntry 4 }
+
+tx21BucOutputLowSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures Output Low Threshold
+		alarm suppression."
+	::= { tx21BucAlarmCfgEntry 5 }
+
+tx21BucOutputHighSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures Output High Threshold
+		alarm suppression."
+	::= { tx21BucAlarmCfgEntry 6 }
+
+tx21BucTempAlarmLevel OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures whether the Temperature alarm
+		generates no alarm, a minor alarm, or a major alarm."
+	::= { tx21BucAlarmCfgEntry 7 }
+
+tx21BucInputLowAlarmLevel OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures whether the Input Low Threshold 
+		alarm generates no alarm, a minor alarm, or a major alarm."             
+	::= { tx21BucAlarmCfgEntry 8 }
+
+tx21BucInputHighAlarmLevel OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures whether the Input High Threshold
+		alarm generates no alarm, a minor alarm, or a major alarm."
+	::= { tx21BucAlarmCfgEntry 9 }
+
+tx21BucOutputLowAlarmLevel OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures whether the Output Low Threshold
+		alarm generates no alarm, a minor alarm, or a major alarm."
+	::= { tx21BucAlarmCfgEntry 10 }
+
+tx21BucOutputHighAlarmLevel OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object configures whether the Output High Threshold
+		alarm generates no alarm, a minor alarm, or a major alarm."
+	::= { tx21BucAlarmCfgEntry 11 }
+
+tx21BucHighTempShutdown OBJECT-TYPE
+	SYNTAX			INTEGER {disable(0), enable(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		High Temperature Shutdown. Enables or disables the
+		high temp TX shutdown when temperature exceeds ratings."
+	::= { tx21BucAlarmCfgEntry 12 }
+
+tx21BucSuppressAlarms OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object causes configured threshold
+		alarms to be suppressed."
+	::= { tx21BucAlarmCfgEntry 13 }
+
+tx21BucSimulateAlarm OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object causes a major alarm
+		in the IBUC."
+	::= { tx21BucAlarmCfgEntry 14 }
+
+
+--------------------------------------------------------------------------------
+---
+---  Controller Alarms Configuration
+---
+--------------------------------------------------------------------------------
+tx21AlarmCfg OBJECT IDENTIFIER ::= { tx21Alarm 2 }
+
+tx21IFLAlarm OBJECT-TYPE
+	SYNTAX			INTEGER {none(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"IF Link relay switch."
+	::= { tx21AlarmCfg 1 }
+
+tx21VDCLow1 OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Power supply #1 voltage alarm"
+	::= { tx21AlarmCfg 2 }
+
+tx21VDCLow2 OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Power supply #2 voltage alarm"
+	::= { tx21AlarmCfg 3 }
+
+tx21CloningFault OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Cloning failed while switching iBUC."
+	::= { tx21AlarmCfg 4 }
+
+tx21WaveguideSwitch1Fault OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Waveguide switch 1 fault."
+	::= { tx21AlarmCfg 5 }
+
+tx21WaveguideSwitch2Fault OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Waveguide switch 2 fault."
+	::= { tx21AlarmCfg 6 }
+
+tx21BucAOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC A is offline."
+	::= { tx21AlarmCfg 7 }
+
+tx21BucBOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC B is offline."
+	::= { tx21AlarmCfg 8 }
+
+tx21BucSOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC S is offline."
+	::= { tx21AlarmCfg 9 }
+
+tx2110MHzAlarm OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"10MHz Reference is too low."
+	::= { tx21AlarmCfg 10 }
+
+
+-------------------------------------------------------------------------------
+--- 
+--- Suppressible Alarms Configuration
+---
+-------------------------------------------------------------------------------
+tx21IFLAlarmSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"IF Link relay switch."
+	::= { tx21AlarmCfg 11 }
+
+tx21VDCLow1Suppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Power supply #1 voltage alarm"
+	::= { tx21AlarmCfg 12 }	
+
+tx21VDCLow2Suppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Power supply #2 voltage alarm"
+	::= { tx21AlarmCfg 13 }
+
+tx21CloningFaultSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Cloning failed while switching iBUC."
+	::= { tx21AlarmCfg 14 }
+
+tx21WaveguideSwitch1FaultSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Waveguide switch 1 fault."
+	::= { tx21AlarmCfg 15 }
+
+tx21WaveguideSwitch2FaultSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Waveguide switch 2 fault."
+	::= { tx21AlarmCfg 16 }
+
+tx21BucAOfflineSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC A is offline."
+	::= { tx21AlarmCfg 17 }
+
+tx21BucBOfflineSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC B is offline."
+	::= { tx21AlarmCfg 18 }
+
+tx21BucSOfflineSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"BUC S is offline."
+	::= { tx21AlarmCfg 19 }
+
+tx2110MHzAlarmSuppressible OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"10MHz Reference is too low."
+	::= { tx21AlarmCfg 20 }
+
+
+tx21SuppressAllAlarms OBJECT-TYPE
+	SYNTAX			INTEGER {no(0), yes(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"Suppress all TX21 alarms."
+	::= { tx21AlarmCfg 21 }
+
+
+--------------------------------------------------------------------------------
+---
+--- BUC ALARM STATUS
+---
+--------------------------------------------------------------------------------
+tx21BucAlarmTable OBJECT-TYPE
+	SYNTAX			SEQUENCE OF Tx21BucAlarmEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	::= { tx21Alarm 10 }
+
+tx21BucAlarmEntry OBJECT-TYPE
+	SYNTAX			Tx21BucAlarmEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	INDEX {tx21BucAlarmIndex}
+	::= { tx21BucAlarmTable 1 }
+
+Tx21BucAlarmEntry ::= SEQUENCE {
+	tx21BucAlarmIndex			Integer32,
+	tx21BucDROLock				INTEGER,
+	tx21BucInputThresholdLow	INTEGER,
+	tx21BucInputThresholdHigh	INTEGER,
+	tx21BucOutputThresholdLow	INTEGER,
+	tx21BucOutputThresholdHigh	INTEGER,
+	tx21BucTxSimulated			INTEGER,
+	tx21BucTxMutedFault			INTEGER,
+	tx21BucTemperatureAlarm		INTEGER,
+	tx21Buc10MHz				INTEGER,
+	tx21BucInputOverdriveFault	INTEGER
+}
+
+tx21BucAlarmIndex OBJECT-TYPE
+	SYNTAX			Integer32 (1..3)
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies this
+		alarm log entry."
+	::= { tx21BucAlarmEntry 1 }
+
+tx21BucDROLock OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		DRO lock alarm exists."
+	::= { tx21BucAlarmEntry 2 }
+
+tx21BucInputThresholdLow OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		Input Threshold Low alarm exists."
+	::= { tx21BucAlarmEntry 3 }
+
+tx21BucInputThresholdHigh OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		Input Threshold High alarm exists."
+	::= { tx21BucAlarmEntry 4 }
+
+tx21BucOutputThresholdLow OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		Output Threshold Low alarm exists."
+	::= { tx21BucAlarmEntry 5 }
+
+tx21BucOutputThresholdHigh OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		OutputThreshold High alarm exists."
+	::= { tx21BucAlarmEntry 6 }
+
+tx21BucTxSimulated OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether an 
+		Tx Simulated alarm exists."
+	::= { tx21BucAlarmEntry 7 }
+
+tx21BucTxMutedFault OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"This identifies whether the transmitter
+		is muted either by an alarm condition or
+		the user disabling the transmitter."
+	::= { tx21BucAlarmEntry 8 }
+
+tx21BucTemperatureAlarm OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether an 
+		high temperature alarm exists."
+	::= { tx21BucAlarmEntry 9 }
+
+tx21Buc10MHz OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether a 
+		10 MHz alarm exists."
+	::= { tx21BucAlarmEntry 10 }
+
+tx21BucInputOverdriveFault OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2), disconnected(4)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of object identifies whether 
+		the input power level is to high for a GaN unit."
+	::= { tx21BucAlarmEntry 11 }
+
+
+
+--------------------------------------------------------------------------------
+--
+-- Controller Alarm Status
+--
+--------------------------------------------------------------------------------
+tx2110MHz OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"10MHz is too low."
+	::= { tx21Alarm 12 }
+
+
+tx21SwitchFaultA OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The switch connected to BUC A fault."
+	::= { tx21Alarm 13 }
+
+tx21SwitchFaultB OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The switch connected to BUC B fault."
+	::= { tx21Alarm 14 }
+
+tx21VoltLevel1 OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"Power supply #1 voltage is to low."
+	::= { tx21Alarm 15 }
+
+tx21VoltLevel2 OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"Power supply #2 voltage is to low."
+	::= { tx21Alarm 16 }
+
+tx21BUCAOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"BUC A is offline."
+	::= { tx21Alarm 17 }
+
+tx21BUCBOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"BUC B is offline."
+	::= { tx21Alarm 18 }
+
+tx21BUCSOffline OBJECT-TYPE
+	SYNTAX			INTEGER {clear(0), minor(1), major(2)}
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"BUC S is offline."
+	::= { tx21Alarm 19 }
+
+
+
+--------------------------------------------------------------------------------
+-- ____                                
+--/ ___|  ___ _ __  ___  ___  _ __ ___ 
+--\___ \ / _ \ '_ \/ __|/ _ \| '__/ __|
+--___) |  __/ | | \__ \ (_) | |  \__ \
+--|____/ \___|_| |_|___/\___/|_|  |___/
+--
+--------------------------------------------------------------------------------
+tx21BucSensorTable OBJECT-TYPE
+	SYNTAX			SEQUENCE OF Tx21BucSensorEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	::= { tx21Sensor 1 }
+
+tx21BucSensorEntry OBJECT-TYPE
+	SYNTAX			Tx21BucSensorEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	INDEX {tx21BucSensorIndex}
+	::= { tx21BucSensorTable 1 }
+
+Tx21BucSensorEntry ::= SEQUENCE {
+	tx21BucSensorIndex			Integer32,
+	tx21BucSupplyVoltage		Integer32,
+	tx21BucSupplyCurrent		Integer32,
+	tx21BucDROVoltage			Integer32,
+	tx21BucTemperature			Integer32,
+	tx21BucInputPowerLevel		Integer32,
+	tx21BucOutputPowerLevel		Integer32,
+}
+
+tx21BucSensorIndex OBJECT-TYPE
+	SYNTAX			Integer32 (1..3)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies this
+		alarm log entry."
+	::= { tx21BucSensorEntry 1 }
+
+tx21BucSupplyVoltage OBJECT-TYPE
+	SYNTAX			Integer32 (1..3000)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		AC/DC voltage level of the IBUC. Values range
+		from 0 to 600 decivolts for DC supplied IBUCs
+		and 0 to 3000 decivolts for AC supplied IBUCs."
+	::= { tx21BucSensorEntry 2 }
+
+tx21BucSupplyCurrent OBJECT-TYPE
+	SYNTAX			Integer32 (1..250)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		AC/DC current consumption of the IBUC. Values range
+		from 0 to 250 deciamps."
+	::= { tx21BucSensorEntry 3 }
+
+tx21BucDROVoltage OBJECT-TYPE
+	SYNTAX			Integer32 (1..100)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		DRO voltage of the IBUC. Values range
+		from 0 to 100 decivolts."
+	::= { tx21BucSensorEntry 4 }
+
+tx21BucTemperature OBJECT-TYPE
+	SYNTAX			Integer32 (-127..100)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		internal temperature level of the IBUC. Values range
+		from -50C to 100C in 1 degree C increments. -127 indicates
+		out of range."
+	::= { tx21BucSensorEntry 5 }
+
+tx21BucInputPowerLevel OBJECT-TYPE
+	SYNTAX			Integer32 (-6000..-1500)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		input power level of the IBUC. Values range
+		from -1500 to -6000 millibels."
+	::= { tx21BucSensorEntry 6 }
+
+
+tx21BucOutputPowerLevel OBJECT-TYPE
+	SYNTAX			Integer32 (-9900..6000)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		output power level of the IBUC. Values range
+		from 0 to 6000 millibels.
+		(-9600) IBUC Out of Lock.
+		(-9900) IBUC is muted."
+	::= { tx21BucSensorEntry 7 }
+
+
+
+
+-- Controller Sensors --
+tx21SupplyVolt1 OBJECT-TYPE
+	SYNTAX			Integer32 (1..3000)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		AC/DC voltage level of the IBUC. Values range
+		from 0 to 600 decivolts for DC supplied IBUCs
+		and 0 to 3000 decivolts for AC supplied IBUCs."
+	::= { tx21Sensor 2 }
+
+tx21SupplyVolt2 OBJECT-TYPE
+	SYNTAX			Integer32 (1..3000)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		AC/DC voltage level of the IBUC. Values range
+		from 0 to 600 decivolts for DC supplied IBUCs
+		and 0 to 3000 decivolts for AC supplied IBUCs."
+	::= { tx21Sensor 3 }
+
+tx21TenMHzLevel OBJECT-TYPE
+	SYNTAX			Integer32 (0..4096)
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the
+		10MHz level of the IBUC. Values range
+		from 0 to 4096 ADC values."
+	::= { tx21Sensor 4 }
+
+
+
+
+--------------------------------------------------------------------------------
+--  _______  __   ____             __ _       
+--|_   _\ \/ /  / ___|___  _ __  / _(_) __ _ 
+--  | |  \  /  | |   / _ \| '_ \| |_| |/ _` |
+--  | |  /  \  | |__| (_) | | | |  _| | (_| |
+--  |_| /_/\_\  \____\___/|_| |_|_| |_|\__, |
+--                                     |___/ 
+--------------------------------------------------------------------------------
+tx21BucTxTable OBJECT-TYPE
+	SYNTAX			SEQUENCE OF Tx21BucTxEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	::= { tx21Tx 1 }
+
+tx21BucTxEntry OBJECT-TYPE
+	SYNTAX			Tx21BucTxEntry
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"This is a table of alarm log entries."
+	INDEX {tx21BucTxIndex}
+	::= { tx21BucTxTable 1 }
+
+Tx21BucTxEntry ::= SEQUENCE {
+	tx21BucTxIndex				Integer32,
+	tx21BucTxEnable				INTEGER,
+	tx21BucFrequency			Integer32,
+	tx21BucPowerupState			INTEGER,
+	tx21BucPowerupDelay			Integer32,
+	tx21BucReadPowerMode		INTEGER,
+	tx21BucBurstThreshold		Integer32,
+	tx21BucGainMode				INTEGER,
+	tx21BucAttenuation			Integer32,
+	tx21BucInputThresholdLo		Integer32,
+	tx21BucInputThresholdHi		Integer32,
+	tx21BucOutputThresholdLo	Integer32,
+	tx21BucOutputThresholdHi	Integer32,
+	tx21BucInternal10MHzTrim	Integer32,
+	tx21BucBurstTimeout			Integer32,
+	tx21BucCouplingFactor		Integer32,
+	tx21BucResetGainControl		INTEGER,
+	tx21BucGainControl			Integer32
+}
+
+tx21BucTxIndex OBJECT-TYPE
+	SYNTAX			Integer32 (1..3)
+	MAX-ACCESS		not-accessible
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies this
+		alarm log entry."
+	::= { tx21BucTxEntry 1 }
+
+tx21BucTxEnable OBJECT-TYPE
+	SYNTAX			INTEGER {disable(0), enable(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object causes the transmitter to
+		be muted."
+	::= { tx21BucTxEntry 2 }
+
+tx21BucFrequency OBJECT-TYPE
+	SYNTAX			Integer32 (1..65535)
+	UNITS			"megahertz"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		monitored frequency in MHz at the output of the IBUC.
+		This can be input as an IF or RF frequency inside the
+		passband of the unit."
+	::= { tx21BucTxEntry 3 }
+
+tx21BucPowerupState OBJECT-TYPE
+	SYNTAX			INTEGER {off(0), on(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		powerup state of the IBUC transmitter.
+		(0) TX OFF
+		(1) TX ON"
+	::= { tx21BucTxEntry 4 }
+
+tx21BucPowerupDelay OBJECT-TYPE
+	SYNTAX			Integer32 (0..500)
+	UNITS			"seconds"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		powerup delay of the IBUC Transmitter before enabling.
+		0-500 in 1 second intervals."
+	::= { tx21BucTxEntry 5 }
+
+tx21BucReadPowerMode OBJECT-TYPE
+	SYNTAX			INTEGER {continuous(0), burst(1)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		mode the IBUC reports its output power level."
+	::= { tx21BucTxEntry 6 }
+
+tx21BucBurstThreshold OBJECT-TYPE
+	SYNTAX			Integer32 (1..65535)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		burst threshold setting of the IBUC. 0 to 6000 millibels
+		further qualified by the power output range. Rated Power + 1
+		to Rated Power - 20 db."
+	::= { tx21BucTxEntry 7 }
+
+tx21BucGainMode OBJECT-TYPE
+	SYNTAX			INTEGER {open(0), alc(1), agc(2)}
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		gain mode of the IBUC."
+	::= { tx21BucTxEntry 8 }
+
+tx21BucAttenuation OBJECT-TYPE
+	SYNTAX			Integer32 (0..3000)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		attenuation setting of this IBUC. If the IBUC is 
+		Option Z this has no meaning and writes will return
+		snmp error.
+		Ranges from 0 to 1600 millibels
+		Option -002 0 to 2000 millibels
+		IBR 0 to 3000 millibels"
+	::= { tx21BucTxEntry 9 }
+
+tx21BucInputThresholdLo OBJECT-TYPE
+	SYNTAX			Integer32 (-6000..-1500)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		Input Low Threshold setting in millibels for this IBUC.
+		Range is -1500 to -6000.
+		Must be below cfgInputThresholdHigh."
+	::= { tx21BucTxEntry 10 }
+
+tx21BucInputThresholdHi OBJECT-TYPE
+	SYNTAX			Integer32 (-6000..-1500)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		Input High Threshold setting in millibels for this IBUC. 
+		Range is -1500 to -6000
+		Must be above cfgInputThresholdLow."
+	::= { tx21BucTxEntry 11 }
+
+tx21BucOutputThresholdLo OBJECT-TYPE
+	SYNTAX			Integer32 (0..6000)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		Output Low Threshold setting in milliBels for this IBUC. 
+		Range is 0 to 6000 further qualified by the output
+		range of the IBUC(Rated Power to Rated Power - 20 db).
+		Must be below cfgInputThresholdHigh."
+	::= { tx21BucTxEntry 12 }
+
+tx21BucOutputThresholdHi OBJECT-TYPE
+	SYNTAX			Integer32 (0..6000)
+	UNITS			"millibels"
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		Output High Threshold setting for this IBUC. 0 to 6000
+		millibels. Further qualified by the output
+		range of the IBUC(Rated Power+1dB to Rated Power - 20 dB).
+		Must be above cfgOutputThresholdLow."
+	::= { tx21BucTxEntry 13 }
+
+tx21BucBurstTimeout OBJECT-TYPE
+	SYNTAX			Integer32 (0..300)
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"This value modifies the burst time out period."
+	::= { tx21BucTxEntry 14 }
+
+tx21BucResetGainControl OBJECT-TYPE
+	SYNTAX			INTEGER {yes(1)}
+	MAX-ACCESS		write-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object causes the Gain Control
+		attenuator to be reset to 0 db. If this IBUC is 
+		Option Z then this will return snmp error.
+		(0) Reset Gain Control"
+	::= { tx21BucTxEntry 15 }
+
+tx21BucGainControl OBJECT-TYPE
+	SYNTAX		Integer32 (0..3000)
+	UNITS			"millibels"
+	MAX-ACCESS		read-only
+	STATUS			current
+	DESCRIPTION
+		"The value of this object identifies the current
+		gain control attenuation setting of this IBUC. If this IBUC is 
+		Option Z then this has no meaning and reads will return
+		snmp error."
+	::= { tx21BucTxEntry 16 }
+
+--
+-- Redundancy Configuration
+--
+tx21SwitchingType OBJECT-TYPE
+	SYNTAX			DisplayString (SIZE (0..1))
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+	"The value of this object uniquely identifies the
+	switching type of the IBUC. Possible values are
+	A/M. A for Automatic and M for Manual"
+	::= { tx21Redundancy 1 }
+
+tx21SwitchAPosition OBJECT-TYPE
+	SYNTAX			DisplayString (SIZE (0..5))
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		switch positon of the IBUC. Reading this variable
+		shows the current waveguide switch position. Writing
+		this variable changes the current switch position.
+		Possible values are BUCA/SPARE"
+	::= { tx21Redundancy 2 }
+
+tx21SwitchBPosition OBJECT-TYPE
+	SYNTAX			DisplayString (SIZE (0..5))
+	MAX-ACCESS		read-write
+	STATUS			current
+	DESCRIPTION
+		"The value of this object uniquely identifies the
+		switch positon of the IBUC. Reading this variable
+		shows the current waveguide switch position. Writing
+		this variable changes the current switch position. 
+		Possible values are BUCB/SPARE"
+	::= { tx21Redundancy 3 }
+
+
+END

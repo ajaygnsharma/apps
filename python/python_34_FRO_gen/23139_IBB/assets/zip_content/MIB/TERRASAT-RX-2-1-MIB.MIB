@@ -1,0 +1,37 @@
+TERRASAT-RX-2-1-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	terrasat                
+		FROM TERRASAT-SMI-MIB
+	OBJECT-GROUP, NOTIFICATION-GROUP, MODULE-COMPLIANCE
+		FROM SNMPv2-CONF
+	IpAddress, OBJECT-TYPE, MODULE-IDENTITY, Integer32, NOTIFICATION-TYPE
+		FROM SNMPv2-SMI
+	DisplayString, TEXTUAL-CONVENTION
+		FROM SNMPv2-TC;
+
+tx21MIB MODULE-IDENTITY
+    LAST-UPDATED    "200909280000Z"
+    ORGANIZATION    "Terrasat Communications, Inc."
+    CONTACT-INFO
+            "Terrasat Communications
+            Customer Service
+
+            Address: 235 Vineyard Court
+            Morgan Hill, CA  95037
+            USA
+
+            Tel: +1 408 782-2166
+
+            E-mail: techsupport@terrasatinc.com"
+    DESCRIPTION
+        "The management MIB for RX1:2 products."
+
+        REVISION        "200909280000Z"
+        DESCRIPTION
+                "The intial version."
+    ::= { terrasat 5 }
+
+
+
+END
