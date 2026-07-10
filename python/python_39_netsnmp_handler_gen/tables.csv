@@ -1,5 +1,0 @@
-table_name,entry_name,base_oid,index_name,index_type,index_min,index_max,min_column,max_column,access
-tx21BucInfoTable,tx21BucInfoEntry,1.3.6.1.4.1.21369.6.1.1.1,tx21BucInfoIndex,ASN_INTEGER,1,3,2,13,RO
-tx21BucAlarmTable,tx21BucAlarmEntry,1.3.6.1.4.1.21369.6.2.10,tx21BucAlarmIndex,ASN_INTEGER,1,3,2,10,RO
-tx21BucSensorTable,tx21BucSensorEntry,1.3.6.1.4.1.21369.6.3.1,tx21BucSensorIndex,ASN_INTEGER,1,3,2,7,RO
-tx21BucTxTable,tx21BucTxEntry,1.3.6.1.4.1.21369.6.4.1,tx21BucTxIndex,ASN_INTEGER,1,3,2,16,RO

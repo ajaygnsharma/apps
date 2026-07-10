@@ -1,3 +1,0 @@
-name,oid,asn,access,get_fn,set_fn,cache_key,src_struct,src_reader,src_field,src_field_type,src_max_len,err_type,err_ok
-tx21SupplyVolt1,1.3.6.1.4.1.21369.6.3.2,ASN_INTEGER,RO,snmp_scalars_tx21SupplyVolt1_get,,,status_cntrlr_s,j_read_sts_cntrlr,supply_voltage[0],uint32,MAX_LEN,Err,Err::SUCCESS
-tx21SupplyVolt2,1.3.6.1.4.1.21369.6.3.3,ASN_INTEGER,RO,snmp_scalars_tx21SupplyVolt2_get,,,status_cntrlr_s,j_read_sts_cntrlr,supply_voltage[1],uint32,MAX_LEN,Err,Err::SUCCESS

@@ -1,4 +1,0 @@
-name,oid,asn,access,get_fn,set_fn,cache_key,src_struct,src_reader,src_field,src_field_type,src_max_len,err_type,err_ok
-tx21SwitchingType,1.3.6.1.4.1.21369.6.7.2,ASN_OCTET_STR,RW,snmp_scalars_tx21SwitchingType_get,snmp_scalars_tx21SwitchingType_set,,cfg_cntrlr_s,j_read_cfg_cntrlr,switching_mode,string,MAX_LEN,Err,Err::SUCCESS
-tx21SwitchAPosition,1.3.6.1.4.1.21369.6.7.4,ASN_OCTET_STR,RW,snmp_scalars_tx21SwitchAPosition_get,snmp_scalars_tx21SwitchAPosition_set,,,,,,,,
-tx21SwitchBPosition,1.3.6.1.4.1.21369.6.7.5,ASN_OCTET_STR,RW,snmp_scalars_tx21SwitchBPosition_get,snmp_scalars_tx21SwitchBPosition_set,,,,,,,,

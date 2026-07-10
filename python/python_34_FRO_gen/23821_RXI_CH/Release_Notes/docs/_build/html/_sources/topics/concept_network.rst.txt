@@ -1,8 +1,0 @@
-Network Configuration Overview
-==============================
-
-The controller supports DHCP or static addressing. Choose static for fixed infrastructure, or DHCP for plug-and-play lab setups.
-
-Related tasks
--------------
-* :doc:`configure_ip`

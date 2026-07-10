@@ -1,7 +1,0 @@
-setup.py
-snmp_client.egg-info/PKG-INFO
-snmp_client.egg-info/SOURCES.txt
-snmp_client.egg-info/dependency_links.txt
-snmp_client.egg-info/entry_points.txt
-snmp_client.egg-info/requires.txt
-snmp_client.egg-info/top_level.txt
